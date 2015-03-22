@@ -1,9 +1,7 @@
 package jakimbox.prefab.block;
 
-import alchemyplusplus.AlchemyPlusPlus;
-import alchemyplusplus.proxy.CommonProxy;
-import alchemyplusplus.registry.CreativeTabRegistry;
 import jakimbox.helper.ItemHelper;
+import jakimbox.proxy.CommonProxyBase;
 import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -69,7 +67,6 @@ public abstract class BasicBlockContainer extends BlockContainer
         super(material);
         setBlockName(blockName);
         setStepSound(sound);
-        setCreativeTab(CreativeTabRegistry.APP_TAB);
         textureName = modID + ":" + blockName + "Icon";
     }
 
@@ -157,7 +154,7 @@ public abstract class BasicBlockContainer extends BlockContainer
     @Override
     public int getRenderType()
     {
-        return CommonProxy.RENDER_ID;
+        return CommonProxyBase.RENDER_ID;
     }
 
     /**
@@ -174,6 +171,8 @@ public abstract class BasicBlockContainer extends BlockContainer
     /**
      * Open the GUI on block activation
      *
+     * @see default example below
+     *
      * @param world  the game world object
      * @param x      the x coordinate of the block being activated
      * @param y      the y coordinate of the block being activated
@@ -186,20 +185,20 @@ public abstract class BasicBlockContainer extends BlockContainer
      * @return boolean does the block get activated
      */
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
-    {
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if (tileEntity != null && !player.isSneaking())
-        {
-            if (!world.isRemote)
-            {
-                player.openGui(AlchemyPlusPlus.INSTANCE, 0, world, x, y, z);
-            }
-            return true;
-        }
-
-        return false;
-    }
+    public abstract boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ);
+//    {
+//        TileEntity tileEntity = world.getTileEntity(x, y, z);
+//        if (tileEntity != null && !player.isSneaking())
+//        {
+//            if (!world.isRemote)
+//            {
+//                player.openGui(Mod.modID, 0, world, x, y, z);
+//            }
+//            return true;
+//        }
+//
+//        return false;
+//    }
 
     /**
      * Set block metadata for model rotation
