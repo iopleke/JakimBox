@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -67,6 +68,22 @@ public abstract class BasicBlockContainer extends BlockContainer
         super(material);
         setBlockName(blockName);
         setStepSound(sound);
+        textureName = modID + ":" + blockName + "Icon";
+    }
+
+    /**
+     * Create a basic block with a given name, material, and sound
+     *
+     * @param modID       the mod's ID
+     * @param blockName   unlocalized name of the block
+     * @param material    Material type
+     * @param creativeTab Creative Tab for the block
+     */
+    public BasicBlockContainer(String modID, String blockName, Material material, CreativeTabs creativeTab)
+    {
+        super(material);
+        setBlockName(blockName);
+        setCreativeTab(creativeTab);
         textureName = modID + ":" + blockName + "Icon";
     }
 
