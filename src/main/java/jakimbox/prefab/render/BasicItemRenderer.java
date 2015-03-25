@@ -39,9 +39,20 @@ public class BasicItemRenderer implements IItemRenderer
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data)
     {
-        if (type == IItemRenderer.ItemRenderType.ENTITY)
+        switch (type)
         {
-            GL11.glTranslatef(-0.5F, -0.0F, -0.5F);
+            case ENTITY:
+                // Translate models sideways so objects in the world spin in place
+                GL11.glTranslatef(-0.5F, -0.0F, -0.5F);
+                break;
+            case EQUIPPED_FIRST_PERSON:
+            case EQUIPPED:
+                // Move model up and over slightly when in the player's hand
+                GL11.glTranslatef(0.0F, 0.6F, 0.2F);
+                break;
+            default:
+                // do nothing special
+                break;
         }
         tesr.renderTileEntityAt(this.tileEntity, 0.0D, -(tesr.yOffset / 3), 0.0D, 0.0625F);
     }
