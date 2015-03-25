@@ -9,7 +9,7 @@ import net.minecraft.world.World;
  *
  * @author jakimfett
  */
-public class ItemBasic extends Item
+public class BasicItem extends Item
 {
 
     // Default lifespan of an item is 5 minutes
@@ -21,7 +21,7 @@ public class ItemBasic extends Item
      * @param modID    unlocalized ID of the mod
      * @param itemName unlocalized name for the item
      */
-    public ItemBasic(String modID, String itemName)
+    public BasicItem(String modID, String itemName)
     {
         super();
         this.iconString = modID + ":" + itemName;
