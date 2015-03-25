@@ -50,6 +50,9 @@ public class BasicItemRenderer implements IItemRenderer
                 // Move model up and over slightly when in the player's hand
                 GL11.glTranslatef(0.0F, 0.6F, 0.2F);
                 break;
+            case INVENTORY:
+                // @TODO - scale small blocks up slightly in the inventory
+                break;
             default:
                 // do nothing special
                 break;
