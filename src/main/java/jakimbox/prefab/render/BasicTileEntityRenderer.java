@@ -22,25 +22,29 @@ public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
 
     public BasicTileEntityRenderer()
     {
-        setScale(1.0F);
+        this(1.0F);
     }
 
     public BasicTileEntityRenderer(float scale)
     {
-        setScale(scale);
-        setRotation(0.0625F);
+        this(scale, 0.0625F);
     }
 
     public BasicTileEntityRenderer(float scale, float rotation)
     {
+
         setScale(scale);
         setRotation(rotation);
         setOffset(0.0D, 0.0D, 0.0D);
     }
 
-    private void setRotation(float rotation)
+    /**
+     * Override for model specific processing
+     *
+     * @param tileEntity TileEntity being rendered
+     */
+    protected void modelSpecificOperations(TileEntity tileEntity)
     {
-        this.rotation = rotation;
     }
 
     @Override
@@ -66,20 +70,16 @@ public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
         }
     }
 
-    /**
-     * Override for model specific processing
-     *
-     * @param tileEntity TileEntity being rendered
-     */
-    protected void modelSpecificOperations(TileEntity tileEntity)
-    {
-    }
-
     public final void setOffset(double xOffset, double yOffset, double zOffset)
     {
         this.xOffset = xOffset;
         this.yOffset = yOffset;
         this.zOffset = zOffset;
+    }
+
+    public final void setRotation(float rotation)
+    {
+        this.rotation = rotation;
     }
 
     public final void setScale(float scale)
