@@ -60,7 +60,7 @@ public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
 
             modelSpecificOperations(tileEntity);
 
-            model.render(0.0625F);
+            model.render(scale);
             GL11.glPopMatrix();
             GL11.glPopMatrix();
         }
