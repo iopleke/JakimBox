@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 /**
  * Base class for simple item rendering
+ *
  * @author jakimfett
  */
 public class BasicItemRenderer implements IItemRenderer
@@ -21,9 +22,18 @@ public class BasicItemRenderer implements IItemRenderer
     }
 
     @Override
-    public boolean handleRenderType(ItemStack item, ItemRenderType type)
+    public boolean handleRenderType(ItemStack itemStack, ItemRenderType type)
     {
-        return true;
+        switch (type)
+        {
+            case ENTITY:
+            case EQUIPPED:
+            case EQUIPPED_FIRST_PERSON:
+            case INVENTORY:
+                return true;
+            default:
+                return false;
+        }
     }
 
     @Override
@@ -37,8 +47,17 @@ public class BasicItemRenderer implements IItemRenderer
     }
 
     @Override
-    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item, ItemRendererHelper helper)
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack itemStack, ItemRendererHelper helper)
     {
-        return true;
+        switch (helper)
+        {
+            case ENTITY_BOBBING:
+            case ENTITY_ROTATION:
+            case EQUIPPED_BLOCK:
+            case INVENTORY_BLOCK:
+                return true;
+            default:
+                return false;
+        }
     }
 }
