@@ -20,6 +20,9 @@ public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
     protected double zOffset;
     protected float zScale;
 
+    /**
+     * Renders the model at a scale of 1
+     */
     public BasicTileEntityRenderer()
     {
         this(1.0F);
@@ -30,9 +33,14 @@ public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
         this(scale, 0.0625F);
     }
 
+    /**
+     * Rendering object with scale and rotation
+     *
+     * @param scale    the scale for the object, relative to 1
+     * @param rotation rotation for the object
+     */
     public BasicTileEntityRenderer(float scale, float rotation)
     {
-
         setScale(scale);
         setRotation(rotation);
         setOffset(0.0D, 0.0D, 0.0D);
