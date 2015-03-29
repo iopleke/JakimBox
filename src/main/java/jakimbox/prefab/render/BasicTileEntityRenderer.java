@@ -72,7 +72,9 @@ public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
 
             modelSpecificOperations(tileEntity);
 
-            model.render(scale);
+            // @TODO - figure out why using scale here causes weird rendering problems
+            //model.render(scale);
+            model.render(0.0625F);
             GL11.glPopMatrix();
             GL11.glPopMatrix();
         }
