@@ -1,6 +1,5 @@
 package jakimbox.prefab.tileEntity.storageTypes;
 
-import codechicken.lib.inventory.InventoryUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -41,7 +40,23 @@ public class BasicInventory implements IInventory
     @Override
     public ItemStack decrStackSize(int slot, int amount)
     {
-        return InventoryUtils.decrStackSize(this, slot, amount);
+        ItemStack item = this.inventory[slot];
+        if (item != null)
+        {
+            if (item.stackSize <= amount)
+            {
+                this.inventory[slot] = null;
+            } else
+            {
+                item = this.inventory[slot].splitStack(amount);
+                if (this.inventory[slot].stackSize < 1)
+                {
+                    this.inventory[slot] = null;
+                }
+            }
+            markDirty();
+        }
+        return item;
     }
 
     /**
@@ -98,7 +113,9 @@ public class BasicInventory implements IInventory
     @Override
     public ItemStack getStackInSlotOnClosing(int slot)
     {
-        return InventoryUtils.getStackInSlotOnClosing(this, slot);
+        ItemStack stack = inventory[slot];
+        inventory[slot] = null;
+        return stack;
     }
 
     /**
