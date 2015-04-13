@@ -8,14 +8,14 @@ import java.util.Arrays;
 /**
  *
  * @author jakimfett
- * @version 0.1
+ * @version @MAJOR@.@MINOR@
  */
 @Mod(modid = JakimBox.modID, name = JakimBox.prettyName, version = JakimBox.version, useMetadata = false, acceptedMinecraftVersions = "[1.7.10,)")
 public class JakimBox
 {
     public static final String modID = "jakimbox";
     public static final String prettyName = "Jakim In A Box";
-    public static final String version = "0.1";
+    public static final String version = "@MAJOR@.@MINOR@";
 
     @Mod.Metadata(JakimBox.modID)
     public static ModMetadata metadata;
