@@ -97,3 +97,16 @@ sourceSets {
         }
     }
 }
+
+task deobfJar(type: Jar) { // Generate deobfuscated
+    from sourceSets.main.output
+    classifier = 'deobf'
+    destinationDir = file (rootProject.getRootDir().getPath() + '/output')
+}
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+    destinationDir = file (rootProject.getRootDir().getPath() + '/output')
+}
+
+tasks.assemble.dependsOn('sourceJar', 'deobfJar')
