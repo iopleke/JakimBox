@@ -2,6 +2,7 @@ package jakimbox.prefab.gui;
 
 import jakimbox.helper.LogHelper;
 import jakimbox.prefab.gui.tabTypes.AbstractTab;
+import java.util.List;
 import net.minecraft.client.gui.inventory.GuiContainer;
 
 /**
@@ -87,6 +88,28 @@ public class Tabs
                 }
             }
         }
+    }
+
+    /**
+     * Get tooltips for tab mouseovers
+     *
+     * @param mouseX
+     * @param mouseY
+     */
+    private List<String> getTabToolTip(int mouseX, int mouseY)
+    {
+        for (AbstractTab tab : tabList)
+        {
+            ListLoop:
+            if (tab != null)
+            {
+                if (tab.coordinateIntersect(mouseX, mouseY) && tab.getTabState() == TabState.CLOSED)
+                {
+                    return tab.tooltipForTab(mouseX, mouseY);
+                }
+            }
+        }
+        return null;
     }
 
     public static enum TabState
