@@ -95,6 +95,7 @@ public class Tabs
      *
      * @param mouseX
      * @param mouseY
+     * @return text for tooltip
      */
     public List<String> getTabToolTip(int mouseX, int mouseY)
     {
