@@ -1,6 +1,7 @@
 package jakimbox.prefab.gui;
 
 import jakimbox.prefab.gui.tabTypes.AbstractTab;
+import net.minecraft.client.gui.inventory.GuiContainer;
 
 /**
  * Class for managing multiple tabs
@@ -14,14 +15,18 @@ public class Tabs
      */
     private AbstractTab[] tabList;
 
+    private GuiContainer gui;
+
     /**
      * Basic constructor
      *
+     * @param gui   gui object
      * @param count defines total number of possible tabs
      */
-    public Tabs(int count)
+    public Tabs(GuiContainer gui, int count)
     {
         tabList = new AbstractTab[count];
+        this.gui = gui;
     }
 
     /**
@@ -44,6 +49,20 @@ public class Tabs
     public AbstractTab getTab(int id)
     {
         return tabList[id];
+    }
+
+    /**
+     * Render all the tabs in the list
+     */
+    public void renderTabs()
+    {
+        for (AbstractTab tab : tabList)
+        {
+            if (tab != null)
+            {
+                tab.renderTab(gui);
+            }
+        }
     }
 
 }
