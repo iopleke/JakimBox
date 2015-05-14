@@ -1,5 +1,6 @@
 package jakimbox.prefab.gui;
 
+import jakimbox.helper.LogHelper;
 import jakimbox.prefab.gui.tabTypes.AbstractTab;
 import net.minecraft.client.gui.inventory.GuiContainer;
 
@@ -49,6 +50,8 @@ public class Tabs
 
     /**
      * Render all the tabs in the list
+     *
+     * @param gui pass in the GUI object for rendering
      */
     public void renderTabs(GuiContainer gui)
     {
@@ -61,4 +64,28 @@ public class Tabs
         }
     }
 
+    /**
+     * Check if a mouse click activates any of the tabs
+     *
+     * @param clickX
+     * @param clickY
+     */
+    private void doTabClicks(int clickX, int clickY)
+    {
+        LogHelper.debug("Clicked at x:" + clickX + " y:" + clickY);
+
+        for (AbstractTab tab : tabList)
+        {
+            ListLoop:
+            if (tab != null)
+            {
+                if (tab.clickIntersect(clickX, clickY))
+                {
+                    LogHelper.debug("Tab on " + tab.getTabSide().toString() + " was clicked!");
+                    tab.initializeTabAnimation();
+                    break ListLoop;
+                }
+            }
+        }
+    }
 }
