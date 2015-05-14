@@ -79,7 +79,7 @@ public class Tabs
             ListLoop:
             if (tab != null)
             {
-                if (tab.clickIntersect(clickX, clickY))
+                if (tab.coordinateIntersect(clickX, clickY))
                 {
                     LogHelper.debug("Tab on " + tab.getTabSide().toString() + " was clicked!");
                     tab.initializeTabAnimation();
@@ -87,5 +87,21 @@ public class Tabs
                 }
             }
         }
+    }
+
+    public static enum TabState
+    {
+        CLOSED, CLOSING, OPEN, OPENING;
+
+    }
+
+    public static enum TabType
+    {
+        BREWING_STAND, CHEST, CHEST_DOUBLE, CHEST_ENDER, ENCHANTING_TABLE, FURNACE, PATREON
+    }
+
+    public static enum TabSide
+    {
+        LEFT, RIGHT
     }
 }
