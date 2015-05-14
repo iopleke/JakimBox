@@ -9,20 +9,15 @@ import org.apache.logging.log4j.Level;
  */
 public class LogHelper
 {
-    public boolean debugMode = false;
-    public String modID;
-
-    public LogHelper(String modID)
-    {
-        this.modID = modID;
-    }
+    public static boolean debugMode = false;
+    public static String modID = "JakimBox";
 
     /**
      * Used for logging when debug is turned on in the config
      *
      * @param obj object to log
      */
-    public void debug(Object obj)
+    public static void debug(Object obj)
     {
         if (debugMode)
         {
@@ -40,7 +35,7 @@ public class LogHelper
      * @param exception exception to log
      * @param level     level of the log
      */
-    public void exception(Object obj, Throwable exception, Level level)
+    public static void exception(Object obj, Throwable exception, Level level)
     {
         FMLLog.log(modID, level, exception, String.valueOf(obj));
     }
@@ -51,7 +46,7 @@ public class LogHelper
      * @param exception exception to log
      * @param level     level of the log
      */
-    public void exception(Throwable exception, Level level)
+    public static void exception(Throwable exception, Level level)
     {
         FMLLog.log(modID, level, exception, exception.toString());
     }
@@ -61,7 +56,7 @@ public class LogHelper
      *
      * @param obj
      */
-    public void warn(Object obj)
+    public static void warn(Object obj)
     {
         log(Level.WARN, obj);
     }
@@ -71,7 +66,7 @@ public class LogHelper
      *
      * @param obj object to log
      */
-    public void info(Object obj)
+    public static void info(Object obj)
     {
         log(Level.INFO, obj);
     }
@@ -82,7 +77,7 @@ public class LogHelper
      * @param level Level of the log
      * @param obj   object to log
      */
-    public void log(Level level, Object obj)
+    public static void log(Level level, Object obj)
     {
         FMLLog.log(modID, level, String.valueOf(obj));
     }
