@@ -113,6 +113,23 @@ public class Tabs
         return null;
     }
 
+    /**
+     * Pass GUI offsets to the tabs, used when screen resizes
+     *
+     * @param x
+     * @param y
+     */
+    public void setDefaultGUICoordinates(int x, int y)
+    {
+        for (AbstractTab tab : tabList)
+        {
+            if (tab != null)
+            {
+                tab.setDefaultGUICoordinates(x, y);
+            }
+        }
+    }
+
     public static enum TabState
     {
         CLOSED, CLOSING, OPEN, OPENING;
