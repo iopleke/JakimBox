@@ -71,7 +71,7 @@ public class Tabs
      * @param clickX
      * @param clickY
      */
-    private void doTabClicks(int clickX, int clickY)
+    public void doTabClicks(int clickX, int clickY)
     {
         LogHelper.debug("Clicked at x:" + clickX + " y:" + clickY);
 
@@ -96,7 +96,7 @@ public class Tabs
      * @param mouseX
      * @param mouseY
      */
-    private List<String> getTabToolTip(int mouseX, int mouseY)
+    public List<String> getTabToolTip(int mouseX, int mouseY)
     {
         for (AbstractTab tab : tabList)
         {
