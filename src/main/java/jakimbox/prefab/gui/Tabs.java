@@ -39,33 +39,6 @@ public class Tabs
     }
 
     /**
-     * Get a tab at a specific place on the list
-     *
-     * @param id tab list ID
-     * @return Tab object (or NULL)
-     */
-    public AbstractTab getTab(int id)
-    {
-        return tabList[id];
-    }
-
-    /**
-     * Render all the tabs in the list
-     *
-     * @param gui pass in the GUI object for rendering
-     */
-    public void renderTabs(GuiContainer gui)
-    {
-        for (AbstractTab tab : tabList)
-        {
-            if (tab != null)
-            {
-                tab.renderTab(gui);
-            }
-        }
-    }
-
-    /**
      * Check if a mouse click activates any of the tabs
      *
      * @param clickX
@@ -91,6 +64,17 @@ public class Tabs
     }
 
     /**
+     * Get a tab at a specific place on the list
+     *
+     * @param id tab list ID
+     * @return Tab object (or NULL)
+     */
+    public AbstractTab getTab(int id)
+    {
+        return tabList[id];
+    }
+
+    /**
      * Get tooltips for tab mouseovers
      *
      * @param mouseX
@@ -111,6 +95,22 @@ public class Tabs
             }
         }
         return null;
+    }
+
+    /**
+     * Render all the tabs in the list
+     *
+     * @param gui pass in the GUI object for rendering
+     */
+    public void renderTabs(GuiContainer gui)
+    {
+        for (AbstractTab tab : tabList)
+        {
+            if (tab != null)
+            {
+                tab.renderTab(gui);
+            }
+        }
     }
 
     /**
