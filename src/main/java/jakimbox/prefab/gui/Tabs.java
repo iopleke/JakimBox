@@ -15,18 +15,14 @@ public class Tabs
      */
     private AbstractTab[] tabList;
 
-    private GuiContainer gui;
-
     /**
      * Basic constructor
      *
-     * @param gui   gui object
      * @param count defines total number of possible tabs
      */
-    public Tabs(GuiContainer gui, int count)
+    public Tabs(int count)
     {
         tabList = new AbstractTab[count];
-        this.gui = gui;
     }
 
     /**
@@ -54,7 +50,7 @@ public class Tabs
     /**
      * Render all the tabs in the list
      */
-    public void renderTabs()
+    public void renderTabs(GuiContainer gui)
     {
         for (AbstractTab tab : tabList)
         {
