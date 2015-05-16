@@ -15,23 +15,69 @@ import net.minecraft.util.ResourceLocation;
  */
 public abstract class AbstractTab
 {
+    /**
+     * How fast does the tab open and close
+     */
     private int animationSpeed;
-    private int defaultGUIX;
-    private int defaultGUIY;
-    private final int defaultTextureClosedX;
-    private final int defaultTextureClosedY;
-    private final int defaultTextureOpenX;
-    private final int defaultTextureOpenY;
+
+    /**
+     * X and Y defaults for tab positionining, hanges as the game window resizes.
+     */
+    private int defaultGUIX, defaultGUIY;
+
+    /**
+     * Texture coordinates for the tab when closed.
+     */
+    private final int defaultTextureClosedX, defaultTextureClosedY;
+
+    /**
+     * Texture coordinates for the tab when open
+     */
+    private final int defaultTextureOpenX, defaultTextureOpenY;
+
+    /**
+     * Current GUI coordinates of the tab
+     */
     private int[] guiCoords;
-    private final int maxX;
-    private final int maxY;
-    private final int minX;
-    private final int minY;
+
+    /**
+     * Maximum dimensions for the tab
+     */
+    private final int maxX, maxY;
+
+    /**
+     * Minimum dimensions for the tab
+     */
+    private final int minX, minY;
+
+    /**
+     * Which side of the GUI is the tab positioned
+     */
     private final TabSide side;
+
+    /**
+     * Current dimensions of the tab
+     */
     private int[] size;
+
+    /**
+     * Whether the tab is closed, open, or somewhere in between
+     */
     private TabState state;
+
+    /**
+     * Current texture coordinates
+     */
     private int[] textureCoords;
+
+    /**
+     * Texture location for the background
+     */
     protected final ResourceLocation tabBackground;
+
+    /**
+     * Type of tab, potentially unnecessary since each type extends the abstract tab
+     */
     public final TabType type;
 
     /**
