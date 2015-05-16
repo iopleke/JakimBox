@@ -128,6 +128,9 @@ public abstract class AbstractTab
         }
     }
 
+    /**
+     * Decrease tab size for closing animation
+     */
     private void decrementTabValues()
     {
         if (size[0] - animationSpeed * 2 > getMinTabSizeX())
@@ -155,6 +158,9 @@ public abstract class AbstractTab
         }
     }
 
+    /**
+     * Increase tab size for opening animation
+     */
     private void incrementTabValues()
     {
         if (size[0] + animationSpeed * 2 < getMaxTabSizeX())
@@ -187,11 +193,17 @@ public abstract class AbstractTab
         }
     }
 
+    /**
+     * Move tab to the default coordinate position
+     */
     private void resetTabGUICoordinates()
     {
         setTabGUICoordinates(defaultGUIX, defaultGUIY);
     }
 
+    /**
+     * Reset the tab size
+     */
     private void resetTabSize()
     {
 
@@ -210,6 +222,9 @@ public abstract class AbstractTab
         }
     }
 
+    /**
+     * Reset the tab texture position
+     */
     private void resetTabTextureCoordinates()
     {
         if (state == TabState.CLOSED)
@@ -221,17 +236,35 @@ public abstract class AbstractTab
         }
     }
 
+    /**
+     * Set GUI position for the tab
+     *
+     * @param x
+     * @param y
+     */
     private void setTabGUICoordinates(int x, int y)
     {
         guiCoords[0] = x;
         guiCoords[1] = y;
     }
 
+    /**
+     * Set tab state
+     *
+     * @param state closed, closing, open, opening
+     */
     private void setTabState(TabState state)
     {
         this.state = state;
     }
 
+    /**
+     * Check if an x/y coordinate intersects with the tab
+     *
+     * @param x
+     * @param y
+     * @return boolean
+     */
     public boolean coordinateIntersect(int x, int y)
     {
 
