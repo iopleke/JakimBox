@@ -1,5 +1,7 @@
 package jakimbox.reference;
 
+import jakimbox.prefab.gui.Tabs;
+
 /**
  * Rotated direction grid for use with block rotation meta values
  *
@@ -52,5 +54,20 @@ public enum RelativeDirection
         {
             -x, -z
         };
+    }
+
+    /**
+     * Return the tab side for a given relative direction
+     *
+     * @param direction
+     * @return TabSide
+     */
+    public static Tabs.TabSide getRelativeDirectionTabSide(RelativeDirection direction)
+    {
+        if (direction == RelativeDirection.FRONT || direction == RelativeDirection.FRONTLEFT || direction == RelativeDirection.LEFT || direction == RelativeDirection.BACKLEFT)
+        {
+            return Tabs.TabSide.LEFT;
+        }
+        return Tabs.TabSide.RIGHT;
     }
 }
