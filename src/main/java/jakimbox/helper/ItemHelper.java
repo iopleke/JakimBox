@@ -5,8 +5,22 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+/**
+ * Helper classes for item and itemstack objects
+ *
+ * @author jakimfett
+ */
 public class ItemHelper
 {
+    /**
+     * Spawn a rotating, bobbing item stack in the world at the provided coordinates
+     *
+     * @param world
+     * @param itemStack stack of items to put in the world
+     * @param x         coordinate
+     * @param y         coordinate
+     * @param z         coordinate
+     */
     public static void throwItemStack(World world, ItemStack itemStack, double x, double y, double z)
     {
         if (itemStack != null)

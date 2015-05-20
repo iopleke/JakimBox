@@ -4,6 +4,7 @@ import cpw.mods.fml.common.FMLLog;
 import org.apache.logging.log4j.Level;
 
 /**
+ * Static helper methods for logging
  *
  * @author jakimfett
  */
