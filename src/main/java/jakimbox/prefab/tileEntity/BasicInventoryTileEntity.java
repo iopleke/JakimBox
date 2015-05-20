@@ -132,7 +132,10 @@ public abstract class BasicInventoryTileEntity extends BasicTileEntity implement
     @Override
     public boolean isUseableByPlayer(EntityPlayer entityPlayer)
     {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && inventory.isUseableByPlayer(entityPlayer, xCoord, yCoord, zCoord);
+        boolean distanceCheck = entityPlayer.getDistanceSq(xCoord + 0.5D, yCoord + 0.5D, zCoord + 0.5D) <= 64.0D;
+        boolean tileEntityCheck = worldObj.getTileEntity(xCoord, yCoord, zCoord) == this;
+        boolean inventoryCheck = inventory.isUseableByPlayer(entityPlayer, xCoord, yCoord, zCoord);
+        return distanceCheck && tileEntityCheck && inventoryCheck;
     }
 
     @Override
