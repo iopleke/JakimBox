@@ -6,6 +6,9 @@ import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * Helper class for world operations
@@ -23,14 +26,8 @@ public class WorldHelper
      */
     public static boolean isActiveFurnace(TileEntity tileEntity)
     {
-        Block block = null;
-        if (FMLClientHandler.instance().getSide() == Side.CLIENT)
-        {
-            block = FMLClientHandler.instance().getClient().theWorld.getBlock(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
-        } else if (FMLClientHandler.instance().getSide() == Side.SERVER)
-        {
-            block = FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld().getBlock(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
-        }
+        Block block = WorldHelper.getWorld().getBlock(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+
         if (block != null)
         {
             if (block.equals(Blocks.lit_furnace))
@@ -39,5 +36,43 @@ public class WorldHelper
             }
         }
         return false;
+    }
+
+    public static World getWorld()
+    {
+        if (FMLClientHandler.instance().getSide() == Side.CLIENT)
+        {
+            return FMLClientHandler.instance().getClient().theWorld;
+        } else if (FMLClientHandler.instance().getSide() == Side.SERVER)
+        {
+            return FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld();
+        }
+        return null;
+    }
+
+    /**
+     * Get ForgeDirection offset for the second half of a double chest
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @return ForgeDirection of the chest, or null if none was found
+     */
+    public ForgeDirection doubleChestOffset(int x, int y, int z)
+    {
+        for (ForgeDirection offset : ForgeDirection.VALID_DIRECTIONS)
+        {
+            // Double chests are on the same Y
+            if (offset.offsetY == 0)
+            {
+                TileEntity potentialChest = WorldHelper.getWorld().getTileEntity(offset.offsetX, offset.offsetY, offset.offsetZ);
+                if (potentialChest instanceof TileEntityChest)
+                {
+                    return offset;
+                }
+            }
+
+        }
+        return null;
     }
 }
