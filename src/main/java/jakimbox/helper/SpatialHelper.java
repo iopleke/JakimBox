@@ -9,6 +9,7 @@ import static jakimbox.reference.RelativeDirection.FRONTLEFT;
 import static jakimbox.reference.RelativeDirection.FRONTRIGHT;
 import static jakimbox.reference.RelativeDirection.LEFT;
 import static jakimbox.reference.RelativeDirection.RIGHT;
+import net.minecraft.tileentity.TileEntity;
 
 /**
  * Helper class for relative and absolute coordinate operations
@@ -41,6 +42,27 @@ public class SpatialHelper
         }
 
         return relative.getOffset();
+    }
+
+    /**
+     * Gets the TileEntity for a given relative direction
+     *
+     * @param tileEntity
+     * @param direction
+     * @return TileEntity or null
+     */
+    public static TileEntity getTileEntityForRelativeDirection(TileEntity tileEntity, RelativeDirection direction)
+    {
+        if (tileEntity != null)
+        {
+            int[] offset = SpatialHelper.getOffsetFromRelative(direction, tileEntity.getBlockMetadata());
+            TileEntity relativeTileEntity = WorldHelper.getWorld().getTileEntity(tileEntity.xCoord + offset[0], tileEntity.yCoord, tileEntity.zCoord + offset[1]);
+            if (relativeTileEntity != null)
+            {
+                return relativeTileEntity;
+            }
+        }
+        return null;
     }
 
     /**
