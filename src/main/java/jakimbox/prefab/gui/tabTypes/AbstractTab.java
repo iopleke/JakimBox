@@ -314,6 +314,16 @@ public abstract class AbstractTab
         return state;
     }
 
+    /**
+     * Get the tab type
+     *
+     * @return TabType
+     */
+    public TabType getType()
+    {
+        return type;
+    }
+
     public void initializeTabAnimation()
     {
         if (state == TabState.CLOSED)
