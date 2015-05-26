@@ -361,8 +361,12 @@ public abstract class AbstractTab
      */
     public void setDefaultGUICoordinates(int x, int y)
     {
-        defaultGUIX = x;
-        defaultGUIY = y;
+        if (defaultGUIX != x || defaultGUIY != y)
+        {
+            defaultGUIX = x;
+            defaultGUIY = y;
+            resetTabGUICoordinates();
+        }
     }
 
     public void setTabTextureCoordinates(int x, int y)
