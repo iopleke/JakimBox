@@ -95,7 +95,7 @@ public abstract class AbstractTab
      */
     public AbstractTab(String modID, TabType type, TabSide side, int animationSpeed, int defaultTextureClosedX, int defaultTextureClosedY, int defaultTextureOpenX, int defaultTextureOpenY, int maxX, int maxY, int minX, int minY)
     {
-        this.tabBackground = new ResourceLocation(modID, "textures/gui/" + type.toString() + "TabBackground.png");
+        this.tabBackground = new ResourceLocation(modID, "textures/gui/" + type.toString().toLowerCase() + "TabBackground.png");
         this.type = type;
         this.side = side;
         this.animationSpeed = animationSpeed;
