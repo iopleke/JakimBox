@@ -108,6 +108,10 @@ public abstract class AbstractTab
         this.minX = minX;
         this.minY = minY;
 
+        guiCoords = new int[2];
+        size = new int[2];
+        textureCoords = new int[2];
+
         reset();
     }
 
