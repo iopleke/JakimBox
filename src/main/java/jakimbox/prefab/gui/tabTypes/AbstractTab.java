@@ -21,11 +21,6 @@ public abstract class AbstractTab
     private int animationSpeed;
 
     /**
-     * X and Y defaults for tab positionining, hanges as the game window resizes.
-     */
-    private int defaultGUIX, defaultGUIY;
-
-    /**
      * Texture coordinates for the tab when closed.
      */
     private final int defaultTextureClosedX, defaultTextureClosedY;
@@ -69,6 +64,8 @@ public abstract class AbstractTab
      * Current texture coordinates
      */
     private int[] textureCoords;
+    protected int defaultGUIX;
+    protected int defaultGUIY;
 
     /**
      * Texture location for the background
@@ -194,14 +191,6 @@ public abstract class AbstractTab
     }
 
     /**
-     * Move tab to the default coordinate position
-     */
-    private void resetTabGUICoordinates()
-    {
-        setTabGUICoordinates(defaultGUIX, defaultGUIY);
-    }
-
-    /**
      * Reset the tab size
      */
     private void resetTabSize()
@@ -237,18 +226,6 @@ public abstract class AbstractTab
     }
 
     /**
-     * Set GUI position for the tab
-     *
-     * @param x
-     * @param y
-     */
-    private void setTabGUICoordinates(int x, int y)
-    {
-        guiCoords[0] = x;
-        guiCoords[1] = y;
-    }
-
-    /**
      * Set tab state
      *
      * @param state closed, closing, open, opening
@@ -256,6 +233,26 @@ public abstract class AbstractTab
     private void setTabState(TabState state)
     {
         this.state = state;
+    }
+
+    /**
+     * Move tab to the default coordinate position
+     */
+    protected void resetTabGUICoordinates()
+    {
+        setTabGUICoordinates(defaultGUIX, defaultGUIY);
+    }
+
+    /**
+     * Set GUI position for the tab
+     *
+     * @param x
+     * @param y
+     */
+    protected void setTabGUICoordinates(int x, int y)
+    {
+        guiCoords[0] = x;
+        guiCoords[1] = y;
     }
 
     /**
