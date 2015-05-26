@@ -40,8 +40,14 @@ public class ChestTab extends AbstractTab
         {
             xOffset = xOffset + DOUBLE_TAB_WIDTH - getMinTabSizeX();
             yOffset = yOffset + getMinTabSizeY();
+        } else if (getTabState() == TabState.OPEN)
+        {
+            if (getType() == TabType.CHEST)
+            {
+                xOffset = xOffset + DOUBLE_TAB_WIDTH - SINGLE_TAB_WIDTH;
+            }
+            yOffset = yOffset + getMinTabSizeY();
         }
-
         setTabGUICoordinates(xOffset, yOffset);
     }
 }
