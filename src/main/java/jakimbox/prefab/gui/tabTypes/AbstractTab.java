@@ -343,8 +343,12 @@ public abstract class AbstractTab
     public void renderTab(GuiContainer gui)
     {
         gui.mc.renderEngine.bindTexture(tabBackground);
+        if (getTabSide() == TabSide.LEFT)
+        {
+            gui.drawTexturedModalRect(defaultGUIX + getMaxTabSizeX() - getMinTabSizeX(), defaultGUIY + getMinTabSizeY(), 0, 0, getMinTabSizeX(), getMinTabSizeY());
+        }
         animateTab();
-        gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], textureCoords[0], textureCoords[1], size[0], size[1]);
+        //gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], textureCoords[0], textureCoords[1], size[0], size[1]);
     }
 
     /**

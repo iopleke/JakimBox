@@ -15,7 +15,7 @@ public class ChestTab extends AbstractTab
 
     public ChestTab(String ModID, TabSide side)
     {
-        super(ModID, TabType.CHEST, side, 2, 0, 0, 0, 18, 68, 194, 15, 18);
+        super(ModID, TabType.CHEST_SINGLE, side, 2, 0, 0, 0, 18, 68, 194, 15, 18);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ChestTab extends AbstractTab
                 yOffset = yOffset + getMinTabSizeY();
                 break;
             case OPEN:
-                if (getType() == TabType.CHEST)
+                if (getType() == TabType.CHEST_SINGLE)
                 {
                     xOffset = xOffset + DOUBLE_TAB_WIDTH - SINGLE_TAB_WIDTH;
                 }

@@ -138,7 +138,7 @@ public class Tabs
 
     public static enum TabType
     {
-        BREWING_STAND, CHEST, CHEST_DOUBLE, CHEST_ENDER, ENCHANTING_TABLE, FURNACE, PATREON
+        BREWING_STAND, CHEST_SINGLE, CHEST_DOUBLE, CHEST_ENDER, ENCHANTING_TABLE, FURNACE, PATREON
     }
 
     public static enum TabSide
