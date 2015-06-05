@@ -82,6 +82,7 @@ public abstract class AbstractTab
      *
      * @param modID                 ID for the mod in question Background graphic resource
      * @param type                  Type for the tab
+     * @param texturePrefix         Prefix for the texture file
      * @param side                  Which side of the GUI is the tab on, from Enum
      * @param animationSpeed        how fast does the tab open and close
      * @param defaultTextureClosedX texture X coordinate default for a closed tab
@@ -93,9 +94,9 @@ public abstract class AbstractTab
      * @param minX                  minimum tab width, should be 15
      * @param minY                  minimum tab width, should be 18
      */
-    public AbstractTab(String modID, TabType type, TabSide side, int animationSpeed, int defaultTextureClosedX, int defaultTextureClosedY, int defaultTextureOpenX, int defaultTextureOpenY, int maxX, int maxY, int minX, int minY)
+    public AbstractTab(String modID, TabType type, String texturePrefix, TabSide side, int animationSpeed, int defaultTextureClosedX, int defaultTextureClosedY, int defaultTextureOpenX, int defaultTextureOpenY, int maxX, int maxY, int minX, int minY)
     {
-        this.tabBackground = new ResourceLocation(modID, "textures/gui/" + type.toString().toLowerCase() + "TabBackground.png");
+        this.tabBackground = new ResourceLocation(modID, "textures/gui/" + texturePrefix + "TabBackground.png");
         this.type = type;
         this.side = side;
         this.animationSpeed = animationSpeed;
@@ -113,6 +114,27 @@ public abstract class AbstractTab
         textureCoords = new int[2];
 
         reset();
+    }
+
+    /**
+     * Generalized tab object, should be extended to make various tab types
+     *
+     * @param modID                 ID for the mod in question Background graphic resource
+     * @param type                  Type for the tab
+     * @param side                  Which side of the GUI is the tab on, from Enum
+     * @param animationSpeed        how fast does the tab open and close
+     * @param defaultTextureClosedX texture X coordinate default for a closed tab
+     * @param defaultTextureClosedY texture Y coordinate default for a closed tab
+     * @param defaultTextureOpenX   texture X coordinate default for an open tab
+     * @param defaultTextureOpenY   texture Y coordinate default for an open tab
+     * @param maxX                  maximum tab width
+     * @param maxY                  maximum tab width
+     * @param minX                  minimum tab width, should be 15
+     * @param minY                  minimum tab width, should be 18
+     */
+    public AbstractTab(String modID, TabType type, TabSide side, int animationSpeed, int defaultTextureClosedX, int defaultTextureClosedY, int defaultTextureOpenX, int defaultTextureOpenY, int maxX, int maxY, int minX, int minY)
+    {
+        this(modID, type, type.toString().toLowerCase(), side, animationSpeed, defaultTextureClosedX, defaultTextureClosedY, defaultTextureOpenX, defaultTextureOpenY, maxX, maxY, minX, minY);
     }
 
     /**

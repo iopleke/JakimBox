@@ -15,7 +15,7 @@ public class ChestTab extends AbstractTab
 
     public ChestTab(String ModID, TabSide side)
     {
-        super(ModID, TabType.CHEST_SINGLE, side, 2, 0, 0, 0, 18, 68, 194, 15, 18);
+        super(ModID, TabType.CHEST_SINGLE, "chest", side, 2, 0, 0, 0, 18, 68, 194, 15, 18);
     }
 
     @Override
