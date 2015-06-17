@@ -1,5 +1,7 @@
 package jakimbox.dispersion.gas;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import jakimbox.JakimBox;
 import jakimbox.prefab.block.BasicBlock;
 import jakimbox.proxy.CommonProxyBase;
@@ -54,4 +56,15 @@ public class BasicGasBlock extends BasicBlock
         return false;
     }
 
+    /**
+     * Set pass for block rendering.
+     *
+     * @return int 1
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public int getRenderBlockPass()
+    {
+        return 1;
+    }
 }
