@@ -1,8 +1,12 @@
 package jakimbox;
 
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import jakimbox.registry.BlockRegistry;
+import jakimbox.registry.CreativeTabRegistry;
 import java.util.Arrays;
 
 /**
@@ -20,10 +24,16 @@ public class JakimBox
     @Mod.Metadata(JakimBox.modID)
     public static ModMetadata metadata;
 
+    @EventHandler
+    public void preInit(FMLPreInitializationEvent event)
+    {
+        BlockRegistry.init();
+        CreativeTabRegistry.init();
+    }
+
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
-
         JakimBox.metadata = JakimBox.setupModMetaData(metadata);
     }
 
