@@ -9,6 +9,8 @@ import jakimbox.reference.Naming;
 import jakimbox.registry.CreativeTabRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 
 /**
  *
@@ -32,6 +34,21 @@ public class BasicGasBlock extends BasicBlock
     public int getRenderType()
     {
         return CommonProxyBase.RENDER_ID;
+    }
+
+    /**
+     * Disable player collision
+     *
+     * @param world
+     * @param x
+     * @param y
+     * @param z
+     * @return null
+     */
+    @Override
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
+    {
+        return null;
     }
 
     /**
