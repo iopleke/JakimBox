@@ -37,19 +37,25 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
         this.setBlockUnbreakable();
     }
 
+    @Override
+    public TileEntity createNewTileEntity(World world, int meta)
+    {
+        return new BasicGasTileEntity();
+    }
+
     /**
-     * Register the block icons from the texture name
+     * Disable player collision
      *
-     * @param iconRegister
+     * @param world
+     * @param x
+     * @param y
+     * @param z
+     * @return null
      */
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
     {
-        for (int i = 0; i < 16; i++)
-        {
-            blockIconArray[i] = iconRegister.registerIcon(textureName + i);
-        }
+        return null;
     }
 
     /**
@@ -64,6 +70,40 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     public IIcon getIcon(int side, int meta)
     {
         return blockIconArray[meta];
+    }
+
+    /**
+     * Set pass for block rendering.
+     *
+     * @return int 1
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public int getRenderBlockPass()
+    {
+        return 1;
+    }
+
+    /**
+     * Get the render type
+     *
+     * @return render ID from the CommonProxy
+     */
+    @Override
+    public int getRenderType()
+    {
+        return CommonProxyBase.RENDER_ID;
+    }
+
+    /**
+     * Disable opaque cube rendering
+     *
+     * @return false
+     */
+    @Override
+    public boolean isOpaqueCube()
+    {
+        return false;
     }
 
     /**
@@ -116,32 +156,6 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     }
 
     /**
-     * Get the render type
-     *
-     * @return render ID from the CommonProxy
-     */
-    @Override
-    public int getRenderType()
-    {
-        return CommonProxyBase.RENDER_ID;
-    }
-
-    /**
-     * Disable player collision
-     *
-     * @param world
-     * @param x
-     * @param y
-     * @param z
-     * @return null
-     */
-    @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
-    {
-        return null;
-    }
-
-    /**
      * Inflict effects on anything moving through the gas
      *
      * @param world
@@ -163,21 +177,19 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
         }
     }
 
-    @Override
-    public TileEntity createNewTileEntity(World world, int meta)
-    {
-        return new BasicGasTileEntity();
-    }
-
     /**
-     * Disable opaque cube rendering
+     * Register the block icons from the texture name
      *
-     * @return false
+     * @param iconRegister
      */
     @Override
-    public boolean isOpaqueCube()
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconRegister)
     {
-        return false;
+        for (int i = 0; i < 16; i++)
+        {
+            blockIconArray[i] = iconRegister.registerIcon(textureName + i);
+        }
     }
 
     /**
@@ -189,17 +201,5 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     public boolean renderAsNormalBlock()
     {
         return false;
-    }
-
-    /**
-     * Set pass for block rendering.
-     *
-     * @return int 1
-     */
-    @SideOnly(Side.CLIENT)
-    @Override
-    public int getRenderBlockPass()
-    {
-        return 1;
     }
 }
