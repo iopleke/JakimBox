@@ -38,6 +38,19 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
         this.setBlockUnbreakable();
     }
 
+    /**
+     * Disable collision with the gas block
+     *
+     * @param meta
+     * @param boat
+     * @return false
+     */
+    @Override
+    public boolean canCollideCheck(int meta, boolean boat)
+    {
+        return false;
+    }
+
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
