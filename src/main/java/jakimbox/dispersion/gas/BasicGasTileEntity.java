@@ -1,6 +1,7 @@
 package jakimbox.dispersion.gas;
 
 import jakimbox.prefab.tileEntity.BasicTileEntity;
+import jakimbox.reference.Corrodes;
 import jakimbox.reference.Naming;
 import jakimbox.registry.BlockRegistry;
 import java.util.ArrayList;
@@ -22,12 +23,14 @@ public class BasicGasTileEntity extends BasicTileEntity
 {
     private static final int decrease = 1;
     private static final int max = 15;
-    private static final int min = 0;
+    private static final int min = 2;
+    private List<Corrodes> corrosiveness = new ArrayList<Corrodes>();
     private int diffusionCount;
     private Random random = new Random();
     private int randomDiffuseTick;
     private boolean syncd;
 
+    public List<Block> corrodibleBlocks = new ArrayList<Block>();
     public List<PotionEffect> potionEffects = new ArrayList<PotionEffect>();
 
     public BasicGasTileEntity()
@@ -49,6 +52,9 @@ public class BasicGasTileEntity extends BasicTileEntity
         potionEffects.add(new PotionEffect(16, 2));
         setDiffusionCount(diffusionCount);
         resetRandomDiffuseTick();
+        corrosiveness.add(Corrodes.ALL);
+
+        updateCorrosiveness();
     }
 
     /**
@@ -90,6 +96,64 @@ public class BasicGasTileEntity extends BasicTileEntity
     }
 
     /**
+     * Set corrodible blocks based on the corrosiveness of the gas
+     *
+     * @default: only replace air
+     * @see jakimbox.reference.Corrodes
+     */
+    private void updateCorrosiveness()
+    {
+        corrodibleBlocks.clear();
+
+        corrodibleBlocks.add(Blocks.air);
+
+        if (corrosiveness.contains(Corrodes.COBBLE) || corrosiveness.contains(Corrodes.ALL))
+        {
+            corrodibleBlocks.add(Blocks.cobblestone);
+            corrodibleBlocks.add(Blocks.cobblestone_wall);
+            corrodibleBlocks.add(Blocks.stone_stairs);
+        }
+        if (corrosiveness.contains(Corrodes.DIRT) || corrosiveness.contains(Corrodes.ALL))
+        {
+            corrodibleBlocks.add(Blocks.dirt);
+            corrodibleBlocks.add(Blocks.grass);
+        }
+        if (corrosiveness.contains(Corrodes.METAL) || corrosiveness.contains(Corrodes.ALL))
+        {
+            corrodibleBlocks.add(Blocks.iron_bars);
+            corrodibleBlocks.add(Blocks.iron_block);
+            corrodibleBlocks.add(Blocks.iron_door);
+            corrodibleBlocks.add(Blocks.iron_ore);
+        }
+        if (corrosiveness.contains(Corrodes.MINERAL) || corrosiveness.contains(Corrodes.ALL))
+        {
+            corrodibleBlocks.add(Blocks.gravel);
+            corrodibleBlocks.add(Blocks.sand);
+            corrodibleBlocks.add(Blocks.clay);
+        }
+        if (corrosiveness.contains(Corrodes.ORGANIC) || corrosiveness.contains(Corrodes.ALL))
+        {
+            corrodibleBlocks.add(Blocks.tallgrass);
+            corrodibleBlocks.add(Blocks.leaves);
+            corrodibleBlocks.add(Blocks.leaves2);
+        }
+        if (corrosiveness.contains(Corrodes.STONE) || corrosiveness.contains(Corrodes.ALL))
+        {
+            corrodibleBlocks.add(Blocks.stone);
+            corrodibleBlocks.add(Blocks.stone_pressure_plate);
+            corrodibleBlocks.add(Blocks.stone_button);
+            corrodibleBlocks.add(Blocks.stone);
+        }
+        if (corrosiveness.contains(Corrodes.WOOD) || corrosiveness.contains(Corrodes.ALL))
+        {
+            corrodibleBlocks.add(Blocks.log);
+            corrodibleBlocks.add(Blocks.planks);
+            corrodibleBlocks.add(Blocks.fence);
+            corrodibleBlocks.add(Blocks.fence_gate);
+        }
+    }
+
+    /**
      * Apply the gas's potion effects
      *
      * @param entity
@@ -123,7 +187,11 @@ public class BasicGasTileEntity extends BasicTileEntity
 
                     if (block != null)
                     {
-                        if (block.equals(Blocks.air))
+                        if (corrodibleBlocks.isEmpty())
+                        {
+                            updateCorrosiveness();
+                        }
+                        if (corrodibleBlocks.contains(block))
                         {
                             worldObj.setBlock(x, y, z, BlockRegistry.basicGas, diffusionCount - decrease, 3);
                             worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(Naming.basicGas, diffusionCount - decrease));
