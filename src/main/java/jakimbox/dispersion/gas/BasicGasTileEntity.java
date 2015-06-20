@@ -185,7 +185,7 @@ public class BasicGasTileEntity extends BasicTileEntity
             corrodibleBlocks.add(Blocks.sand);
             corrodibleBlocks.add(Blocks.clay);
         }
-        if (corrosiveness.contains(Corrodes.ORGANIC) || corrosiveness.contains(Corrodes.ALL))
+        if (corrosiveness.contains(Corrodes.VEGETATION) || corrosiveness.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.cactus);
             corrodibleBlocks.add(Blocks.deadbush);
