@@ -21,4 +21,7 @@ public abstract class BasicTileEntity extends TileEntity
     {
         return worldObj != null ? super.getBlockMetadata() : 0;
     }
+
+    @Override
+    public abstract void updateEntity();
 }

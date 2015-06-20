@@ -179,9 +179,6 @@ public abstract class BasicInventoryTileEntity extends BasicTileEntity implement
         inventory.setInventorySlotContents(slot, stack);
     }
 
-    @Override
-    public abstract void updateEntity();
-
     /**
      * Save data to NBT
      *
