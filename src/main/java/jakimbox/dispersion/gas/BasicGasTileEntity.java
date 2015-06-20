@@ -158,6 +158,7 @@ public class BasicGasTileEntity extends BasicTileEntity
             corrodibleBlocks.add(Blocks.coal_block);
             corrodibleBlocks.add(Blocks.coal_ore);
             corrodibleBlocks.add(Blocks.diamond_block);
+            corrodibleBlocks.add(Blocks.diamond_ore);
         }
         if (corrosiveness.contains(Corrodes.COBBLE) || corrosiveness.contains(Corrodes.ALL))
         {
@@ -186,9 +187,14 @@ public class BasicGasTileEntity extends BasicTileEntity
         }
         if (corrosiveness.contains(Corrodes.ORGANIC) || corrosiveness.contains(Corrodes.ALL))
         {
-            corrodibleBlocks.add(Blocks.tallgrass);
+            corrodibleBlocks.add(Blocks.cactus);
+            corrodibleBlocks.add(Blocks.deadbush);
+            corrodibleBlocks.add(Blocks.double_plant);
             corrodibleBlocks.add(Blocks.leaves);
             corrodibleBlocks.add(Blocks.leaves2);
+            corrodibleBlocks.add(Blocks.red_flower);
+            corrodibleBlocks.add(Blocks.tallgrass);
+            corrodibleBlocks.add(Blocks.yellow_flower);
         }
         if (corrosiveness.contains(Corrodes.STONE) || corrosiveness.contains(Corrodes.ALL))
         {
@@ -199,10 +205,20 @@ public class BasicGasTileEntity extends BasicTileEntity
         }
         if (corrosiveness.contains(Corrodes.WOOD) || corrosiveness.contains(Corrodes.ALL))
         {
-            corrodibleBlocks.add(Blocks.log);
-            corrodibleBlocks.add(Blocks.planks);
+            corrodibleBlocks.add(Blocks.acacia_stairs);
+            corrodibleBlocks.add(Blocks.birch_stairs);
+            corrodibleBlocks.add(Blocks.bookshelf);
+            corrodibleBlocks.add(Blocks.chest);
+            corrodibleBlocks.add(Blocks.crafting_table);
+            corrodibleBlocks.add(Blocks.dark_oak_stairs);
+            corrodibleBlocks.add(Blocks.double_wooden_slab);
             corrodibleBlocks.add(Blocks.fence);
             corrodibleBlocks.add(Blocks.fence_gate);
+            corrodibleBlocks.add(Blocks.lever);
+            corrodibleBlocks.add(Blocks.log);
+            corrodibleBlocks.add(Blocks.planks);
+            corrodibleBlocks.add(Blocks.trapdoor);
+            corrodibleBlocks.add(Blocks.trapped_chest);
         }
     }
 
