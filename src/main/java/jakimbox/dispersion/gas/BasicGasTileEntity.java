@@ -52,7 +52,7 @@ public class BasicGasTileEntity extends BasicTileEntity
         potionEffects.add(new PotionEffect(16, 2));
         setDiffusionCount(diffusionCount);
         resetRandomDiffuseTick();
-        corrosiveness.add(Corrodes.ALL);
+        corrosiveness.add(Corrodes.NONE);
 
         updateCorrosiveness();
     }
@@ -276,7 +276,7 @@ public class BasicGasTileEntity extends BasicTileEntity
                         {
                             int sideBlockMeta = worldObj.getBlockMetadata(x, y, z);
                             int blockMeta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-                            if (sideBlockMeta <= blockMeta - 2)
+                            if (sideBlockMeta < blockMeta - 1)
                             {
                                 setGas(xCoord, yCoord, zCoord, (blockMeta + sideBlockMeta) / 2);
                                 setGas(x, y, z, (blockMeta + sideBlockMeta) / 2);
