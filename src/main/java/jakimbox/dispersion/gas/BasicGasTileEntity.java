@@ -188,12 +188,18 @@ public class BasicGasTileEntity extends BasicTileEntity
         if (corrosiveness.contains(Corrodes.VEGETATION) || corrosiveness.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.cactus);
+            corrodibleBlocks.add(Blocks.carrots);
             corrodibleBlocks.add(Blocks.deadbush);
             corrodibleBlocks.add(Blocks.double_plant);
             corrodibleBlocks.add(Blocks.leaves);
             corrodibleBlocks.add(Blocks.leaves2);
+            corrodibleBlocks.add(Blocks.potatoes);
             corrodibleBlocks.add(Blocks.red_flower);
+            corrodibleBlocks.add(Blocks.reeds);
+            corrodibleBlocks.add(Blocks.sapling);
             corrodibleBlocks.add(Blocks.tallgrass);
+            corrodibleBlocks.add(Blocks.waterlily);
+            corrodibleBlocks.add(Blocks.wheat);
             corrodibleBlocks.add(Blocks.yellow_flower);
         }
         if (corrosiveness.contains(Corrodes.STONE) || corrosiveness.contains(Corrodes.ALL))
