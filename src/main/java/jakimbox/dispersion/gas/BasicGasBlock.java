@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 /**
@@ -118,6 +119,21 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     public boolean isOpaqueCube()
     {
         return false;
+    }
+
+    /**
+     * Allow block replacement
+     *
+     * @param world
+     * @param x
+     * @param y
+     * @param z
+     * @return true
+     */
+    @Override
+    public boolean isReplaceable(IBlockAccess world, int x, int y, int z)
+    {
+        return true;
     }
 
     /**
