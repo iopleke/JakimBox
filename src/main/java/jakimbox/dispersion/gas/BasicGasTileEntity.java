@@ -58,13 +58,54 @@ public class BasicGasTileEntity extends BasicTileEntity
     }
 
     /**
+     * Replace a block in a given direction with the gas
+     *
+     * @param direction
+     */
+    private void corrodeBlock(ForgeDirection direction)
+    {
+        int x = xCoord + direction.offsetX;
+        int y = yCoord + direction.offsetY;
+        int z = zCoord + direction.offsetZ;
+        int meta = Math.max(diffusionCount - decrease, min);
+        worldObj.setBlock(x, y, z, BlockRegistry.basicGas, meta, 3);
+        worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(Naming.basicGas, meta));
+    }
+
+    private void diffuseGas(int x, int y, int z)
+    {
+        int meta = Math.max(diffusionCount - decrease, min);
+        this.setGas(x, y, z, meta);
+    }
+
+    /**
+     * Equalize gas "pressure"
+     */
+    private void equalize()
+    {
+        if (diffusionCount > 0)
+        {
+            diffuseGas(xCoord, yCoord, zCoord);
+        } else
+        {
+            removeGas(xCoord, yCoord, zCoord);
+        }
+    }
+
+    private void removeGas(int x, int y, int z)
+    {
+        worldObj.setBlockToAir(x, y, z);
+        worldObj.setTileEntity(x, y, z, null);
+    }
+
+    /**
      * Reset the random diffusion tick
      *
      * @TODO add config for these values
      */
     private void resetRandomDiffuseTick()
     {
-        randomDiffuseTick = random.nextInt(15) + 20;
+        randomDiffuseTick = random.nextInt(15) + 5;
     }
 
     /**
@@ -84,6 +125,12 @@ public class BasicGasTileEntity extends BasicTileEntity
         {
             this.diffusionCount = max;
         }
+    }
+
+    private void setGas(int x, int y, int z, int meta)
+    {
+        worldObj.setBlock(x, y, z, BlockRegistry.basicGas, meta, 3);
+        worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(Naming.basicGas, meta));
     }
 
     /**
@@ -106,7 +153,12 @@ public class BasicGasTileEntity extends BasicTileEntity
         corrodibleBlocks.clear();
 
         corrodibleBlocks.add(Blocks.air);
-
+        if (corrosiveness.contains(Corrodes.CARBON) || corrosiveness.contains(Corrodes.ALL))
+        {
+            corrodibleBlocks.add(Blocks.coal_block);
+            corrodibleBlocks.add(Blocks.coal_ore);
+            corrodibleBlocks.add(Blocks.diamond_block);
+        }
         if (corrosiveness.contains(Corrodes.COBBLE) || corrosiveness.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.cobblestone);
@@ -120,6 +172,7 @@ public class BasicGasTileEntity extends BasicTileEntity
         }
         if (corrosiveness.contains(Corrodes.METAL) || corrosiveness.contains(Corrodes.ALL))
         {
+            corrodibleBlocks.add(Blocks.anvil);
             corrodibleBlocks.add(Blocks.iron_bars);
             corrodibleBlocks.add(Blocks.iron_block);
             corrodibleBlocks.add(Blocks.iron_door);
@@ -174,9 +227,9 @@ public class BasicGasTileEntity extends BasicTileEntity
         {
             syncDiffusionCount();
         }
-        if (diffusionCount > min && diffusionCount <= max)
+        if (this.randomDiffuseTick <= 0)
         {
-            if (this.randomDiffuseTick <= 0)
+            if (diffusionCount > min && diffusionCount <= max)
             {
                 for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
                 {
@@ -193,18 +246,31 @@ public class BasicGasTileEntity extends BasicTileEntity
                         }
                         if (corrodibleBlocks.contains(block))
                         {
-                            worldObj.setBlock(x, y, z, BlockRegistry.basicGas, diffusionCount - decrease, 3);
-                            worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(Naming.basicGas, diffusionCount - decrease));
+                            corrodeBlock(direction);
+                            equalize();
 
                             syncd = false;
+                        } else if (block.equals(BlockRegistry.basicGas))
+                        {
+                            int sideBlockMeta = worldObj.getBlockMetadata(x, y, z);
+                            int blockMeta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+                            if (sideBlockMeta <= blockMeta - 2)
+                            {
+                                setGas(xCoord, yCoord, zCoord, (blockMeta + sideBlockMeta) / 2);
+                                setGas(x, y, z, (blockMeta + sideBlockMeta) / 2);
+                            }
                         }
                     }
                 }
-                resetRandomDiffuseTick();
             } else
             {
-                this.randomDiffuseTick--;
+                removeGas(xCoord, yCoord, zCoord);
             }
+            resetRandomDiffuseTick();
+        } else
+        {
+            this.randomDiffuseTick--;
         }
+
     }
 }
