@@ -7,5 +7,5 @@ package jakimbox.reference;
  */
 public enum Corrodes
 {
-    ALL, COBBLE, DIRT, METAL, MINERAL, NONE, ORGANIC, STONE, WOOD,
+    ALL, CARBON, COBBLE, DIRT, METAL, MINERAL, NONE, ORGANIC, STONE, WOOD,
 }
