@@ -3,6 +3,7 @@ package jakimbox.dispersion.gas;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import jakimbox.JakimBox;
+import jakimbox.helper.LogHelper;
 import jakimbox.prefab.block.BasicBlock;
 import jakimbox.proxy.CommonProxyBase;
 import jakimbox.reference.Naming;
@@ -127,13 +128,7 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
         if (tileEntity instanceof BasicGasTileEntity)
         {
             int meta = world.getBlockMetadata(x, y, z);
-            if (meta > 0)
-            {
-                world.setBlockMetadataWithNotify(x, y, z, meta - 1, 2);
-            } else
-            {
-                world.setBlockMetadataWithNotify(x, y, z, 15, 2);
-            }
+            LogHelper.info("Block meta is " + meta);
         }
         return false;
     }
