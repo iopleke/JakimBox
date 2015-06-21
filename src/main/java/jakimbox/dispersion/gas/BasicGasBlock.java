@@ -74,6 +74,27 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     }
 
     /**
+     *
+     * @param blockAccess
+     * @param x
+     * @param y
+     * @param z
+     * @param side
+     * @return
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side)
+    {
+//        Block block = blockAccess.getBlock(x, y, z);
+//        if (block instanceof BasicGasBlock)
+//        {
+//            return false;
+//        }
+        return super.shouldSideBeRendered(blockAccess, x, y, z, side);
+    }
+
+    /**
      * Returns block texture based on meta
      *
      * @param side
