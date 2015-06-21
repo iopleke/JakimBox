@@ -293,11 +293,23 @@ public class BasicGasTileEntity extends BasicTileEntity
                         {
                             int sideBlockMeta = worldObj.getBlockMetadata(x, y, z);
                             int blockMeta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+                            // @TODO - make high frequency gas block updates a config option
+//                            if (sideBlockMeta < blockMeta)
+//                            {
+//                                setGas(xCoord, yCoord, zCoord, blockMeta - 1);
+//                                setGas(x, y, z, sideBlockMeta + 1);
+//                            }
                             if (sideBlockMeta < blockMeta - 1)
                             {
-                                setGas(xCoord, yCoord, zCoord, (blockMeta + sideBlockMeta) / 2);
-                                setGas(x, y, z, (blockMeta + sideBlockMeta) / 2);
+                                int newMeta = Math.round((blockMeta + sideBlockMeta) / 2);
+                                setGas(xCoord, yCoord, zCoord, newMeta);
+                                setGas(x, y, z, newMeta);
                             }
+//                            else if (sideBlockMeta <= min && sideBlockMeta < blockMeta)
+//                            {
+//                                setGas(xCoord, yCoord, zCoord, blockMeta - 1);
+//                                setGas(x, y, z, sideBlockMeta + 1);
+//                            }
                         }
                     }
                 }
