@@ -24,6 +24,7 @@ public class BasicGasTileEntity extends BasicTileEntity
     private static final int decrease = 1;
     private static final int max = 15;
     private static final int min = 2;
+    private int buoyancy = 0;
     private List<Corrodes> corrosiveness = new ArrayList<Corrodes>();
     private int diffusionCount;
     private Random random = new Random();
@@ -53,7 +54,6 @@ public class BasicGasTileEntity extends BasicTileEntity
         setDiffusionCount(diffusionCount);
         resetRandomDiffuseTick();
         corrosiveness.add(Corrodes.NONE);
-
         updateCorrosiveness();
     }
 
@@ -242,6 +242,16 @@ public class BasicGasTileEntity extends BasicTileEntity
         }
     }
 
+    /**
+     * Set gas buoyancy relative to air, zero is neutral
+     *
+     * @param buoyancy -1 for heavier, 1 for lighter, 0 for neutral
+     */
+    public void setBuoyancy(int buoyancy)
+    {
+        this.buoyancy = buoyancy;
+    }
+
     @Override
     public void updateEntity()
     {
@@ -255,6 +265,13 @@ public class BasicGasTileEntity extends BasicTileEntity
             {
                 for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
                 {
+                    if (buoyancy > 0 && direction == ForgeDirection.DOWN)
+                    {
+                        continue;
+                    } else if (buoyancy < 0 && direction == ForgeDirection.UP)
+                    {
+                        continue;
+                    }
                     int x = xCoord + direction.offsetX;
                     int y = yCoord + direction.offsetY;
                     int z = zCoord + direction.offsetZ;
