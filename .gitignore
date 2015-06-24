@@ -12,7 +12,6 @@
 *.json
 *.log
 *.py
-*.sh
 *.txt
 *.xml
 .cache
