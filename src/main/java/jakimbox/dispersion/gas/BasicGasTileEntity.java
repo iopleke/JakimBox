@@ -21,40 +21,58 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public class BasicGasTileEntity extends BasicTileEntity
 {
-    private static final int decrease = 1;
-    private static final int max = 15;
-    private static final int min = 2;
-    private int buoyancy = 0;
-    private List<Corrodes> corrosiveness = new ArrayList<Corrodes>();
-    private int diffusionCount;
+    private int buoyancy;
+    private final int decrease = 1;
+    private int radius;
+    private int radiusCount;
+    private final int radiusMax = 15;
+    private final int radiusMin = 0;
     private Random random = new Random();
     private int randomDiffuseTick;
-    private boolean syncd;
+    private boolean syncd = false;
+    private final int updateTickMin = 20;
+    private final int updateTickRandom = 35;
 
+    public ArrayList<Corrodes> corrodes = new ArrayList<Corrodes>();
     public List<Block> corrodibleBlocks = new ArrayList<Block>();
     public List<PotionEffect> potionEffects = new ArrayList<PotionEffect>();
 
     public BasicGasTileEntity()
     {
-        this(Naming.basicGas, max);
-        syncd = false;
+        this(Naming.basicGas, 15, 15, 0, new ArrayList<Corrodes>());
+    }
+
+    public BasicGasTileEntity(BasicGasTileEntity tileEntity)
+    {
+        this(Naming.basicGas, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getCorrodes());
     }
 
     /**
      * Create a new TileEntity instance
      *
      * @param gasName
-     * @param diffusionCount
+     * @param radius
+     * @param radiusCount
+     * @param buoyancy
+     * @param corrodes
      */
-    public BasicGasTileEntity(String gasName, int diffusionCount)
+    public BasicGasTileEntity(String gasName, int radius, int radiusCount, int buoyancy, ArrayList<Corrodes> corrodes)
     {
         super(gasName);
 
-        potionEffects.add(new PotionEffect(16, 2));
-        setDiffusionCount(diffusionCount);
+        this.buoyancy = buoyancy;
+        this.radius = radius;
+        if (corrodes.isEmpty())
+        {
+            corrodes.add(Corrodes.NONE);
+        }
+        this.corrodes = corrodes;
+        this.radiusCount = radiusCount;
+
         resetRandomDiffuseTick();
-        corrosiveness.add(Corrodes.NONE);
         updateCorrosiveness();
+
+        potionEffects.add(new PotionEffect(16, 2));
     }
 
     /**
@@ -67,15 +85,19 @@ public class BasicGasTileEntity extends BasicTileEntity
         int x = xCoord + direction.offsetX;
         int y = yCoord + direction.offsetY;
         int z = zCoord + direction.offsetZ;
-        int meta = Math.max(diffusionCount - decrease, min);
-        worldObj.setBlock(x, y, z, BlockRegistry.basicGas, meta, 3);
-        worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(Naming.basicGas, meta));
+
+        worldObj.setBlock(x, y, z, BlockRegistry.basicGas, getAdjustedMeta(), 3);
+        worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(this));
+    }
+
+    private int getAdjustedMeta()
+    {
+        return Math.max(getRadiusCount() - getDecrease(), radiusMin);
     }
 
     private void diffuseGas(int x, int y, int z)
     {
-        int meta = Math.max(diffusionCount - decrease, min);
-        this.setGas(x, y, z, meta);
+        this.setGas(x, y, z, getAdjustedMeta());
     }
 
     /**
@@ -83,7 +105,7 @@ public class BasicGasTileEntity extends BasicTileEntity
      */
     private void equalize()
     {
-        if (diffusionCount > 0)
+        if (radiusCount > radiusMin)
         {
             diffuseGas(xCoord, yCoord, zCoord);
         } else
@@ -105,32 +127,14 @@ public class BasicGasTileEntity extends BasicTileEntity
      */
     private void resetRandomDiffuseTick()
     {
-        randomDiffuseTick = random.nextInt(15) + 5;
-    }
-
-    /**
-     * Set the diffusion count from any given int
-     *
-     * @param diffusionCount
-     */
-    private void setDiffusionCount(int diffusionCount)
-    {
-        if (diffusionCount >= min && diffusionCount <= max)
-        {
-            this.diffusionCount = diffusionCount;
-        } else if (diffusionCount < min)
-        {
-            this.diffusionCount = min;
-        } else if (diffusionCount > max)
-        {
-            this.diffusionCount = max;
-        }
+        randomDiffuseTick = random.nextInt(updateTickRandom) + updateTickMin;
     }
 
     private void setGas(int x, int y, int z, int meta)
     {
-        worldObj.setBlock(x, y, z, BlockRegistry.basicGas, meta, 3);
-        worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(Naming.basicGas, meta));
+        int updateTypeFlag = 3;
+        worldObj.setBlock(x, y, z, BlockRegistry.basicGas, meta, updateTypeFlag);
+        worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(this));
     }
 
     /**
@@ -138,7 +142,7 @@ public class BasicGasTileEntity extends BasicTileEntity
      */
     private void syncDiffusionCount()
     {
-        diffusionCount = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        radiusCount = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
         syncd = true;
     }
 
@@ -153,25 +157,25 @@ public class BasicGasTileEntity extends BasicTileEntity
         corrodibleBlocks.clear();
 
         corrodibleBlocks.add(Blocks.air);
-        if (corrosiveness.contains(Corrodes.CARBON) || corrosiveness.contains(Corrodes.ALL))
+        if (corrodes.contains(Corrodes.CARBON) || corrodes.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.coal_block);
             corrodibleBlocks.add(Blocks.coal_ore);
             corrodibleBlocks.add(Blocks.diamond_block);
             corrodibleBlocks.add(Blocks.diamond_ore);
         }
-        if (corrosiveness.contains(Corrodes.COBBLE) || corrosiveness.contains(Corrodes.ALL))
+        if (corrodes.contains(Corrodes.COBBLE) || corrodes.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.cobblestone);
             corrodibleBlocks.add(Blocks.cobblestone_wall);
             corrodibleBlocks.add(Blocks.stone_stairs);
         }
-        if (corrosiveness.contains(Corrodes.DIRT) || corrosiveness.contains(Corrodes.ALL))
+        if (corrodes.contains(Corrodes.DIRT) || corrodes.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.dirt);
             corrodibleBlocks.add(Blocks.grass);
         }
-        if (corrosiveness.contains(Corrodes.METAL) || corrosiveness.contains(Corrodes.ALL))
+        if (corrodes.contains(Corrodes.METAL) || corrodes.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.anvil);
             corrodibleBlocks.add(Blocks.iron_bars);
@@ -179,13 +183,13 @@ public class BasicGasTileEntity extends BasicTileEntity
             corrodibleBlocks.add(Blocks.iron_door);
             corrodibleBlocks.add(Blocks.iron_ore);
         }
-        if (corrosiveness.contains(Corrodes.MINERAL) || corrosiveness.contains(Corrodes.ALL))
+        if (corrodes.contains(Corrodes.MINERAL) || corrodes.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.gravel);
             corrodibleBlocks.add(Blocks.sand);
             corrodibleBlocks.add(Blocks.clay);
         }
-        if (corrosiveness.contains(Corrodes.VEGETATION) || corrosiveness.contains(Corrodes.ALL))
+        if (corrodes.contains(Corrodes.VEGETATION) || corrodes.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.cactus);
             corrodibleBlocks.add(Blocks.carrots);
@@ -202,14 +206,14 @@ public class BasicGasTileEntity extends BasicTileEntity
             corrodibleBlocks.add(Blocks.wheat);
             corrodibleBlocks.add(Blocks.yellow_flower);
         }
-        if (corrosiveness.contains(Corrodes.STONE) || corrosiveness.contains(Corrodes.ALL))
+        if (corrodes.contains(Corrodes.STONE) || corrodes.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.stone);
             corrodibleBlocks.add(Blocks.stone_pressure_plate);
             corrodibleBlocks.add(Blocks.stone_button);
             corrodibleBlocks.add(Blocks.stone);
         }
-        if (corrosiveness.contains(Corrodes.WOOD) || corrosiveness.contains(Corrodes.ALL))
+        if (corrodes.contains(Corrodes.WOOD) || corrodes.contains(Corrodes.ALL))
         {
             corrodibleBlocks.add(Blocks.acacia_stairs);
             corrodibleBlocks.add(Blocks.birch_stairs);
@@ -243,6 +247,56 @@ public class BasicGasTileEntity extends BasicTileEntity
     }
 
     /**
+     * Get the gas buoyancy
+     *
+     * @return buoyancy
+     */
+    public int getBuoyancy()
+    {
+        return buoyancy;
+    }
+
+    /**
+     * Get the gas corrodes list
+     *
+     * @return corrodes
+     */
+    public ArrayList<Corrodes> getCorrodes()
+    {
+        return corrodes;
+    }
+
+    /**
+     * Get the gas radius decrease
+     *
+     * @return decrease
+     */
+    public int getDecrease()
+    {
+        return decrease;
+    }
+
+    /**
+     * Get the gas diffusion radius
+     *
+     * @return radius
+     */
+    public int getRadius()
+    {
+        return radius;
+    }
+
+    /**
+     * Get the gas radius decrease
+     *
+     * @return decrease
+     */
+    public int getRadiusCount()
+    {
+        return radiusCount;
+    }
+
+    /**
      * Set gas buoyancy relative to air, zero is neutral
      *
      * @param buoyancy -1 for heavier, 1 for lighter, 0 for neutral
@@ -261,7 +315,7 @@ public class BasicGasTileEntity extends BasicTileEntity
         }
         if (this.randomDiffuseTick <= 0)
         {
-            if (diffusionCount > min && diffusionCount <= max)
+            if (radiusCount > radiusMin && radiusCount <= radiusMax)
             {
                 for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
                 {
@@ -272,6 +326,7 @@ public class BasicGasTileEntity extends BasicTileEntity
                     {
                         continue;
                     }
+
                     int x = xCoord + direction.offsetX;
                     int y = yCoord + direction.offsetY;
                     int z = zCoord + direction.offsetZ;
