@@ -19,7 +19,7 @@ public class JakimBox
 {
     public static final String modID = "jakimbox";
     public static final String prettyName = "Jakim In A Box";
-    public static final String version = "@MAJOR@.@MINOR@";
+    public static final String version = "@MAJOR@.@MINOR@.@BUILD@";
 
     @Mod.Metadata(JakimBox.modID)
     public static ModMetadata metadata;
