@@ -41,7 +41,7 @@ public class JakimBox
     {
         meta.modId = JakimBox.modID;
         meta.name = JakimBox.prettyName;
-        meta.description = meta.name + ": I got tired of re-creating a Block/TileEntity/Item framework for every single mod I worked on. So I made this.";
+        meta.description = "I got tired of re-creating a Block/TileEntity/Item framework for every single mod I worked on. So I made this.";
         meta.url = "https://github.com/jakimfett/JakimBox";
         meta.logoFile = "assets/" + JakimBox.modID + "/logo.png";
         meta.version = JakimBox.version;
