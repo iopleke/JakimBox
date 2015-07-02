@@ -1,5 +1,6 @@
 package jakimbox.dispersion.gas;
 
+import jakimbox.Config;
 import jakimbox.prefab.tileEntity.BasicTileEntity;
 import jakimbox.reference.Corrodes;
 import jakimbox.reference.Naming;
@@ -22,7 +23,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class BasicGasTileEntity extends BasicTileEntity
 {
     private int buoyancy;
-    private final int decrease = 1;
     private int radius;
     private int radiusCount;
     private final int radiusMax = 15;
@@ -273,7 +273,7 @@ public class BasicGasTileEntity extends BasicTileEntity
      */
     public int getDecrease()
     {
-        return decrease;
+        return Config.gasDiffusionRate;
     }
 
     /**
