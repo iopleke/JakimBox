@@ -27,8 +27,6 @@ public class BasicGasTileEntity extends BasicTileEntity
     private int radiusCount;
     private int randomDiffuseTick;
     private boolean syncd = false;
-    private final int updateTickMin = 20;
-    private final int updateTickRandom = 35;
 
     public ArrayList<Corrodes> corrodes = new ArrayList<Corrodes>();
     public List<Block> corrodibleBlocks = new ArrayList<Block>();
@@ -124,7 +122,7 @@ public class BasicGasTileEntity extends BasicTileEntity
      */
     private void resetRandomDiffuseTick()
     {
-        randomDiffuseTick = JakimBox.random.nextInt(updateTickRandom) + updateTickMin;
+        randomDiffuseTick = JakimBox.random.nextInt(Config.gasUpdateTickRandom) + Config.gasUpdateTickMin;
     }
 
     private void setGas(int x, int y, int z, int meta)

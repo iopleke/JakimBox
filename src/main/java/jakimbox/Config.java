@@ -20,4 +20,8 @@ public class Config
     // Maximum and minimum distance from source block for gas diffusion mechanic
     public static int gasDiffusionRadiusMax = 16;
     public static int gasDiffusionRadiusMin = 0;
+
+    // Tick minimum and maximum random value for gas updates
+    public static int gasUpdateTickMin = 20;
+    public static int gasUpdateTickRandom = 35;
 }
