@@ -1,6 +1,7 @@
 package jakimbox.dispersion.gas;
 
 import jakimbox.Config;
+import jakimbox.JakimBox;
 import jakimbox.prefab.tileEntity.BasicTileEntity;
 import jakimbox.reference.Corrodes;
 import jakimbox.reference.Naming;
@@ -8,7 +9,6 @@ import jakimbox.registry.BlockRegistry;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
@@ -25,7 +25,6 @@ public class BasicGasTileEntity extends BasicTileEntity
     private int buoyancy;
     private int radius;
     private int radiusCount;
-    private Random random = new Random();
     private int randomDiffuseTick;
     private boolean syncd = false;
     private final int updateTickMin = 20;
@@ -125,7 +124,7 @@ public class BasicGasTileEntity extends BasicTileEntity
      */
     private void resetRandomDiffuseTick()
     {
-        randomDiffuseTick = random.nextInt(updateTickRandom) + updateTickMin;
+        randomDiffuseTick = JakimBox.random.nextInt(updateTickRandom) + updateTickMin;
     }
 
     private void setGas(int x, int y, int z, int meta)
