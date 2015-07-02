@@ -25,8 +25,6 @@ public class BasicGasTileEntity extends BasicTileEntity
     private int buoyancy;
     private int radius;
     private int radiusCount;
-    private final int radiusMax = 15;
-    private final int radiusMin = 0;
     private Random random = new Random();
     private int randomDiffuseTick;
     private boolean syncd = false;
@@ -92,7 +90,7 @@ public class BasicGasTileEntity extends BasicTileEntity
 
     private int getAdjustedMeta()
     {
-        return Math.max(getRadiusCount() - getDecrease(), radiusMin);
+        return Math.max(getRadiusCount() - getDecrease(), Config.gasDiffusionRadiusMin);
     }
 
     private void diffuseGas(int x, int y, int z)
@@ -105,7 +103,7 @@ public class BasicGasTileEntity extends BasicTileEntity
      */
     private void equalize()
     {
-        if (radiusCount > radiusMin)
+        if (radiusCount > Config.gasDiffusionRadiusMin)
         {
             diffuseGas(xCoord, yCoord, zCoord);
         } else
@@ -315,7 +313,7 @@ public class BasicGasTileEntity extends BasicTileEntity
         }
         if (this.randomDiffuseTick <= 0)
         {
-            if (radiusCount > radiusMin && radiusCount <= radiusMax)
+            if (radiusCount > Config.gasDiffusionRadiusMin && radiusCount <= Config.gasDiffusionRadiusMax)
             {
                 for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
                 {

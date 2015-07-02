@@ -16,4 +16,8 @@ public class Config
 
     // Adjust the diffusion rate of gases
     public static int gasDiffusionRate = 3;
+
+    // Maximum and minimum distance from source block for gas diffusion mechanic
+    public static int gasDiffusionRadiusMax = 16;
+    public static int gasDiffusionRadiusMin = 0;
 }
