@@ -32,6 +32,7 @@ public class JakimBox
     {
         BlockRegistry.init();
         CreativeTabRegistry.init();
+        Config.init();
     }
 
     @Mod.EventHandler
