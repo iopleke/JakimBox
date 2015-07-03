@@ -4,3 +4,21 @@ language.region=US
 language.code=en_US
 
 tile.basicGas.name=Null Gass (Test Block)
+
+config.general.description=General configuration options
+config.debugging.description=Debugging and extra logging options
+config.gases.description=Config options for gases
+
+config.debugging.debugMode.description=Enable all hidden warning, error, and value printouts
+config.debugging.debugMode.name=Enable debug mode
+
+config.gases.gasDiffusionRate.description=How fast the gas disperses into the air
+config.gases.gasDiffusionRate.name=Gas diffusion rate
+config.gases.gasDiffusionRadiusMax.description=How far will gas spread from a source block
+config.gases.gasDiffusionRadiusMax.name=Gas diffusion max
+config.gases.gasUpdateTickMin.description=Minimum number of ticks between gas updates. 
+config.gases.gasUpdateTickMin.explanation=Increase to improve performance at the cost of slower gas diffusion.
+config.gases.gasUpdateTickMin.name=Gas update minimum
+config.gases.gasUpdateTickRandom.description=A random number between 0 and this number will be added to the gasUpdateTickMin. 
+config.gases.gasUpdateTickRandom.explanation=Increase to slightly improve performance at the cost of more erratic gas diffusion
+config.gases.gasUpdateTickRandom.name=Gas random max value
