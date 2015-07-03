@@ -28,8 +28,12 @@ public class BasicGasTileEntity extends BasicTileEntity
     private int randomDiffuseTick;
     private boolean syncd = false;
 
+    /**
+     * @TODO - move corrosion registry to gas block registration class
+     */
     public ArrayList<Corrodes> corrodes = new ArrayList<Corrodes>();
     public List<Block> corrodibleBlocks = new ArrayList<Block>();
+
     public List<PotionEffect> potionEffects = new ArrayList<PotionEffect>();
 
     public BasicGasTileEntity()
