@@ -23,6 +23,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class BasicGasTileEntity extends BasicTileEntity
 {
     private int buoyancy;
+    private int density;
+    private int densityMax;
     private int radius;
     private int radiusCount;
     private int randomDiffuseTick;
@@ -38,12 +40,12 @@ public class BasicGasTileEntity extends BasicTileEntity
 
     public BasicGasTileEntity()
     {
-        this(Naming.basicGas, 15, 15, 0, new ArrayList<Corrodes>());
+        this(Naming.basicGas, 15, 15, 160, 0, new ArrayList<Corrodes>());
     }
 
     public BasicGasTileEntity(BasicGasTileEntity tileEntity)
     {
-        this(Naming.basicGas, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getCorrodes());
+        this(Naming.basicGas, tileEntity.getRadius(), tileEntity.getRadiusCount() - 1, tileEntity.getDensity() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getCorrodes());
     }
 
     /**
@@ -54,8 +56,9 @@ public class BasicGasTileEntity extends BasicTileEntity
      * @param radiusCount
      * @param buoyancy
      * @param corrodes
+     * @param density
      */
-    public BasicGasTileEntity(String gasName, int radius, int radiusCount, int buoyancy, ArrayList<Corrodes> corrodes)
+    public BasicGasTileEntity(String gasName, int radius, int radiusCount, int buoyancy, int density, ArrayList<Corrodes> corrodes)
     {
         super(gasName);
 
@@ -67,6 +70,8 @@ public class BasicGasTileEntity extends BasicTileEntity
         }
         this.corrodes = corrodes;
         this.radiusCount = radiusCount;
+
+        densityMax = 160;
 
         resetRandomDiffuseTick();
         updateCorrosiveness();
@@ -111,6 +116,16 @@ public class BasicGasTileEntity extends BasicTileEntity
         {
             removeGas(xCoord, yCoord, zCoord);
         }
+    }
+
+    private int getDensity()
+    {
+        return density;
+    }
+
+    private int getDensityMax()
+    {
+        return densityMax;
     }
 
     private void removeGas(int x, int y, int z)
