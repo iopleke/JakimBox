@@ -3,6 +3,7 @@ package jakimbox.dispersion.gas;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import jakimbox.JakimBox;
+import jakimbox.helper.ColorHelper;
 import jakimbox.helper.LogHelper;
 import jakimbox.prefab.block.BasicBlock;
 import jakimbox.proxy.CommonProxyBase;
@@ -74,6 +75,35 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     }
 
     /**
+     * Get the color for in-world rendering of the gas block
+     *
+     * @param world
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public int colorMultiplier(IBlockAccess world, int x, int y, int z)
+    {
+        return ColorHelper.getHexColorFromMeta(world.getBlockMetadata(x, y, z));
+    }
+
+    /**
+     * Color for inventory rendering
+     *
+     * @param meta
+     * @return
+     */
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getRenderColor(int meta)
+    {
+        return ColorHelper.getHexColorFromMeta(meta);
+    }
+
+    /**
      *
      * @param blockAccess
      * @param x
@@ -82,8 +112,8 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
      * @param side
      * @return
      */
-    @SideOnly(Side.CLIENT)
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side)
     {
 //        Block block = blockAccess.getBlock(x, y, z);
@@ -105,6 +135,7 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta)
     {
+        // @TODO - use density instead of meta value
         return blockIconArray[meta];
     }
 
