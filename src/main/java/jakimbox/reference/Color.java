@@ -33,7 +33,7 @@ public class Color
     /**
      * True color for rendering objects
      */
-    public static final class RenderColor
+    public static final class TrueColor
     {
         public static final int BLACK = -16777216;
         public static final int BLUE = -16776961;
@@ -47,5 +47,28 @@ public class Color
         public static final int TRANSPARENT = 0;
         public static final int WHITE = -1;
         public static final int YELLOW = -256;
+    }
+
+    /**
+     * Hex colors
+     */
+    public static final class HexColor
+    {
+        public static final int BLACK = 0x000000;
+        public static final int BLUE = 0x0000FF;
+        public static final int CYAN = 0x00FFFF;
+        public static final int DARKGREY = 0x696969;
+        public static final int GREEN = 0x00FF00;
+        public static final int GREY = 0xBEBEBE;
+        public static final int KHAKI = 0x808000;
+        public static final int LIGHTGREY = 0xC9C9C9;
+        public static final int MAGENTA = 0x65281;
+        public static final int MAROON = 0x773300;
+        public static final int PINK = 0xFF1493;
+        public static final int PURPLE = 0x700A99;
+        public static final int RED = 0xFF0000;
+        public static final int SALMON = 0xFA8072;
+        public static final int WHITE = 0x000000;
+        public static final int YELLOW = 0xFFFF00;
     }
 }
