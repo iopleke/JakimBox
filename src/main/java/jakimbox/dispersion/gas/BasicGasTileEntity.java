@@ -23,9 +23,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class BasicGasTileEntity extends BasicTileEntity
 {
     private int buoyancy;
-    private int density;
-    private int densityMax;
-    private int distanceToSource;
+    private int radius;
+    private int radiusCount;
     private int randomDiffuseTick;
     private boolean syncd = false;
 
@@ -44,31 +43,30 @@ public class BasicGasTileEntity extends BasicTileEntity
 
     public BasicGasTileEntity(BasicGasTileEntity tileEntity)
     {
-        this(Naming.basicGas, tileEntity.getBuoyancy(), tileEntity.getDistanceToSource(), tileEntity.getAdjustedDensity(), tileEntity.getCorrodes());
+        this(Naming.basicGas, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getCorrodes());
     }
 
     /**
      * Create a new TileEntity instance
      *
      * @param gasName
+     * @param radius
+     * @param radiusCount
      * @param buoyancy
-     * @param distanceToSource
      * @param corrodes
-     * @param density
      */
-    public BasicGasTileEntity(String gasName, int buoyancy, int distanceToSource, int density, ArrayList<Corrodes> corrodes)
+    public BasicGasTileEntity(String gasName, int radius, int radiusCount, int buoyancy, ArrayList<Corrodes> corrodes)
     {
         super(gasName);
 
         this.buoyancy = buoyancy;
+        this.radius = radius;
         if (corrodes.isEmpty())
         {
             corrodes.add(Corrodes.NONE);
         }
         this.corrodes = corrodes;
-        this.distanceToSource = distanceToSource;
-
-        densityMax = 160;
+        this.radiusCount = radiusCount;
 
         resetRandomDiffuseTick();
         updateCorrosiveness();
@@ -87,13 +85,18 @@ public class BasicGasTileEntity extends BasicTileEntity
         int y = yCoord + direction.offsetY;
         int z = zCoord + direction.offsetZ;
 
-        worldObj.setBlock(x, y, z, BlockRegistry.basicGas, getMetaForBlock(), 3);
+        worldObj.setBlock(x, y, z, BlockRegistry.basicGas, getAdjustedMeta(), 3);
         worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(this));
+    }
+
+    private int getAdjustedMeta()
+    {
+        return Math.max(getRadiusCount() - getDecrease(), Config.gasDiffusionRadiusMin);
     }
 
     private void diffuseGas(int x, int y, int z)
     {
-        this.setGas(x, y, z, getMetaForBlock());
+        this.setGas(x, y, z, getAdjustedMeta());
     }
 
     /**
@@ -101,39 +104,13 @@ public class BasicGasTileEntity extends BasicTileEntity
      */
     private void equalize()
     {
-        if (distanceToSource <= Config.gasDiffusionRadiusMax)
+        if (radiusCount > Config.gasDiffusionRadiusMin)
         {
             diffuseGas(xCoord, yCoord, zCoord);
         } else
         {
             removeGas(xCoord, yCoord, zCoord);
         }
-    }
-
-    private int getAdjustedDensity()
-    {
-        return this.density - Config.gasDiffusionRate;
-    }
-
-    private int getDensity()
-    {
-        return density;
-    }
-
-    private int getDensityMax()
-    {
-        return densityMax;
-    }
-
-    private int getDistanceToSource()
-    {
-        return distanceToSource;
-    }
-
-    private int getMetaForBlock()
-    {
-        int adjustedMeta = (density / densityMax) * Config.gasDiffusionRadiusMax;
-        return adjustedMeta;
     }
 
     private void removeGas(int x, int y, int z)
@@ -164,8 +141,7 @@ public class BasicGasTileEntity extends BasicTileEntity
      */
     private void syncDiffusionCount()
     {
-        // @TODO - send a custom packet here to sync the server and client TileEntities
-        //radiusCount = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+        radiusCount = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
         syncd = true;
     }
 
@@ -300,6 +276,26 @@ public class BasicGasTileEntity extends BasicTileEntity
     }
 
     /**
+     * Get the gas diffusion radius
+     *
+     * @return radius
+     */
+    public int getRadius()
+    {
+        return radius;
+    }
+
+    /**
+     * Get the gas radius decrease
+     *
+     * @return decrease
+     */
+    public int getRadiusCount()
+    {
+        return radiusCount;
+    }
+
+    /**
      * Set gas buoyancy relative to air, zero is neutral
      *
      * @param buoyancy -1 for heavier, 1 for lighter, 0 for neutral
@@ -312,14 +308,13 @@ public class BasicGasTileEntity extends BasicTileEntity
     @Override
     public void updateEntity()
     {
-        removeGas(xCoord, yCoord, zCoord);
         if (!syncd)
         {
             syncDiffusionCount();
         }
         if (this.randomDiffuseTick <= 0)
         {
-            if (distanceToSource >= Config.gasDiffusionRadiusMin && distanceToSource <= Config.gasDiffusionRadiusMax)
+            if (radiusCount > Config.gasDiffusionRadiusMin && radiusCount <= Config.gasDiffusionRadiusMax)
             {
                 for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
                 {
