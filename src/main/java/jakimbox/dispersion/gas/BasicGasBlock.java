@@ -9,13 +9,16 @@ import jakimbox.prefab.block.BasicBlock;
 import jakimbox.proxy.CommonProxyBase;
 import jakimbox.reference.Naming;
 import jakimbox.registry.CreativeTabRegistry;
+import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -101,6 +104,23 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     public int getRenderColor(int meta)
     {
         return ColorHelper.getHexColorFromMeta(meta);
+    }
+
+    /**
+     * Add sub blocks for creative menu
+     *
+     * @param item
+     * @param creativeTab
+     * @param blockList
+     */
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item item, CreativeTabs creativeTab, List blockList)
+    {
+        for (int i = 0; i < 16; ++i)
+        {
+            blockList.add(new ItemStack(item, 1, i));
+        }
     }
 
     /**
