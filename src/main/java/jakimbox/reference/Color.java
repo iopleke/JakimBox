@@ -39,8 +39,8 @@ public class Color
         public static final int BLUE = -16776961;
         public static final int CYAN = -16711681;
         public static final int DARKGREY = -12303292;
-        public static final int GREY = -7829368;
         public static final int GREEN = -16711936;
+        public static final int GREY = -7829368;
         public static final int LIGHTGREY = -3355444;
         public static final int MAGENTA = -65281;
         public static final int RED = -65536;
