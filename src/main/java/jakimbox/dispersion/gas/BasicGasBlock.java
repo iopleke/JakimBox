@@ -56,6 +56,22 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
         return false;
     }
 
+    /**
+     * Get the color for in-world rendering of the gas block
+     *
+     * @param world
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
+    @SideOnly(Side.CLIENT)
+    @Override
+    public int colorMultiplier(IBlockAccess world, int x, int y, int z)
+    {
+        return ColorHelper.getHexColorFromMeta(world.getBlockMetadata(x, y, z));
+    }
+
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
@@ -75,73 +91,6 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
     {
         return null;
-    }
-
-    /**
-     * Get the color for in-world rendering of the gas block
-     *
-     * @param world
-     * @param x
-     * @param y
-     * @param z
-     * @return
-     */
-    @SideOnly(Side.CLIENT)
-    @Override
-    public int colorMultiplier(IBlockAccess world, int x, int y, int z)
-    {
-        return ColorHelper.getHexColorFromMeta(world.getBlockMetadata(x, y, z));
-    }
-
-    /**
-     * Color for inventory rendering
-     *
-     * @param meta
-     * @return
-     */
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderColor(int meta)
-    {
-        return ColorHelper.getHexColorFromMeta(meta);
-    }
-
-    /**
-     * Add sub blocks for creative menu
-     *
-     * @param item
-     * @param creativeTab
-     * @param blockList
-     */
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs creativeTab, List blockList)
-    {
-        for (int i = 0; i < 16; ++i)
-        {
-            blockList.add(new ItemStack(item, 1, i));
-        }
-    }
-
-    /**
-     *
-     * @param blockAccess
-     * @param x
-     * @param y
-     * @param z
-     * @param side
-     * @return
-     */
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side)
-    {
-//        Block block = blockAccess.getBlock(x, y, z);
-//        if (block instanceof BasicGasBlock)
-//        {
-//            return false;
-//        }
-        return super.shouldSideBeRendered(blockAccess, x, y, z, side);
     }
 
     /**
@@ -172,6 +121,19 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     }
 
     /**
+     * Color for inventory rendering
+     *
+     * @param meta
+     * @return
+     */
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getRenderColor(int meta)
+    {
+        return ColorHelper.getHexColorFromMeta(meta);
+    }
+
+    /**
      * Get the render type
      *
      * @return render ID from the CommonProxy
@@ -180,6 +142,23 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     public int getRenderType()
     {
         return CommonProxyBase.RENDER_ID;
+    }
+
+    /**
+     * Add sub blocks for creative menu
+     *
+     * @param item
+     * @param creativeTab
+     * @param blockList
+     */
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item item, CreativeTabs creativeTab, List blockList)
+    {
+        for (int i = 0; i < 16; ++i)
+        {
+            blockList.add(new ItemStack(item, 1, i));
+        }
     }
 
     /**
@@ -297,5 +276,26 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     public boolean renderAsNormalBlock()
     {
         return false;
+    }
+
+    /**
+     *
+     * @param blockAccess
+     * @param x
+     * @param y
+     * @param z
+     * @param side
+     * @return
+     */
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side)
+    {
+//        Block block = blockAccess.getBlock(x, y, z);
+//        if (block instanceof BasicGasBlock)
+//        {
+//            return false;
+//        }
+        return super.shouldSideBeRendered(blockAccess, x, y, z, side);
     }
 }
