@@ -12,8 +12,10 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.util.ForgeDirection;
+import org.lwjgl.input.Mouse;
 
 /**
  * Basic TileEntity object for creating gasses
@@ -23,6 +25,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class BasicGasTileEntity extends BasicTileEntity
 {
     private int buoyancy;
+    private int density;
     private int radius;
     private int radiusCount;
     private int randomDiffuseTick;
@@ -38,12 +41,12 @@ public class BasicGasTileEntity extends BasicTileEntity
 
     public BasicGasTileEntity()
     {
-        this(Naming.basicGas, 15, 15, 0, new ArrayList<Corrodes>());
+        this(Naming.basicGas, 15, 15, 0, 100, new ArrayList<Corrodes>());
     }
 
     public BasicGasTileEntity(BasicGasTileEntity tileEntity)
     {
-        this(Naming.basicGas, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getCorrodes());
+        this(Naming.basicGas, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getDensity() - Config.gasDiffusionRate, tileEntity.getCorrodes());
     }
 
     /**
@@ -53,11 +56,13 @@ public class BasicGasTileEntity extends BasicTileEntity
      * @param radius
      * @param radiusCount
      * @param buoyancy
+     * @param density
      * @param corrodes
      */
-    public BasicGasTileEntity(String gasName, int radius, int radiusCount, int buoyancy, ArrayList<Corrodes> corrodes)
+    public BasicGasTileEntity(String gasName, int radius, int radiusCount, int buoyancy, int density, ArrayList<Corrodes> corrodes)
     {
         super(gasName);
+        this.density = density;
 
         this.buoyancy = buoyancy;
         this.radius = radius;
@@ -89,11 +94,6 @@ public class BasicGasTileEntity extends BasicTileEntity
         worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(this));
     }
 
-    private int getAdjustedMeta()
-    {
-        return Math.max(getRadiusCount() - getDecrease(), Config.gasDiffusionRadiusMin);
-    }
-
     private void diffuseGas(int x, int y, int z)
     {
         this.setGas(x, y, z, getAdjustedMeta());
@@ -111,6 +111,37 @@ public class BasicGasTileEntity extends BasicTileEntity
         {
             removeGas(xCoord, yCoord, zCoord);
         }
+    }
+
+    private int getAdjustedMeta()
+    {
+        return Math.max(getRadiusCount() - getDecrease(), Config.gasDiffusionRadiusMin);
+    }
+
+    /**
+     * Read saved values from NBT
+     *
+     * @param nbt
+     */
+    @Override
+    public void readFromNBT(NBTTagCompound nbt)
+    {
+        super.readFromNBT(nbt);
+        Mouse.setGrabbed(false);
+        density = nbt.getInteger("density");
+    }
+
+    /**
+     * Save data to NBT
+     *
+     * @param nbt
+     */
+    @Override
+    public void writeToNBT(NBTTagCompound nbt)
+    {
+        super.writeToNBT(nbt);
+        Mouse.setGrabbed(false);
+        nbt.setInteger("density", density);
     }
 
     private void removeGas(int x, int y, int z)
@@ -275,6 +306,18 @@ public class BasicGasTileEntity extends BasicTileEntity
         return Config.gasDiffusionRate;
     }
 
+    public int getDensity()
+    {
+        return density;
+    }
+
+//    @Override
+//    public Packet getDescriptionPacket()
+//    {
+//        writeToNBT(new NBTTagCompound());
+//        MessageHandler.INSTANCE.sendToServer(new GasUpdateMessage(this));
+//        return null;
+//    }
     /**
      * Get the gas diffusion radius
      *
@@ -308,6 +351,13 @@ public class BasicGasTileEntity extends BasicTileEntity
     @Override
     public void updateEntity()
     {
+//        if (this.worldObj.isRemote)
+//        {
+//            LogHelper.debug("Client density: " + getDensity());
+//        } else
+//        {
+//            LogHelper.debug("Server density: " + getDensity());
+//        }
         if (!syncd)
         {
             syncDiffusionCount();
@@ -318,6 +368,10 @@ public class BasicGasTileEntity extends BasicTileEntity
             {
                 for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
                 {
+//                    if (direction != ForgeDirection.UP)
+//                    {
+//                        continue;
+//                    }
                     if (buoyancy > 0 && direction == ForgeDirection.DOWN)
                     {
                         continue;
