@@ -1,6 +1,8 @@
 package jakimbox.helper;
 
+import jakimbox.dispersion.gas.BasicGasBlock;
 import jakimbox.reference.Color.HexColor;
+import jakimbox.registry.BlockRegistry;
 
 /**
  * Helper class for ingame colors
@@ -52,6 +54,23 @@ public class ColorHelper
                 return HexColor.YELLOW;
             default:
                 return HexColor.WHITE;
+        }
+    }
+
+    /**
+     * Get the appropriate block for a given HexColor
+     *
+     * @param color
+     * @return HexColor
+     */
+    public static BasicGasBlock getBlockFromHexColor(int color)
+    {
+        switch (color)
+        {
+            case HexColor.BLUE:
+                return BlockRegistry.gasBlue;
+            default:
+                return BlockRegistry.gasWhite;
         }
     }
 }
