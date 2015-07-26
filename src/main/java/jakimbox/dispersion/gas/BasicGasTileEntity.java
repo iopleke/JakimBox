@@ -2,6 +2,7 @@ package jakimbox.dispersion.gas;
 
 import jakimbox.Config;
 import jakimbox.JakimBox;
+import jakimbox.helper.ColorHelper;
 import jakimbox.prefab.tileEntity.BasicTileEntity;
 import jakimbox.reference.Corrodes;
 import jakimbox.reference.Naming;
@@ -15,7 +16,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.util.ForgeDirection;
-import org.lwjgl.input.Mouse;
 
 /**
  * Basic TileEntity object for creating gasses
@@ -25,6 +25,7 @@ import org.lwjgl.input.Mouse;
 public class BasicGasTileEntity extends BasicTileEntity
 {
     private int buoyancy;
+    private int color;
     private int density;
     private int radius;
     private int radiusCount;
@@ -116,32 +117,6 @@ public class BasicGasTileEntity extends BasicTileEntity
     private int getAdjustedMeta()
     {
         return Math.max(getRadiusCount() - getDecrease(), Config.gasDiffusionRadiusMin);
-    }
-
-    /**
-     * Read saved values from NBT
-     *
-     * @param nbt
-     */
-    @Override
-    public void readFromNBT(NBTTagCompound nbt)
-    {
-        super.readFromNBT(nbt);
-        Mouse.setGrabbed(false);
-        density = nbt.getInteger("density");
-    }
-
-    /**
-     * Save data to NBT
-     *
-     * @param nbt
-     */
-    @Override
-    public void writeToNBT(NBTTagCompound nbt)
-    {
-        super.writeToNBT(nbt);
-        Mouse.setGrabbed(false);
-        nbt.setInteger("density", density);
     }
 
     private void removeGas(int x, int y, int z)
@@ -287,6 +262,16 @@ public class BasicGasTileEntity extends BasicTileEntity
     }
 
     /**
+     * Get the the block color
+     *
+     * @return int
+     */
+    public int getColor()
+    {
+        return ColorHelper.getHexColorFromMeta(randomDiffuseTick % 16);
+    }
+
+    /**
      * Get the gas corrodes list
      *
      * @return corrodes
@@ -336,6 +321,18 @@ public class BasicGasTileEntity extends BasicTileEntity
     public int getRadiusCount()
     {
         return radiusCount;
+    }
+
+    /**
+     * Read saved values from NBT
+     *
+     * @param nbt
+     */
+    @Override
+    public void readFromNBT(NBTTagCompound nbt)
+    {
+        super.readFromNBT(nbt);
+        density = nbt.getInteger("density");
     }
 
     /**
@@ -431,5 +428,17 @@ public class BasicGasTileEntity extends BasicTileEntity
             this.randomDiffuseTick--;
         }
 
+    }
+
+    /**
+     * Save data to NBT
+     *
+     * @param nbt
+     */
+    @Override
+    public void writeToNBT(NBTTagCompound nbt)
+    {
+        super.writeToNBT(nbt);
+        nbt.setInteger("density", density);
     }
 }
