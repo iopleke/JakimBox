@@ -1,9 +1,9 @@
 package jakimbox.registry;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import jakimbox.JakimBox;
 import jakimbox.dispersion.gas.BasicGasBlock;
 import jakimbox.dispersion.gas.BasicGasTileEntity;
+import jakimbox.reference.Color.HexColor;
 import jakimbox.reference.Naming;
 
 /**
@@ -14,12 +14,17 @@ import jakimbox.reference.Naming;
 public class BlockRegistry
 {
 
-    public static BasicGasBlock basicGas;
+    public static BasicGasBlock gasBlue;
+    public static BasicGasBlock gasWhite;
 
     public static void init()
     {
-        basicGas = new BasicGasBlock();
-        GameRegistry.registerBlock(basicGas, JakimBox.modID);
-        GameRegistry.registerTileEntity(BasicGasTileEntity.class, Naming.basicGas + "TileEntity");
+        gasBlue = new BasicGasBlock(HexColor.BLUE);
+        GameRegistry.registerBlock(gasBlue, "gasBlue");
+        GameRegistry.registerTileEntity(BasicGasTileEntity.class, Naming.basicGas + "BlueTileEntity");
+
+        gasWhite = new BasicGasBlock(HexColor.WHITE);
+        GameRegistry.registerBlock(gasWhite, "gasWhite");
+        GameRegistry.registerTileEntity(BasicGasTileEntity.class, Naming.basicGas + "WhiteTileEntity");
     }
 }
