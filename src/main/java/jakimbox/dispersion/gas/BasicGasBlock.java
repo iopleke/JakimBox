@@ -3,7 +3,6 @@ package jakimbox.dispersion.gas;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import jakimbox.JakimBox;
-import jakimbox.helper.ColorHelper;
 import jakimbox.helper.LogHelper;
 import jakimbox.prefab.block.BasicBlock;
 import jakimbox.proxy.CommonProxyBase;
@@ -36,11 +35,15 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     @SideOnly(Side.CLIENT)
     protected IIcon[] blockIconArray = new IIcon[16];
 
-    public BasicGasBlock()
+    @SideOnly(Side.CLIENT)
+    private int color;
+
+    public BasicGasBlock(int color)
     {
         super(JakimBox.modID, Naming.basicGas, Material.glass, Block.soundTypeSnow);
         this.setCreativeTab(CreativeTabRegistry.TAB_JAKIMBOX);
         this.setBlockUnbreakable();
+        this.color = color;
     }
 
     /**
@@ -65,17 +68,17 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
      * @param z
      * @return
      */
-    @SideOnly(Side.CLIENT)
     @Override
+    @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess world, int x, int y, int z)
     {
-        return ColorHelper.getHexColorFromMeta(world.getBlockMetadata(x, y, z));
+        return color;
     }
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta)
     {
-        return new BasicGasTileEntity();
+        return new BasicGasTileEntity(color);
     }
 
     /**
@@ -130,7 +133,7 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
     @SideOnly(Side.CLIENT)
     public int getRenderColor(int meta)
     {
-        return ColorHelper.getHexColorFromMeta(meta);
+        return color;
     }
 
     /**
