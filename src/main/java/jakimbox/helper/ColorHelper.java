@@ -25,11 +25,11 @@ public class ColorHelper
             case 1:
                 return HexColor.BLACK;
             case 2:
-                return HexColor.DARKGREY;
+                return HexColor.BLACK;
             case 3:
-                return HexColor.GREY;
+                return HexColor.BLACK;
             case 4:
-                return HexColor.LIGHTGREY;
+                return HexColor.BLACK;
             case 5:
                 return HexColor.BLUE;
             case 6:

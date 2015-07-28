@@ -57,11 +57,8 @@ public class Color
         public static final int BLACK = 0x000000;
         public static final int BLUE = 0x0000FF;
         public static final int CYAN = 0x00FFFF;
-        public static final int DARKGREY = 0x696969;
         public static final int GREEN = 0x00FF00;
-        public static final int GREY = 0xBEBEBE;
         public static final int KHAKI = 0x808000;
-        public static final int LIGHTGREY = 0xC9C9C9;
         public static final int MAGENTA = 0x65281;
         public static final int MAROON = 0x773300;
         public static final int PINK = 0xFF1493;
