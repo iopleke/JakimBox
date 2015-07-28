@@ -6,7 +6,6 @@ import jakimbox.helper.ColorHelper;
 import jakimbox.prefab.tileEntity.BasicTileEntity;
 import jakimbox.reference.Corrodes;
 import jakimbox.reference.Naming;
-import jakimbox.registry.BlockRegistry;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,14 +39,14 @@ public class BasicGasTileEntity extends BasicTileEntity
 
     public List<PotionEffect> potionEffects = new ArrayList<PotionEffect>();
 
-    public BasicGasTileEntity()
+    public BasicGasTileEntity(int color)
     {
-        this(Naming.basicGas, 15, 15, 0, 100, new ArrayList<Corrodes>());
+        this(Naming.basicGas, 15, 15, 0, 100, color, new ArrayList<Corrodes>());
     }
 
     public BasicGasTileEntity(BasicGasTileEntity tileEntity)
     {
-        this(Naming.basicGas, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getDensity() - Config.gasDiffusionRate, tileEntity.getCorrodes());
+        this(Naming.basicGas, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getDensity() - Config.gasDiffusionRate, tileEntity.getColor(), tileEntity.getCorrodes());
     }
 
     /**
@@ -60,7 +59,7 @@ public class BasicGasTileEntity extends BasicTileEntity
      * @param density
      * @param corrodes
      */
-    public BasicGasTileEntity(String gasName, int radius, int radiusCount, int buoyancy, int density, ArrayList<Corrodes> corrodes)
+    public BasicGasTileEntity(String gasName, int radius, int radiusCount, int buoyancy, int density, int color, ArrayList<Corrodes> corrodes)
     {
         super(gasName);
         this.density = density;
@@ -78,6 +77,8 @@ public class BasicGasTileEntity extends BasicTileEntity
         updateCorrosiveness();
 
         potionEffects.add(new PotionEffect(16, 2));
+
+        this.color = color;
     }
 
     /**
@@ -91,7 +92,7 @@ public class BasicGasTileEntity extends BasicTileEntity
         int y = yCoord + direction.offsetY;
         int z = zCoord + direction.offsetZ;
 
-        worldObj.setBlock(x, y, z, BlockRegistry.basicGas, getAdjustedMeta(), 3);
+        worldObj.setBlock(x, y, z, ColorHelper.getBlockFromHexColor(color), getAdjustedMeta(), 3);
         worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(this));
     }
 
@@ -138,7 +139,7 @@ public class BasicGasTileEntity extends BasicTileEntity
     private void setGas(int x, int y, int z, int meta)
     {
         int updateTypeFlag = 3;
-        worldObj.setBlock(x, y, z, BlockRegistry.basicGas, meta, updateTypeFlag);
+        worldObj.setBlock(x, y, z, ColorHelper.getBlockFromHexColor(color), meta, updateTypeFlag);
         worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(this));
     }
 
@@ -365,10 +366,10 @@ public class BasicGasTileEntity extends BasicTileEntity
             {
                 for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
                 {
-//                    if (direction != ForgeDirection.UP)
-//                    {
-//                        continue;
-//                    }
+                    if (direction != ForgeDirection.UP)
+                    {
+                        continue;
+                    }
                     if (buoyancy > 0 && direction == ForgeDirection.DOWN)
                     {
                         continue;
@@ -394,7 +395,7 @@ public class BasicGasTileEntity extends BasicTileEntity
                             equalize();
 
                             syncd = false;
-                        } else if (block.equals(BlockRegistry.basicGas))
+                        } else if (block.equals(ColorHelper.getBlockFromHexColor(color)))
                         {
                             int sideBlockMeta = worldObj.getBlockMetadata(x, y, z);
                             int blockMeta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
