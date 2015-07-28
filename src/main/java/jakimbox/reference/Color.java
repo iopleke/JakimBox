@@ -65,7 +65,7 @@ public class Color
         public static final int PURPLE = 0x700A99;
         public static final int RED = 0xFF0000;
         public static final int SALMON = 0xFA8072;
-        public static final int WHITE = 0x000000;
+        public static final int WHITE = 0xFFFFFF;
         public static final int YELLOW = 0xFFFF00;
     }
 }
