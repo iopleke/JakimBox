@@ -3,9 +3,13 @@ package jakimbox.dispersion.gas;
 import jakimbox.Config;
 import jakimbox.JakimBox;
 import jakimbox.helper.ColorHelper;
+import jakimbox.helper.LogHelper;
+import jakimbox.network.MessageHandler;
+import jakimbox.network.message.GasUpdateMessage;
 import jakimbox.prefab.tileEntity.BasicTileEntity;
 import jakimbox.reference.Corrodes;
 import jakimbox.reference.Naming;
+import jakimbox.registry.BlockRegistry;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.Packet;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -41,12 +46,12 @@ public class BasicGasTileEntity extends BasicTileEntity
 
     public BasicGasTileEntity(int color)
     {
-        this(Naming.basicGas, 15, 15, 0, 100, color, new ArrayList<Corrodes>());
+        this(Naming.box, 15, 15, 0, 100, color, new ArrayList<Corrodes>());
     }
 
     public BasicGasTileEntity(BasicGasTileEntity tileEntity)
     {
-        this(Naming.basicGas, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getDensity() - Config.gasDiffusionRate, tileEntity.getColor(), tileEntity.getCorrodes());
+        this(Naming.box, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getDensity() - Config.gasDiffusionRate, tileEntity.getColor(), tileEntity.getCorrodes());
     }
 
     /**
@@ -91,8 +96,7 @@ public class BasicGasTileEntity extends BasicTileEntity
         int x = xCoord + direction.offsetX;
         int y = yCoord + direction.offsetY;
         int z = zCoord + direction.offsetZ;
-
-        worldObj.setBlock(x, y, z, ColorHelper.getBlockFromHexColor(color), getAdjustedMeta(), 3);
+        worldObj.setBlock(x, y, z, BlockRegistry.basicGasBlock, getAdjustedMeta(), 3);
         worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(this));
     }
 
@@ -139,7 +143,7 @@ public class BasicGasTileEntity extends BasicTileEntity
     private void setGas(int x, int y, int z, int meta)
     {
         int updateTypeFlag = 3;
-        worldObj.setBlock(x, y, z, ColorHelper.getBlockFromHexColor(color), meta, updateTypeFlag);
+        worldObj.setBlock(x, y, z, BlockRegistry.basicGasBlock, meta, updateTypeFlag);
         worldObj.setTileEntity(x, y, z, new BasicGasTileEntity(this));
     }
 
@@ -297,13 +301,14 @@ public class BasicGasTileEntity extends BasicTileEntity
         return density;
     }
 
-//    @Override
-//    public Packet getDescriptionPacket()
-//    {
-//        writeToNBT(new NBTTagCompound());
-//        MessageHandler.INSTANCE.sendToServer(new GasUpdateMessage(this));
-//        return null;
-//    }
+    @Override
+    public Packet getDescriptionPacket()
+    {
+        writeToNBT(new NBTTagCompound());
+        MessageHandler.INSTANCE.sendToServer(new GasUpdateMessage(this));
+        return null;
+    }
+
     /**
      * Get the gas diffusion radius
      *
@@ -334,6 +339,7 @@ public class BasicGasTileEntity extends BasicTileEntity
     {
         super.readFromNBT(nbt);
         density = nbt.getInteger("density");
+        color = nbt.getInteger("color");
     }
 
     /**
@@ -346,19 +352,32 @@ public class BasicGasTileEntity extends BasicTileEntity
         this.buoyancy = buoyancy;
     }
 
+    public void setColor(int color)
+    {
+        this.color = color;
+    }
+
+    public void setDensity(int density)
+    {
+        this.density = density;
+    }
+
     @Override
     public void updateEntity()
     {
-//        if (this.worldObj.isRemote)
-//        {
-//            LogHelper.debug("Client density: " + getDensity());
-//        } else
-//        {
-//            LogHelper.debug("Server density: " + getDensity());
-//        }
+        if (this.worldObj.isRemote)
+        {
+            LogHelper.debug("Client color: " + this.color);
+
+        } else
+        {
+            LogHelper.debug("Server color: " + this.color);
+        }
+
         if (!syncd)
         {
             syncDiffusionCount();
+            getDescriptionPacket();
         }
         if (this.randomDiffuseTick <= 0)
         {
@@ -395,7 +414,7 @@ public class BasicGasTileEntity extends BasicTileEntity
                             equalize();
 
                             syncd = false;
-                        } else if (block.equals(ColorHelper.getBlockFromHexColor(color)))
+                        } else if (block.equals(BlockRegistry.basicGasBlock))
                         {
                             int sideBlockMeta = worldObj.getBlockMetadata(x, y, z);
                             int blockMeta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
@@ -441,5 +460,6 @@ public class BasicGasTileEntity extends BasicTileEntity
     {
         super.writeToNBT(nbt);
         nbt.setInteger("density", density);
+        nbt.setInteger("color", color);
     }
 }
