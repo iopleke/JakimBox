@@ -6,5 +6,6 @@ package jakimbox.reference;
  */
 public class Naming
 {
-    public static final String basicGas = "basicGas";
+    public static final String box = "JakimInABox";
+    public static final String gas = "basicGas";
 }
