@@ -6,7 +6,6 @@ import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import jakimbox.network.MessageHandler;
 import jakimbox.proxy.CommonProxyBase;
 import jakimbox.registry.BlockRegistry;
 import jakimbox.registry.CreativeTabRegistry;
@@ -39,7 +38,7 @@ public class JakimBox
         BlockRegistry.init();
         CreativeTabRegistry.init();
         Config.init();
-        MessageHandler.init();
+        //MessageHandler.init();
     }
 
     @Mod.EventHandler
