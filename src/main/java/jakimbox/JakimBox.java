@@ -1,5 +1,7 @@
 package jakimbox;
 
+import com.mia.craftstudio.CSProject;
+import com.mia.craftstudio.minecraft.CSMCConnector;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.ModMetadata;
@@ -32,6 +34,8 @@ public class JakimBox
     @SidedProxy(clientSide = "jakimbox.proxy.client.ClientProxyBase", serverSide = "jakimbox.proxy.CommonProxyBase")
     public static CommonProxyBase proxy;
 
+    public static CSProject csproject;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -39,6 +43,7 @@ public class JakimBox
         CreativeTabRegistry.init();
         Config.init();
         //MessageHandler.init();
+        csproject = CSMCConnector.getCSProject("craftstudio").addAllPacks().loadPacks();
     }
 
     @Mod.EventHandler
