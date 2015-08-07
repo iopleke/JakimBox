@@ -4,8 +4,6 @@ import jakimbox.Config;
 import jakimbox.JakimBox;
 import jakimbox.helper.ColorHelper;
 import jakimbox.helper.LogHelper;
-import jakimbox.network.MessageHandler;
-import jakimbox.network.message.GasUpdateMessage;
 import jakimbox.prefab.tileEntity.BasicTileEntity;
 import jakimbox.reference.Corrodes;
 import jakimbox.reference.Naming;
@@ -17,7 +15,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.Packet;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -301,14 +298,13 @@ public class BasicGasTileEntity extends BasicTileEntity
         return density;
     }
 
-    @Override
-    public Packet getDescriptionPacket()
-    {
-        writeToNBT(new NBTTagCompound());
-        MessageHandler.INSTANCE.sendToServer(new GasUpdateMessage(this));
-        return null;
-    }
-
+//    @Override
+//    public Packet getDescriptionPacket()
+//    {
+//        writeToNBT(new NBTTagCompound());
+//        MessageHandler.INSTANCE.sendToServer(new GasUpdateMessage(this));
+//        return null;
+//    }
     /**
      * Get the gas diffusion radius
      *
