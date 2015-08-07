@@ -43,12 +43,12 @@ public class BasicGasTileEntity extends BasicTileEntity
 
     public BasicGasTileEntity(int color)
     {
-        this(Naming.box, 15, 15, 0, 100, color, new ArrayList<Corrodes>());
+        this(Naming.gas, 15, 15, 0, 100, color, new ArrayList<Corrodes>());
     }
 
     public BasicGasTileEntity(BasicGasTileEntity tileEntity)
     {
-        this(Naming.box, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getDensity() - Config.gasDiffusionRate, tileEntity.getColor(), tileEntity.getCorrodes());
+        this(Naming.gas, tileEntity.getRadius(), tileEntity.getRadiusCount() - tileEntity.getDecrease(), tileEntity.getBuoyancy(), tileEntity.getDensity() - Config.gasDiffusionRate, tileEntity.getColor(), tileEntity.getCorrodes());
     }
 
     /**

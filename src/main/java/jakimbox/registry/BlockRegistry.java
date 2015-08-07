@@ -2,6 +2,7 @@ package jakimbox.registry;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import jakimbox.box.BoxBlock;
+import jakimbox.box.BoxTileEntity;
 import jakimbox.dispersion.gas.BasicGasBlock;
 import jakimbox.dispersion.gas.BasicGasTileEntity;
 import jakimbox.reference.Naming;
@@ -20,7 +21,7 @@ public class BlockRegistry
     {
         boxBlock = new BoxBlock();
         GameRegistry.registerBlock(boxBlock, Naming.box);
-        GameRegistry.registerTileEntity(BasicGasTileEntity.class, "tile" + Naming.box);
+        GameRegistry.registerTileEntity(BoxTileEntity.class, "tile" + Naming.box);
 
         basicGasBlock = new BasicGasBlock(1);
         GameRegistry.registerBlock(basicGasBlock, Naming.gas);

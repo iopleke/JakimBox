@@ -40,7 +40,7 @@ public class BasicGasBlock extends BasicBlock implements ITileEntityProvider
 
     public BasicGasBlock(int color)
     {
-        super(JakimBox.modID, Naming.box, Material.glass, Block.soundTypeSnow);
+        super(JakimBox.modID, Naming.gas, Material.glass, Block.soundTypeSnow);
         this.setCreativeTab(CreativeTabRegistry.TAB_JAKIMBOX);
         this.setBlockUnbreakable();
         this.color = color;
