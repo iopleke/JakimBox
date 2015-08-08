@@ -1,13 +1,10 @@
 package jakimbox.proxy.client;
 
-import com.mia.craftstudio.minecraft.AnimationManager;
-import com.mia.craftstudio.minecraft.CSMCConnector;
-import com.mia.craftstudio.minecraft.client.CSClientEventHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import jakimbox.box.BoxTileEntity;
-import jakimbox.prefab.render.RenderProp;
-import jakimbox.prefab.render.RenderPropInv;
+import jakimbox.box.BoxTileEntityRenderer;
+import jakimbox.prefab.render.BasicItemRenderer;
 import jakimbox.proxy.CommonProxyBase;
 import jakimbox.registry.BlockRegistry;
 import net.minecraft.item.Item;
@@ -24,11 +21,9 @@ public class ClientProxyBase extends CommonProxyBase
     {
         RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
 
-        ClientRegistry.bindTileEntitySpecialRenderer(BoxTileEntity.class, new RenderProp());
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.boxBlock), new RenderPropInv());
-
-        CSClientEventHandler.register();
-        AnimationManager.INSTANCE.ordinal();
-        CSMCConnector.INSTANCE.ordinal();
+        BoxTileEntityRenderer boxModelRenderer = new BoxTileEntityRenderer();
+        ClientRegistry.bindTileEntitySpecialRenderer(BoxTileEntity.class, boxModelRenderer);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockRegistry.boxBlock),
+            new BasicItemRenderer(boxModelRenderer, new BoxTileEntity()));
     }
 }
