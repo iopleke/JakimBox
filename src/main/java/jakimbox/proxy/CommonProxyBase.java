@@ -55,7 +55,7 @@ public class CommonProxyBase
 
     public String getItemDisplayName(ItemStack newStack)
     {
-        return this.displayName;
+        return CommonProxyBase.displayName;
     }
 
     public EntityPlayer getPlayer(MessageContext context)
