@@ -1,7 +1,5 @@
 package jakimbox.proxy;
 
-import com.mia.craftstudio.minecraft.AnimationManager;
-import com.mia.craftstudio.minecraft.CSMCConnector;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,8 +15,6 @@ public class CommonProxyBase
 
     public void registerRenderers()
     {
-        AnimationManager.INSTANCE.ordinal();
-        CSMCConnector.INSTANCE.ordinal();
     }
 
     public World getClientWorld()
