@@ -21,7 +21,8 @@ public class BoxBlock extends BasicBlock implements ITileEntityProvider
     public BoxBlock()
     {
         super(JakimBox.modID, Naming.box, Material.cloth, Block.soundTypeCloth);
-        this.setCreativeTab(CreativeTabRegistry.TAB_JAKIMBOX);
+        setCreativeTab(CreativeTabRegistry.TAB_JAKIMBOX);
+        setBlockBounds(0.1F, 0F, 0.1F, 0.9F, 1F, 0.9F);
     }
 
     @Override
