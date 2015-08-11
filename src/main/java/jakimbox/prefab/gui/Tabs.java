@@ -18,6 +18,11 @@ public class Tabs
     private AbstractTab[] tabList;
 
     /**
+     * Offset widths for tabs, index 0 for left side, 1 for right side
+     */
+    private int tabOffsetCache[];
+
+    /**
      * Basic constructor
      *
      * @param count defines total number of possible tabs
@@ -25,6 +30,31 @@ public class Tabs
     public Tabs(int count)
     {
         tabList = new AbstractTab[count];
+
+        tabOffsetCache = new int[2];
+        tabOffsetCache[0] = 0;
+        tabOffsetCache[1] = 0;
+    }
+
+    /**
+     * Check if a given tab is wider than current cached max
+     *
+     * @param id
+     */
+    private void updateOffsetCache(int id)
+    {
+        int side;
+        if (tabList[id].getTabSide() == TabSide.LEFT)
+        {
+            side = 0;
+        } else
+        {
+            side = 1;
+        }
+        if (tabList[id].getMaxTabSizeX() > tabOffsetCache[side])
+        {
+            tabOffsetCache[side] = tabList[id].getMaxTabSizeX();
+        }
     }
 
     /**
@@ -36,6 +66,8 @@ public class Tabs
     public void addTab(AbstractTab tab, int id)
     {
         tabList[id] = tab;
+
+        updateOffsetCache(id);
     }
 
     /**
@@ -95,6 +127,16 @@ public class Tabs
             }
         }
         return null;
+    }
+
+    /**
+     * Get the combined left and right max widths
+     *
+     * @return
+     */
+    public int getTabsWidth()
+    {
+        return tabOffsetCache[0] + tabOffsetCache[1];
     }
 
     /**
