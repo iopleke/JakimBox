@@ -118,6 +118,7 @@ public class BoxModel extends BasicModel
     @Override
     public void render(float scale)
     {
+        scale = 0.028F;
         mainbox.rotateAngleX = 0F;
         mainbox.rotateAngleY = -1.570796F;
         mainbox.rotateAngleZ = 0F;

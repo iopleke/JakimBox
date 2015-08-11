@@ -16,7 +16,7 @@ public class BoxTileEntityRenderer extends BasicTileEntityRenderer
     {
         super(0.24F, 0.0625F);
 
-        setOffset(0.5D, 1.7D, 0.5D);
+        setOffset(0.5D, 0.68D, 0.5D);
 
         model = new BoxModel();
         texture = new ResourceLocation(JakimBox.modID, "textures/models/jakimbox.png");
