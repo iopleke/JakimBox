@@ -15,17 +15,20 @@ public class ChestTab extends AbstractTab
 
     public ChestTab(String ModID, TabSide side)
     {
-        super(ModID, TabType.CHEST_SINGLE, "chest", side, 2, 0, 0, 0, 18, 68, 194, 15, 18);
-    }
-
-    @Override
-    public void initializeTabAnimation()
-    {
-        super.initializeTabAnimation();
-        if (getTabState() == TabState.CLOSED)
-        {
-            setTabTextureCoordinates(getMaxTabSizeX() - getMinTabSizeX(), getMinTabSizeY());
-        }
+        super(ModID, // Used to set the texture
+            TabType.CHEST_SINGLE, // Tab type
+            "chest", // Texture prefix
+            side, // Side, passed in from object construction
+            2, // Animation speed
+            0, // Texture coordinate for closed (x)
+            0, // Texture coordinate for closed (y)
+            0, // Texture coordinate for open (x)
+            18, // Texture coordinate for open (y)
+            68, // Maximum tab width, used to reset the tab
+            194, // Maximum tab height, used to reset the tab
+            15, // Minimum tab width, used to reset the tab
+            18 // Minimum tab height, used to reset the tab
+        );
     }
 
     /**
@@ -57,5 +60,15 @@ public class ChestTab extends AbstractTab
         }
 
         setTabGUICoordinates(xOffset, yOffset);
+    }
+
+    @Override
+    public void initializeTabAnimation()
+    {
+        super.initializeTabAnimation();
+        if (getTabState() == TabState.CLOSED)
+        {
+            setTabTextureCoordinates(getMaxTabSizeX() - getMinTabSizeX(), getMinTabSizeY());
+        }
     }
 }
