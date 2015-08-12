@@ -22,6 +22,9 @@ public class Tabs
      */
     private int tabOffsetCache[];
 
+    public static final int tabMinX = 15;
+    public static final int tabMinY = 18;
+
     /**
      * Basic constructor
      *
@@ -163,11 +166,13 @@ public class Tabs
      */
     public void setDefaultGUICoordinates(int x, int y)
     {
+        int offset = 0;
         for (AbstractTab tab : tabList)
         {
             if (tab != null)
             {
-                tab.setDefaultGUICoordinates(x, y);
+                tab.setDefaultGUICoordinates(x, y + offset);
+                offset += 18;
             }
         }
     }
