@@ -22,8 +22,8 @@ public class Tabs
      */
     private int tabOffsetCache[];
 
-    public static final int tabMinX = 15;
-    public static final int tabMinY = 18;
+    public static final int iconWidth = 15;
+    public static final int iconHeight = 18;
 
     /**
      * Basic constructor
@@ -54,9 +54,9 @@ public class Tabs
         {
             side = 1;
         }
-        if (tabList[id].getMaxTabSizeX() > tabOffsetCache[side])
+        if (tabList[id].getInvWidth() > tabOffsetCache[side])
         {
-            tabOffsetCache[side] = tabList[id].getMaxTabSizeX();
+            tabOffsetCache[side] = tabList[id].getInvWidth();
         }
     }
 
@@ -78,11 +78,11 @@ public class Tabs
      *
      * @param clickX
      * @param clickY
+     * @param side
      */
-    public void doTabClicks(int clickX, int clickY)
+    public void doTabClicks(int clickX, int clickY, TabSide side)
     {
         LogHelper.debug("Clicked at x:" + clickX + " y:" + clickY);
-
         for (AbstractTab tab : tabList)
         {
             ListLoop:
@@ -91,8 +91,10 @@ public class Tabs
                 if (tab.coordinateIntersect(clickX, clickY))
                 {
                     LogHelper.debug("Tab on " + tab.getTabSide().toString() + " was clicked!");
-                    tab.initializeTabAnimation();
-                    break ListLoop;
+                    tab.toggleTabState();
+                } else if (tab.getTabSide() == side)
+                {
+                    tab.reset();
                 }
             }
         }
@@ -139,7 +141,8 @@ public class Tabs
      */
     public int getTabsWidth()
     {
-        return tabOffsetCache[0] + tabOffsetCache[1];
+        int DOUBLE_TAB_WIDTH = 122;
+        return DOUBLE_TAB_WIDTH;
     }
 
     /**
@@ -179,7 +182,7 @@ public class Tabs
 
     public static enum TabState
     {
-        CLOSED, CLOSING, OPEN, OPENING;
+        CLOSED, OPEN;
 
     }
 
