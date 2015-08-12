@@ -12,6 +12,9 @@ import net.minecraft.client.gui.inventory.GuiContainer;
  */
 public class Tabs
 {
+    public static final int iconHeight = 18;
+    public static final int iconWidth = 15;
+
     /**
      * List of tabs contained in the object
      */
@@ -21,9 +24,6 @@ public class Tabs
      * Offset widths for tabs, index 0 for left side, 1 for right side
      */
     private int tabOffsetCache[];
-
-    public static final int iconWidth = 15;
-    public static final int iconHeight = 18;
 
     /**
      * Basic constructor
@@ -143,6 +143,11 @@ public class Tabs
     {
         int DOUBLE_TAB_WIDTH = 122;
         return DOUBLE_TAB_WIDTH;
+    }
+
+    public void removeTab(int id)
+    {
+        tabList[id] = null;
     }
 
     /**
