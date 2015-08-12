@@ -166,16 +166,25 @@ public class Tabs
      *
      * @param x
      * @param y
+     * @param guiWidth
      */
-    public void setDefaultGUICoordinates(int x, int y)
+    public void setDefaultGUICoordinates(int x, int y, int guiWidth)
     {
-        int offset = 0;
+        int offsetL = 0;
+        int offsetR = 0;
         for (AbstractTab tab : tabList)
         {
             if (tab != null)
             {
-                tab.setDefaultGUICoordinates(x, y + offset);
-                offset += 18;
+                if (tab.getTabSide() == TabSide.RIGHT)
+                {
+                    tab.setDefaultGUICoordinates(x + guiWidth + tab.getIconWidth(), y + offsetR);
+                    offsetR += 18;
+                } else
+                {
+                    tab.setDefaultGUICoordinates(x, y + offsetL);
+                    offsetL += 18;
+                }
             }
         }
     }
