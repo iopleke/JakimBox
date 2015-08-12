@@ -197,16 +197,42 @@ public abstract class AbstractTab
         {
             gui.mc.renderEngine.bindTexture(tabBackground);
 
-            if (state == TabState.CLOSED)
+            if (side == TabSide.LEFT)
             {
-                gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], iconTextureX, iconTextureY, getIconWidth(), getIconHeight());
-            } else
+                renderLeftTab((BenchGUI) gui);
+            } else if (side == TabSide.RIGHT)
             {
-                gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 + ((BenchGUI) gui).textureSizeY / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
-                gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], iconTextureX + 3, iconTextureY, getIconWidth(), getIconHeight());
-                gui.drawTexturedModalRect(guiCoords[0] - 3, guiCoords[1], 54, 0, 3, getIconHeight());
-
+                renderRightTab((BenchGUI) gui);
             }
+        }
+    }
+
+    private void renderRightTab(BenchGUI gui)
+    {
+        if (state == TabState.CLOSED)
+        {
+            gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], iconTextureX + 3, iconTextureY, getIconWidth(), getIconHeight());
+        } else
+        {
+            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 + ((BenchGUI) gui).textureSizeY / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
+            gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], iconTextureX, iconTextureY, getIconWidth(), getIconHeight());
+
+            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), guiCoords[1], 57, iconTextureY, 3, getIconHeight());
+
+        }
+    }
+
+    private void renderLeftTab(BenchGUI gui)
+    {
+        if (state == TabState.CLOSED)
+        {
+            gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], iconTextureX, iconTextureY, getIconWidth(), getIconHeight());
+        } else
+        {
+            gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 + ((BenchGUI) gui).textureSizeY / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
+            gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], iconTextureX + 3, iconTextureY, getIconWidth(), getIconHeight());
+            gui.drawTexturedModalRect(guiCoords[0] - 3, guiCoords[1], 54, 0, 3, getIconHeight());
+
         }
     }
 
