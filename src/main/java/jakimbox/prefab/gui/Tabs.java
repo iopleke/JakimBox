@@ -145,6 +145,11 @@ public class Tabs
         return DOUBLE_TAB_WIDTH;
     }
 
+    /**
+     * Set the tab at a given index to null
+     *
+     * @param id
+     */
     public void removeTab(int id)
     {
         tabList[id] = null;
@@ -197,7 +202,6 @@ public class Tabs
     public static enum TabState
     {
         CLOSED, OPEN;
-
     }
 
     public static enum TabType
