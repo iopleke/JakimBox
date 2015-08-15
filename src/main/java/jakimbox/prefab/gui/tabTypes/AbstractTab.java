@@ -23,12 +23,15 @@ public abstract class AbstractTab
      */
     protected int invTextureX, invTextureY;
 
+    /**
+     * Texture coordinates for the tab icon
+     */
     protected int iconTextureX, iconTextureY;
 
     /**
      * Zero point GUI coordinates of the tab.
      */
-    private int[] guiCoords;
+    protected int[] guiCoords;
 
     /**
      * Maximum dimensions for the tab
@@ -45,8 +48,10 @@ public abstract class AbstractTab
      */
     private TabState state;
 
-    protected int defaultGUIX;
-    protected int defaultGUIY;
+    /**
+     * Default coordinates for rendering a tab
+     */
+    protected int defaultGUIX, defaultGUIY;
 
     /**
      * Texture location for the background
@@ -214,13 +219,29 @@ public abstract class AbstractTab
             gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], iconTextureX + 3, iconTextureY, getIconWidth(), getIconHeight());
         } else
         {
-            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 + ((BenchGUI) gui).textureSizeY / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
+            renderOpenTabForSide(gui, TabSide.RIGHT);
             gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], iconTextureX, iconTextureY, getIconWidth(), getIconHeight());
-
-            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), guiCoords[1], 57, iconTextureY, 3, getIconHeight());
-
+            renderTabTransition(gui, side);
         }
     }
+
+    /**
+     * Render a graphical transition between tab icon and tab
+     *
+     * @param gui
+     * @param side
+     */
+    protected void renderTabTransition(BenchGUI gui, TabSide side)
+    {
+    }
+
+    /**
+     * Render an open tab
+     *
+     * @param gui
+     * @param side
+     */
+    protected abstract void renderOpenTabForSide(BenchGUI gui, TabSide side);
 
     private void renderLeftTab(BenchGUI gui)
     {
@@ -229,10 +250,9 @@ public abstract class AbstractTab
             gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], iconTextureX, iconTextureY, getIconWidth(), getIconHeight());
         } else
         {
-            gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 + ((BenchGUI) gui).textureSizeY / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
+            renderOpenTabForSide(gui, TabSide.LEFT);
             gui.drawTexturedModalRect(guiCoords[0], guiCoords[1], iconTextureX + 3, iconTextureY, getIconWidth(), getIconHeight());
-            gui.drawTexturedModalRect(guiCoords[0] - 3, guiCoords[1], 54, 0, 3, getIconHeight());
-
+            renderTabTransition(gui, side);
         }
     }
 
