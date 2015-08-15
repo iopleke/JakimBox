@@ -10,7 +10,7 @@ import jakimbox.prefab.gui.Tabs.TabSide;
  */
 public enum RelativeDirection
 {
-    LEFT(-1, 0), BACKLEFT(-1, 1), BACK(0, 1), BACKRIGHT(1, 1), RIGHT(1, 0), FRONTRIGHT(1, -1), FRONT(0, -1), FRONTLEFT(-1, -1);
+    LEFT(1, 0), BACKLEFT(1, 1), BACK(0, 1), BACKRIGHT(-1, 1), RIGHT(-1, 0), FRONTRIGHT(-1, -1), FRONT(0, -1), FRONTLEFT(1, -1);
 
     /**
      * Array of all valid relative directions

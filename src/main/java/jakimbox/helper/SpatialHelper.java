@@ -33,11 +33,11 @@ public class SpatialHelper
             switch (meta)
             {
                 case 1:
-                    return SpatialHelper.rotateRelativeDirection(SpatialHelper.rotateRelativeDirection(relative, false), false).getOffset();
+                    return SpatialHelper.rotateRelativeDirection(SpatialHelper.rotateRelativeDirection(relative, false), false).getOpposite();
                 case 2:
                     return relative.getOpposite();
                 case 3:
-                    return SpatialHelper.rotateRelativeDirection(SpatialHelper.rotateRelativeDirection(relative, true), true).getOffset();
+                    return SpatialHelper.rotateRelativeDirection(SpatialHelper.rotateRelativeDirection(relative, true), true).getOpposite();
             }
         }
 
