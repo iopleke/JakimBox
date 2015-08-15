@@ -3,7 +3,9 @@ package jakimbox.prefab.gui;
 import jakimbox.helper.LogHelper;
 import jakimbox.prefab.gui.tabTypes.AbstractTab;
 import java.util.List;
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.init.Blocks;
 
 /**
  * Class for managing multiple tabs
@@ -212,5 +214,34 @@ public class Tabs
     public static enum TabSide
     {
         LEFT, RIGHT
+    }
+
+    public static TabType getTabTypeFromBlock(Block block)
+    {
+        if (block == Blocks.anvil)
+        {
+            return TabType.ANVIL;
+        }
+        if (block == Blocks.chest)
+        {
+            return TabType.CHEST_SINGLE;
+        }
+        if (block == Blocks.ender_chest)
+        {
+            return TabType.CHEST_ENDER;
+        }
+        if (block == Blocks.enchanting_table)
+        {
+            return TabType.ENCHANTING_TABLE;
+        }
+        if (block == Blocks.furnace)
+        {
+            return TabType.FURNACE;
+        }
+        if (block == Blocks.hopper)
+        {
+            return TabType.HOPPER;
+        }
+        return null;
     }
 }
