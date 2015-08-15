@@ -1,7 +1,6 @@
 package jakimbox.prefab.container;
 
-import jakimbox.prefab.tileEntity.BasicInventoryTileEntity;
-import jakimbox.prefab.tileEntity.TabbedInventoryTileEntity;
+import jakimbox.prefab.tileEntity.BasicTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -32,7 +31,7 @@ public abstract class BasicContainer extends Container
     /**
      * Stored TileEntity object.
      */
-    private BasicInventoryTileEntity tileEntity;
+    private BasicTileEntity tileEntity;
 
     /**
      * Container object for the TileEntity
@@ -40,7 +39,7 @@ public abstract class BasicContainer extends Container
      * @param inventoryPlayer the player's inventory
      * @param tileEntity
      */
-    public BasicContainer(InventoryPlayer inventoryPlayer, TabbedInventoryTileEntity tileEntity)
+    public BasicContainer(InventoryPlayer inventoryPlayer, BasicTileEntity tileEntity)
     {
         this.tileEntity = tileEntity;
 
@@ -86,7 +85,7 @@ public abstract class BasicContainer extends Container
     @Override
     public boolean canInteractWith(EntityPlayer entityPlayer)
     {
-        return tileEntity.isUseableByPlayer(entityPlayer);
+        return true;
     }
 
     /**
