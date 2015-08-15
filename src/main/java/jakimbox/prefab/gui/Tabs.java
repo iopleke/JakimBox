@@ -96,6 +96,7 @@ public class Tabs
                     tab.toggleTabState();
                 } else if (tab.getTabSide() == side)
                 {
+                    // @TODO - restrict this to only reset tabs if click is on a different tab
                     tab.reset();
                 }
             }
