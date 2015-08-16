@@ -38,7 +38,7 @@ public class Config
     public static int gasUpdateTickRandom = 35;
 
     public static int furnaceGUIUpdatePacketFrequency = 40;
-    public static int maxUpdateTickCount = 100;
+    public static int maxUpdateTickCount = 40;
 
     public static void init()
     {
