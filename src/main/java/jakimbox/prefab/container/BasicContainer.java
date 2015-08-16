@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
  *
  * @author jakimfett
  */
-public abstract class BasicContainer extends Container
+public class BasicContainer extends Container
 {
     /**
      * Starting x/y offsets for the player's inventory slots
