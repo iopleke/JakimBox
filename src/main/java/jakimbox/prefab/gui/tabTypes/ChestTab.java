@@ -1,7 +1,7 @@
 package jakimbox.prefab.gui.tabTypes;
 
+import jakimbox.prefab.gui.BasicTabbedGUI;
 import jakimbox.prefab.gui.Tabs.TabSide;
-import jakimbox.prefab.gui.Tabs.TabState;
 import jakimbox.prefab.gui.Tabs.TabType;
 
 /**
@@ -11,20 +11,50 @@ import jakimbox.prefab.gui.Tabs.TabType;
 public class ChestTab extends AbstractTab
 {
     private final int DOUBLE_TAB_WIDTH = 122;
-    private final int SINGLE_TAB_WIDTH = 68;
 
-    public ChestTab(String ModID, TabSide side)
+    public ChestTab(String modID, TabSide side, TabType type)
     {
-        super(ModID, TabType.CHEST_SINGLE, "chest", side, 2, 0, 0, 0, 18, 68, 194, 15, 18);
+        super(modID, // Used to set the texture
+            type, // Tab type
+            side, // Side, passed in from object construction
+            0, // Texture coordinate for open (x)
+            18, // Texture coordinate for open (y)
+            68, // Maximum tab width, used to reset the tab
+            194 // Maximum tab height, used to reset the tab
+        );
+        if (type == TabType.CHEST_DOUBLE)
+        {
+            invTextureX = 68;
+            invWidth = DOUBLE_TAB_WIDTH;
+
+            iconTextureX = 18;
+        } else if (type == TabType.CHEST_ENDER)
+        {
+            iconTextureX = 36;
+        }
     }
 
     @Override
-    public void initializeTabAnimation()
+    protected void renderOpenTabForSide(BasicTabbedGUI gui, TabSide side)
     {
-        super.initializeTabAnimation();
-        if (getTabState() == TabState.CLOSED)
+        if (side == TabSide.LEFT)
         {
-            setTabTextureCoordinates(getMaxTabSizeX() - getMinTabSizeX(), getMinTabSizeY());
+            gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
+        } else
+        {
+            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
+        }
+    }
+
+    @Override
+    protected void renderTabTransition(BasicTabbedGUI gui, TabSide side)
+    {
+        if (side == TabSide.LEFT)
+        {
+            gui.drawTexturedModalRect(guiCoords[0] - 3, guiCoords[1], 54, 0, 3, getIconHeight());
+        } else
+        {
+            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), guiCoords[1], 57, iconTextureY, 3, getIconHeight());
         }
     }
 
@@ -34,26 +64,13 @@ public class ChestTab extends AbstractTab
     @Override
     protected void resetTabGUICoordinates()
     {
+
         int xOffset = defaultGUIX;
         int yOffset = defaultGUIY;
 
-        switch (getTabState())
+        if (type == TabType.CHEST_DOUBLE)
         {
-            case CLOSED:
-                xOffset = xOffset + DOUBLE_TAB_WIDTH - getMinTabSizeX();
-                yOffset = yOffset + getMinTabSizeY();
-                break;
-            case OPEN:
-                if (getType() == TabType.CHEST_SINGLE)
-                {
-                    xOffset = xOffset + DOUBLE_TAB_WIDTH - SINGLE_TAB_WIDTH;
-                }
-                yOffset = yOffset + getMinTabSizeY();
-                break;
-            case CLOSING:
-                break;
-            case OPENING:
-                break;
+            //xOffset -= DOUBLE_TAB_WIDTH;
         }
 
         setTabGUICoordinates(xOffset, yOffset);

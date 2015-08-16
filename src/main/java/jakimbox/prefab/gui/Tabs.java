@@ -3,7 +3,8 @@ package jakimbox.prefab.gui;
 import jakimbox.helper.LogHelper;
 import jakimbox.prefab.gui.tabTypes.AbstractTab;
 import java.util.List;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 
 /**
  * Class for managing multiple tabs
@@ -12,10 +13,18 @@ import net.minecraft.client.gui.inventory.GuiContainer;
  */
 public class Tabs
 {
+    public static final int iconHeight = 18;
+    public static final int iconWidth = 15;
+
     /**
      * List of tabs contained in the object
      */
     private AbstractTab[] tabList;
+
+    /**
+     * Offset widths for tabs, index 0 for left side, 1 for right side
+     */
+    private int tabOffsetCache[];
 
     /**
      * Basic constructor
@@ -25,6 +34,31 @@ public class Tabs
     public Tabs(int count)
     {
         tabList = new AbstractTab[count];
+
+        tabOffsetCache = new int[2];
+        tabOffsetCache[0] = 0;
+        tabOffsetCache[1] = 0;
+    }
+
+    /**
+     * Check if a given tab is wider than current cached max
+     *
+     * @param id
+     */
+    private void updateOffsetCache(int id)
+    {
+        int side;
+        if (tabList[id].getTabSide() == TabSide.LEFT)
+        {
+            side = 0;
+        } else
+        {
+            side = 1;
+        }
+        if (tabList[id].getInvWidth() > tabOffsetCache[side])
+        {
+            tabOffsetCache[side] = tabList[id].getInvWidth();
+        }
     }
 
     /**
@@ -36,6 +70,8 @@ public class Tabs
     public void addTab(AbstractTab tab, int id)
     {
         tabList[id] = tab;
+
+        updateOffsetCache(id);
     }
 
     /**
@@ -43,11 +79,11 @@ public class Tabs
      *
      * @param clickX
      * @param clickY
+     * @param side
      */
-    public void doTabClicks(int clickX, int clickY)
+    public void doTabClicks(int clickX, int clickY, TabSide side)
     {
         LogHelper.debug("Clicked at x:" + clickX + " y:" + clickY);
-
         for (AbstractTab tab : tabList)
         {
             ListLoop:
@@ -56,8 +92,11 @@ public class Tabs
                 if (tab.coordinateIntersect(clickX, clickY))
                 {
                     LogHelper.debug("Tab on " + tab.getTabSide().toString() + " was clicked!");
-                    tab.initializeTabAnimation();
-                    break ListLoop;
+                    tab.toggleTabState();
+                } else if (tab.getTabSide() == side)
+                {
+                    // @TODO - restrict this to only reset tabs if click is on a different tab
+                    tab.reset();
                 }
             }
         }
@@ -98,11 +137,32 @@ public class Tabs
     }
 
     /**
+     * Get the combined left and right max widths
+     *
+     * @return
+     */
+    public int getTabsWidth()
+    {
+        int DOUBLE_TAB_WIDTH = 122;
+        return DOUBLE_TAB_WIDTH;
+    }
+
+    /**
+     * Set the tab at a given index to null
+     *
+     * @param id
+     */
+    public void removeTab(int id)
+    {
+        tabList[id] = null;
+    }
+
+    /**
      * Render all the tabs in the list
      *
      * @param gui pass in the GUI object for rendering
      */
-    public void renderTabs(GuiContainer gui)
+    public void renderTabs(BasicTabbedGUI gui)
     {
         for (AbstractTab tab : tabList)
         {
@@ -118,31 +178,70 @@ public class Tabs
      *
      * @param x
      * @param y
+     * @param guiWidth
      */
-    public void setDefaultGUICoordinates(int x, int y)
+    public void setDefaultGUICoordinates(int x, int y, int guiWidth)
     {
+        int offsetL = 0;
+        int offsetR = 0;
         for (AbstractTab tab : tabList)
         {
             if (tab != null)
             {
-                tab.setDefaultGUICoordinates(x, y);
+                if (tab.getTabSide() == TabSide.RIGHT)
+                {
+                    tab.setDefaultGUICoordinates(x + guiWidth + tab.getIconWidth(), y + offsetR);
+                    offsetR += 18;
+                } else
+                {
+                    tab.setDefaultGUICoordinates(x, y + offsetL);
+                    offsetL += 18;
+                }
             }
         }
     }
 
     public static enum TabState
     {
-        CLOSED, CLOSING, OPEN, OPENING;
-
+        CLOSED, OPEN;
     }
 
     public static enum TabType
     {
-        BREWING_STAND, CHEST_SINGLE, CHEST_DOUBLE, CHEST_ENDER, ENCHANTING_TABLE, FURNACE, PATREON
+        ANVIL, BREWING_STAND, CHEST_SINGLE, CHEST_DOUBLE, CHEST_ENDER, ENCHANTING_TABLE, FURNACE, HOPPER, PATREON
     }
 
     public static enum TabSide
     {
         LEFT, RIGHT
+    }
+
+    public static TabType getTabTypeFromBlock(Block block)
+    {
+        if (block == Blocks.anvil)
+        {
+            return TabType.ANVIL;
+        }
+        if (block == Blocks.chest)
+        {
+            return TabType.CHEST_SINGLE;
+        }
+        if (block == Blocks.ender_chest)
+        {
+            return TabType.CHEST_ENDER;
+        }
+        if (block == Blocks.enchanting_table)
+        {
+            return TabType.ENCHANTING_TABLE;
+        }
+        if (block == Blocks.furnace)
+        {
+            return TabType.FURNACE;
+        }
+        if (block == Blocks.hopper)
+        {
+            return TabType.HOPPER;
+        }
+        return null;
     }
 }

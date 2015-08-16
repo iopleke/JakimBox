@@ -8,6 +8,7 @@ tile.basicGas.name=Null Gass (Test Block)
 config.general.description=General configuration options
 config.debugging.description=Debugging and extra logging options
 config.gases.description=Config options for gases
+config.performance.description=Performance tweaks, generally already pretty nicely balanced, change at your own risk
 
 config.debugging.debugMode.description=Enable all hidden warning, error, and value printouts
 config.debugging.debugMode.name=Enable debug mode

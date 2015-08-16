@@ -20,6 +20,7 @@ public class Config
     public static String configPrefix = "config/jakimfett/";
     public static String CATEGORY_DEBUGGING = "debugging";
     public static String CATEGORY_GASES = "gases";
+    public static String CATEGORY_PERFORMANCE = "performance";
 
     // Enable or disable extra debug info and logging
     public static boolean debugMode = true;
@@ -35,6 +36,9 @@ public class Config
     // Tick minimum and maximum random value for gas updates
     public static int gasUpdateTickMin = 20;
     public static int gasUpdateTickRandom = 35;
+
+    public static int furnaceGUIUpdatePacketFrequency = 40;
+    public static int maxUpdateTickCount = 100;
 
     public static void init()
     {
@@ -53,6 +57,7 @@ public class Config
         //config.addCustomCategoryComment(Configuration.CATEGORY_GENERAL, StatCollector.translateToLocal("config.general.description"));
         config.addCustomCategoryComment(Config.CATEGORY_DEBUGGING, StatCollector.translateToLocal("config.debugging.description"));
         config.addCustomCategoryComment(Config.CATEGORY_GASES, StatCollector.translateToLocal("config.gases.description"));
+        config.addCustomCategoryComment(Config.CATEGORY_PERFORMANCE, StatCollector.translateToLocal("config.performance.description"));
 
         prop = config.get(Config.CATEGORY_DEBUGGING, "debugMode", Config.debugMode);
         prop.comment = StatCollector.translateToLocal("config.debugging.debugMode.description");
@@ -87,6 +92,18 @@ public class Config
         prop.comment += "\n" + StatCollector.translateToLocal("config.gases.gasUpdateTickRandom.explanation");
         prop.setLanguageKey("config.gases.gasUpdateTickRandom.name");
         gasUpdateTickRandom = prop.getInt();
+        configList.add(prop.getName());
+
+        prop = Config.config.get(Config.CATEGORY_PERFORMANCE, "maxUpdateTickCount", Config.maxUpdateTickCount);
+        prop.comment = StatCollector.translateToLocal("config.maxUpdateTickCount.description");
+        prop.setLanguageKey("config.maxUpdateTickCount.tooltip");
+        Config.maxUpdateTickCount = prop.getInt();
+        configList.add(prop.getName());
+
+        prop = Config.config.get(Config.CATEGORY_PERFORMANCE, "furnaceGUIUpdatePacketFrequency", Config.furnaceGUIUpdatePacketFrequency);
+        prop.comment = StatCollector.translateToLocal("config.furnaceGUIUpdatePacketFrequency.description");
+        prop.setLanguageKey("config.furnaceGUIUpdatePacketFrequency.tooltip");
+        Config.furnaceGUIUpdatePacketFrequency = prop.getInt();
         configList.add(prop.getName());
 
         if (config.hasChanged())

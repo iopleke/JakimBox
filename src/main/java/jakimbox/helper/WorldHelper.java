@@ -75,4 +75,38 @@ public class WorldHelper
         }
         return null;
     }
+
+    public static enum AdjacentBlockType
+    {
+        CHEST_DOUBLE, CHEST_SINGLE, EMPTY, FURNACE_ACTIVE, FURNACE_INACTIVE, OFFSET;
+
+        /**
+         * Array of all valid block types
+         */
+        public static final AdjacentBlockType[] VALID_TYPES =
+        {
+            CHEST_DOUBLE, CHEST_SINGLE, EMPTY, FURNACE_ACTIVE, FURNACE_INACTIVE, OFFSET
+        };
+
+        /**
+         * Check if the TileEntity type is supported
+         *
+         * @param block
+         * @return boolean
+         */
+        public static boolean isBlockSupported(Block block)
+        {
+            if (block == Blocks.anvil
+                || block == Blocks.brewing_stand
+                || block == Blocks.chest
+                || block == Blocks.ender_chest
+                || block == Blocks.enchanting_table
+                || block == Blocks.furnace
+                || block == Blocks.hopper)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 }
