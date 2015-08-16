@@ -8,7 +8,6 @@ import java.util.List;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import werkbench.reference.Compendium;
 
 /**
  * Configuration class for JakimBox
@@ -101,7 +100,7 @@ public class Config
         Config.maxUpdateTickCount = prop.getInt();
         configList.add(prop.getName());
 
-        prop = Config.config.get(Compendium.Config.categoryPerformance, "furnaceGUIUpdatePacketFrequency", Config.furnaceGUIUpdatePacketFrequency);
+        prop = Config.config.get(Config.CATEGORY_PERFORMANCE, "furnaceGUIUpdatePacketFrequency", Config.furnaceGUIUpdatePacketFrequency);
         prop.comment = StatCollector.translateToLocal("config.furnaceGUIUpdatePacketFrequency.description");
         prop.setLanguageKey("config.furnaceGUIUpdatePacketFrequency.tooltip");
         Config.furnaceGUIUpdatePacketFrequency = prop.getInt();
