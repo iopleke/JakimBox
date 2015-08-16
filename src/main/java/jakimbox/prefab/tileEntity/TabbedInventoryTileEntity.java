@@ -19,12 +19,12 @@ public abstract class TabbedInventoryTileEntity extends BasicInventoryTileEntity
 {
 
     /**
-     * Cached memory for the surrounding blocks,
+     * Cached memory for the surrounding blocks.
      */
     private final Map<RelativeDirection, Block> cache = new EnumMap<RelativeDirection, Block>(RelativeDirection.class);
 
     /**
-     * Counter for updating the cache,
+     * Counter for updating the cache.
      */
     private int tickCounter;
 
@@ -32,7 +32,9 @@ public abstract class TabbedInventoryTileEntity extends BasicInventoryTileEntity
     {
         super(tileEntityName, inventorySize);
         resetBlockCache();
-        resetTickCounter();
+
+        // Update the cache within the first 1/2 second after the world loads
+        tickCounter = 10;
     }
 
     /**
@@ -44,7 +46,7 @@ public abstract class TabbedInventoryTileEntity extends BasicInventoryTileEntity
     }
 
     /**
-     * Wipe the blockmemory, then set all valid directions to null,
+     * Wipe the blockmemory, then set all valid directions to null.
      */
     private void resetBlockCache()
     {
@@ -74,7 +76,7 @@ public abstract class TabbedInventoryTileEntity extends BasicInventoryTileEntity
     }
 
     /**
-     * Main update loop
+     * Main update loop.
      */
     @Override
     public void updateEntity()
@@ -90,9 +92,17 @@ public abstract class TabbedInventoryTileEntity extends BasicInventoryTileEntity
     }
 
     /**
-     * Check all sides on the Y plane, and update any changes to the block cache
+     * Force a cache update in the next tick.
      */
-    public void updateSideChecks()
+    public void doCacheUpdateNow()
+    {
+        tickCounter = 0;
+    }
+
+    /**
+     * Check all sides on the Y plane, and update any changes to the block cache.
+     */
+    private void updateSideChecks()
     {
         for (RelativeDirection direction : RelativeDirection.VALID_DIRECTIONS)
         {
