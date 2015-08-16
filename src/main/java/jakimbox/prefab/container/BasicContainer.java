@@ -20,8 +20,15 @@ public class BasicContainer extends Container
      */
     private int[] offsets =
     {
-        0, 0
+        32, 166
     };
+
+    /**
+     * Saved slot index for adding/removing slots
+     */
+    private int slotIndex = 0;
+
+    public static int playerInventoryIndex = 36;
 
     /**
      * Height of the slots, shouldn't ever change.
@@ -53,24 +60,22 @@ public class BasicContainer extends Container
      */
     private void bindPlayerInventory(InventoryPlayer inventoryPlayer)
     {
-        int slotIndex, x, y;
+        int x, y;
 
         for (int i = 0; i < 3; i++)
         {
             for (int j = 0; j < 9; j++)
             {
-                slotIndex = j + i * 9 + 9;
                 x = offsets[0] + j * slotHeight;
                 y = offsets[1] + i * slotHeight;
-                addSlotToContainer(new Slot(inventoryPlayer, slotIndex, x, y));
+                addSlotToContainer(new Slot(inventoryPlayer, slotIndex++, x, y));
                 if (i == 0)
                 {
-
                     x = offsets[0] + j * slotHeight;
                     int hotbarOffset = 4;
                     int hotbarMultiplier = 3;
                     y = offsets[1] + hotbarMultiplier * slotHeight + hotbarOffset;
-                    addSlotToContainer(new Slot(inventoryPlayer, j, x, y));
+                    addSlotToContainer(new Slot(inventoryPlayer, slotIndex++, x, y));
                 }
             }
         }
