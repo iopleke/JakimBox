@@ -19,18 +19,19 @@ public class ChestTab extends AbstractTab
             side, // Side, passed in from object construction
             0, // Texture coordinate for open (x)
             18, // Texture coordinate for open (y)
-            68, // Maximum tab width, used to reset the tab
-            194 // Maximum tab height, used to reset the tab
+            66, // Maximum tab width, used to reset the tab
+            174 // Maximum tab height, used to reset the tab
         );
         if (type == TabType.CHEST_DOUBLE)
         {
-            invTextureX = 68;
+            invTextureX = 66;
             invWidth = DOUBLE_TAB_WIDTH;
 
             iconTextureX = 18;
         } else if (type == TabType.CHEST_ENDER)
         {
             iconTextureX = 36;
+            invTextureX = 185;
         }
     }
 
@@ -39,10 +40,10 @@ public class ChestTab extends AbstractTab
     {
         if (side == TabSide.LEFT)
         {
-            gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
+            gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight() - 16, invTextureX, invTextureY, getInvWidth(), getInvHeight());
         } else
         {
-            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
+            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight() - 16, invTextureX, invTextureY, getInvWidth(), getInvHeight());
         }
     }
 
@@ -51,10 +52,22 @@ public class ChestTab extends AbstractTab
     {
         if (side == TabSide.LEFT)
         {
-            gui.drawTexturedModalRect(guiCoords[0] - 3, guiCoords[1], 54, 0, 3, getIconHeight());
+            if (type == TabType.CHEST_ENDER)
+            {
+                gui.drawTexturedModalRect(guiCoords[0] - 3, guiCoords[1], 60, 0, 3, getIconHeight());
+            } else
+            {
+                gui.drawTexturedModalRect(guiCoords[0] - 3, guiCoords[1], 54, 0, 3, getIconHeight());
+            }
         } else
         {
-            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), guiCoords[1], 57, iconTextureY, 3, getIconHeight());
+            if (type == TabType.CHEST_ENDER)
+            {
+                gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), guiCoords[1], 63, iconTextureY, 3, getIconHeight());
+            } else
+            {
+                gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), guiCoords[1], 57, iconTextureY, 3, getIconHeight());
+            }
         }
     }
 
