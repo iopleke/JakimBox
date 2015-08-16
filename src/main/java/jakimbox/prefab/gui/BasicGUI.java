@@ -28,7 +28,7 @@ public abstract class BasicGUI extends GuiContainer
     {
         super(new BasicContainer(inventoryPlayer, tileEntity));
 
-        texture = new ResourceLocation(modID, "textures/gui/" + tileEntity.name + "GUIBackground.png");
+        texture = new ResourceLocation(modID, "textures/gui/" + tileEntity.name.toLowerCase() + "GUIBackground.png");
 
         this.textureX = 0;
         this.textureY = 0;
