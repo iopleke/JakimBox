@@ -4,7 +4,6 @@ import jakimbox.helper.LogHelper;
 import jakimbox.prefab.gui.tabTypes.AbstractTab;
 import java.util.List;
 import net.minecraft.block.Block;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Blocks;
 
 /**
@@ -163,7 +162,7 @@ public class Tabs
      *
      * @param gui pass in the GUI object for rendering
      */
-    public void renderTabs(GuiContainer gui)
+    public void renderTabs(BasicTabbedGUI gui)
     {
         for (AbstractTab tab : tabList)
         {
