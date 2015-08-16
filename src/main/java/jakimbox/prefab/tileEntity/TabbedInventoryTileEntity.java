@@ -108,11 +108,10 @@ public abstract class TabbedInventoryTileEntity extends BasicInventoryTileEntity
                     {
                         cache.put(direction, block);
                     }
+                    continue;
                 }
-            } else
-            {
-                cache.put(direction, null);
             }
+            cache.put(direction, null);
         }
     }
 }
