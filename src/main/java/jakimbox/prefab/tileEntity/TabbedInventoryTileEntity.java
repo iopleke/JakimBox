@@ -1,12 +1,12 @@
 package jakimbox.prefab.tileEntity;
 
 import jakimbox.helper.SpatialHelper;
+import jakimbox.helper.WorldHelper.AdjacentBlockType;
 import jakimbox.reference.RelativeDirection;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Random;
 import net.minecraft.block.Block;
-import werkbench.reference.Compendium;
 import werkbench.reference.Config;
 
 /**
@@ -101,7 +101,7 @@ public abstract class TabbedInventoryTileEntity extends BasicInventoryTileEntity
 
             if (block != null)
             {
-                if (Compendium.AdjacentBlockType.isBlockSupported(block))
+                if (AdjacentBlockType.isBlockSupported(block))
                 {
                     Block cachedBlock = (Block) cache.get(direction);
                     if (cachedBlock != block)
