@@ -1,9 +1,9 @@
 package jakimbox.prefab.gui.tabTypes;
 
+import jakimbox.Config;
 import jakimbox.prefab.gui.BasicTabbedGUI;
 import jakimbox.prefab.gui.Tabs.TabSide;
 import jakimbox.prefab.gui.Tabs.TabType;
-import werkbench.reference.Config;
 
 /**
  *

@@ -1,5 +1,6 @@
 package jakimbox.prefab.tileEntity;
 
+import jakimbox.Config;
 import jakimbox.helper.SpatialHelper;
 import jakimbox.helper.WorldHelper.AdjacentBlockType;
 import jakimbox.reference.RelativeDirection;
@@ -7,7 +8,6 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Random;
 import net.minecraft.block.Block;
-import werkbench.reference.Config;
 
 /**
  *
