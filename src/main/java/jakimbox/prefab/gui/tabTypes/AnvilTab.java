@@ -19,7 +19,7 @@ public class AnvilTab extends AbstractTab
             0, // Texture coordinate for open (x)
             18, // Texture coordinate for open (y)
             100, // Maximum tab width, used to reset the tab
-            94 // Maximum tab height, used to reset the tab
+            82 // Maximum tab height, used to reset the tab
         );
     }
 
@@ -28,10 +28,10 @@ public class AnvilTab extends AbstractTab
     {
         if (side == TabSide.LEFT)
         {
-            gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight() * 2, invTextureX, invTextureY, getInvWidth(), getInvHeight());
+            gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight() - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
         } else
         {
-            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight() * 2, invTextureX, invTextureY, getInvWidth(), getInvHeight());
+            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight() - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
         }
     }
 
