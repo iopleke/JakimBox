@@ -1,9 +1,19 @@
 package jakimbox.prefab.gui;
 
+import jakimbox.Config;
 import jakimbox.prefab.gui.Tabs.TabSide;
+import jakimbox.prefab.gui.tabTypes.AnvilTab;
+import jakimbox.prefab.gui.tabTypes.ChestTab;
+import jakimbox.prefab.gui.tabTypes.FurnaceTab;
 import jakimbox.prefab.tileEntity.TabbedInventoryTileEntity;
+import jakimbox.reference.RelativeDirection;
+import java.util.Map;
+import java.util.Random;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import werkbench.reference.Compendium;
 
 /**
  * Basic tabbed GUI class
@@ -12,6 +22,15 @@ import net.minecraft.world.World;
  */
 public abstract class BasicTabbedGUI extends BasicGUI
 {
+    /**
+     * Counter for updating the tabs.
+     */
+    private int tickCounter;
+
+    /**
+     * TileEntity object
+     */
+    private TabbedInventoryTileEntity tileEntity;
 
     /**
      * List of tabs for the GUI
@@ -46,6 +65,8 @@ public abstract class BasicTabbedGUI extends BasicGUI
     {
         super(modID, inventoryPlayer, tileEntity, world, 0, 0);
 
+        this.tileEntity = tileEntity;
+
         textureWidth = 256;
         textureHeight = 256;
 
@@ -53,6 +74,25 @@ public abstract class BasicTabbedGUI extends BasicGUI
 
         xSize = textureWidth + (tabs.getTabsWidth() - tabWidthOverlap);
         ySize = textureHeight;
+
+        // Update the tabs within the first 1/2 second after the GUI loads
+        tickCounter = 10;
+    }
+
+    /**
+     * Decrease the tick counter by one.
+     */
+    private void decrementTickCounter()
+    {
+        tickCounter--;
+    }
+
+    /**
+     * Reset the tick counter to a random between 0 and the max update count.
+     */
+    private void resetTickCounter()
+    {
+        tickCounter = new Random().nextInt(Config.maxUpdateTickCount);
     }
 
     /**
@@ -66,6 +106,15 @@ public abstract class BasicTabbedGUI extends BasicGUI
     protected void drawGuiContainerBackgroundLayer(float opacity, int mouseX, int mouseY)
     {
         super.drawGuiContainerBackgroundLayer(opacity, mouseX, mouseY);
+
+        if (tickCounter <= 0)
+        {
+            updateTabState();
+            resetTickCounter();
+        } else
+        {
+            decrementTickCounter();
+        }
 
         updateGUIOffsets();
         tabs.renderTabs(this);
@@ -103,6 +152,38 @@ public abstract class BasicTabbedGUI extends BasicGUI
         int xCoordOffset = width / 2 - textureWidth / 2 + tabWidthOverlap - Tabs.iconWidth;
         int yCoordOffset = height / 2 + textureHeight / 2;
         tabs.setDefaultGUICoordinates(xCoordOffset, yCoordOffset, textureWidth - tabWidthOverlap * 2 + 1);
+    }
+
+    /**
+     * Update the tabs based on the block cache
+     */
+    protected void updateTabState()
+    {
+        int tabID = 0;
+        for (Map.Entry<RelativeDirection, Block> entry : tileEntity.getBlockCache().entrySet())
+        {
+            if (tabs.getTab(tabID) == null || tabs.getTab(tabID).type != Tabs.getTabTypeFromBlock(entry.getValue()))
+            {
+                if (entry.getValue() == Blocks.chest)
+                {
+                    // @TODO - add logic to check for double chests
+                    tabs.addTab(new ChestTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_SINGLE), tabID);
+                } else if (entry.getValue() == Blocks.ender_chest)
+                {
+                    tabs.addTab(new ChestTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_ENDER), tabID);
+                } else if (entry.getValue() == Blocks.furnace)
+                {
+                    tabs.addTab(new FurnaceTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey())), tabID);
+                } else if (entry.getValue() == Blocks.anvil)
+                {
+                    tabs.addTab(new AnvilTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey())), tabID);
+                } else if (tabs.getTab(tabID) != null)
+                {
+                    tabs.removeTab(tabID);
+                }
+            }
+            tabID++;
+        }
     }
 
     /**
