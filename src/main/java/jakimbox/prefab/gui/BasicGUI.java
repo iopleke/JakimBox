@@ -22,7 +22,7 @@ public abstract class BasicGUI extends GuiContainer
     /**
      * Texture coordinates for the background
      */
-    private int textureX, textureY;
+    protected int textureX, textureY;
 
     public BasicGUI(String modID, InventoryPlayer inventoryPlayer, BasicTileEntity tileEntity, World world, int width, int height)
     {
@@ -40,7 +40,7 @@ public abstract class BasicGUI extends GuiContainer
     /**
      * Bind the texture for rendering.
      */
-    private void bindGUITexture()
+    protected void bindGUITexture()
     {
         mc.renderEngine.bindTexture(texture);
     }
@@ -48,9 +48,9 @@ public abstract class BasicGUI extends GuiContainer
     /**
      * Draw the GUI background layer
      */
-    private void drawGUIBackground()
+    protected void drawGUIBackground()
     {
-        drawTexturedModalRect(getOffsetX(), getOffsetY(), textureX, textureY, xSize, ySize);
+        drawTexturedModalRect(getGUIOffsetX(), getGUIOffsetY(), textureX, textureY, xSize, ySize);
     }
 
     /**
@@ -58,7 +58,7 @@ public abstract class BasicGUI extends GuiContainer
      *
      * @return int
      */
-    private int getOffsetX()
+    protected int getGUIOffsetX()
     {
         return (int) (width - xSize) / 2;
     }
@@ -68,7 +68,7 @@ public abstract class BasicGUI extends GuiContainer
      *
      * @return int
      */
-    private int getOffsetY()
+    protected int getGUIOffsetY()
     {
         return (int) (height - ySize) / 2;
     }
