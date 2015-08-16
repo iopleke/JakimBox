@@ -1,8 +1,8 @@
 package jakimbox.prefab.gui.tabTypes;
 
+import jakimbox.prefab.gui.BasicTabbedGUI;
 import jakimbox.prefab.gui.Tabs.TabSide;
 import jakimbox.prefab.gui.Tabs.TabType;
-import werkbench.bench.BenchGUI;
 
 /**
  *
@@ -35,19 +35,19 @@ public class ChestTab extends AbstractTab
     }
 
     @Override
-    protected void renderOpenTabForSide(BenchGUI gui, TabSide side)
+    protected void renderOpenTabForSide(BasicTabbedGUI gui, TabSide side)
     {
         if (side == TabSide.LEFT)
         {
-            gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 + ((BenchGUI) gui).textureSizeY / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
+            gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
         } else
         {
-            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 + ((BenchGUI) gui).textureSizeY / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
+            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 + ((BasicTabbedGUI) gui).getTextureHeight() / 2 - getInvHeight(), invTextureX, invTextureY, getInvWidth(), getInvHeight());
         }
     }
 
     @Override
-    protected void renderTabTransition(BenchGUI gui, TabSide side)
+    protected void renderTabTransition(BasicTabbedGUI gui, TabSide side)
     {
         if (side == TabSide.LEFT)
         {

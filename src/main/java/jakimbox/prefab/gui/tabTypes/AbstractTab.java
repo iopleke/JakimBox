@@ -1,15 +1,14 @@
 package jakimbox.prefab.gui.tabTypes;
 
 import jakimbox.helper.LogHelper;
+import jakimbox.prefab.gui.BasicTabbedGUI;
 import jakimbox.prefab.gui.Tabs;
 import jakimbox.prefab.gui.Tabs.TabSide;
 import jakimbox.prefab.gui.Tabs.TabState;
 import jakimbox.prefab.gui.Tabs.TabType;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
-import werkbench.bench.BenchGUI;
 
 /**
  *
@@ -196,23 +195,23 @@ public abstract class AbstractTab
      *
      * @param gui a GuiContainer for rendering the visuals
      */
-    public void renderTab(GuiContainer gui)
+    public void renderTab(BasicTabbedGUI gui)
     {
-        if (gui instanceof BenchGUI)
+        if (gui instanceof BasicTabbedGUI)
         {
             gui.mc.renderEngine.bindTexture(tabBackground);
 
             if (side == TabSide.LEFT)
             {
-                renderLeftTab((BenchGUI) gui);
+                renderLeftTab((BasicTabbedGUI) gui);
             } else if (side == TabSide.RIGHT)
             {
-                renderRightTab((BenchGUI) gui);
+                renderRightTab((BasicTabbedGUI) gui);
             }
         }
     }
 
-    private void renderRightTab(BenchGUI gui)
+    private void renderRightTab(BasicTabbedGUI gui)
     {
         if (state == TabState.CLOSED)
         {
@@ -231,7 +230,7 @@ public abstract class AbstractTab
      * @param gui
      * @param side
      */
-    protected void renderTabTransition(BenchGUI gui, TabSide side)
+    protected void renderTabTransition(BasicTabbedGUI gui, TabSide side)
     {
     }
 
@@ -241,9 +240,9 @@ public abstract class AbstractTab
      * @param gui
      * @param side
      */
-    protected abstract void renderOpenTabForSide(BenchGUI gui, TabSide side);
+    protected abstract void renderOpenTabForSide(BasicTabbedGUI gui, TabSide side);
 
-    private void renderLeftTab(BenchGUI gui)
+    private void renderLeftTab(BasicTabbedGUI gui)
     {
         if (state == TabState.CLOSED)
         {

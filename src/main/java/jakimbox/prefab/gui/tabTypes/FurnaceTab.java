@@ -1,9 +1,8 @@
 package jakimbox.prefab.gui.tabTypes;
 
+import jakimbox.prefab.gui.BasicTabbedGUI;
 import jakimbox.prefab.gui.Tabs.TabSide;
 import jakimbox.prefab.gui.Tabs.TabType;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import werkbench.bench.BenchGUI;
 import werkbench.reference.Config;
 
 /**
@@ -45,7 +44,7 @@ public class FurnaceTab extends AbstractTab
     }
 
     @Override
-    protected void renderOpenTabForSide(BenchGUI gui, TabSide side)
+    protected void renderOpenTabForSide(BasicTabbedGUI gui, TabSide side)
     {
         if (side == TabSide.LEFT)
         {
@@ -57,7 +56,7 @@ public class FurnaceTab extends AbstractTab
     }
 
     @Override
-    protected void renderTabTransition(BenchGUI gui, TabSide side)
+    protected void renderTabTransition(BasicTabbedGUI gui, TabSide side)
     {
         if (side == TabSide.LEFT)
         {
@@ -69,11 +68,11 @@ public class FurnaceTab extends AbstractTab
     }
 
     @Override
-    public void renderTab(GuiContainer gui)
+    public void renderTab(BasicTabbedGUI gui)
     {
         super.renderTab(gui);
 
-        if (gui instanceof BenchGUI)
+        if (gui instanceof BasicTabbedGUI)
         {
             incrementTickCount();
 
