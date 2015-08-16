@@ -24,16 +24,14 @@ public class BasicContainer extends Container
     };
 
     /**
-     * Saved slot index for adding/removing slots
-     */
-    private int slotIndex = 0;
-
-    public static int playerInventoryIndex = 36;
-
-    /**
      * Height of the slots, shouldn't ever change.
      */
     private final int slotHeight = 18;
+
+    /**
+     * Saved slot index for adding/removing slots
+     */
+    protected int slotIndex = 0;
 
     /**
      * Stored TileEntity object.

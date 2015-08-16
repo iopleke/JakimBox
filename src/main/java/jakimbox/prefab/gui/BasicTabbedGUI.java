@@ -1,6 +1,7 @@
 package jakimbox.prefab.gui;
 
 import jakimbox.Config;
+import jakimbox.prefab.container.BasicContainer;
 import jakimbox.prefab.gui.Tabs.TabSide;
 import jakimbox.prefab.gui.tabTypes.AnvilTab;
 import jakimbox.prefab.gui.tabTypes.ChestTab;
@@ -10,7 +11,6 @@ import jakimbox.reference.RelativeDirection;
 import java.util.Map;
 import java.util.Random;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import werkbench.reference.Compendium;
@@ -56,14 +56,14 @@ public abstract class BasicTabbedGUI extends BasicGUI
      * Creates a tabbed GUI object
      *
      * @param modID
-     * @param inventoryPlayer
+     * @param container
      * @param tileEntity
      * @param world
      * @param tabCount
      */
-    public BasicTabbedGUI(String modID, InventoryPlayer inventoryPlayer, TabbedInventoryTileEntity tileEntity, World world, int tabCount)
+    public BasicTabbedGUI(String modID, BasicContainer container, TabbedInventoryTileEntity tileEntity, World world, int tabCount)
     {
-        super(modID, inventoryPlayer, tileEntity, world, 0, 0);
+        super(modID, container, tileEntity, world, 0, 0);
 
         this.tileEntity = tileEntity;
 

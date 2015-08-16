@@ -3,7 +3,6 @@ package jakimbox.prefab.gui;
 import jakimbox.prefab.container.BasicContainer;
 import jakimbox.prefab.tileEntity.BasicTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -24,9 +23,9 @@ public abstract class BasicGUI extends GuiContainer
      */
     protected int textureX, textureY;
 
-    public BasicGUI(String modID, InventoryPlayer inventoryPlayer, BasicTileEntity tileEntity, World world, int width, int height)
+    public BasicGUI(String modID, BasicContainer container, BasicTileEntity tileEntity, World world, int width, int height)
     {
-        super(new BasicContainer(inventoryPlayer, tileEntity));
+        super(container);
 
         texture = new ResourceLocation(modID, "textures/gui/" + tileEntity.name.toLowerCase() + "GUIBackground.png");
 
