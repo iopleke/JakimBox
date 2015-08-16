@@ -48,9 +48,11 @@ public class FurnaceTab extends AbstractTab
     {
         if (side == TabSide.LEFT)
         {
+            gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 - getInvHeight() / 2 - getIconHeight() + 3 + 38, invTextureX, invTextureY + 76, getInvWidth(), 38);
             gui.drawTexturedModalRect(guiCoords[0] - invWidth, gui.height / 2 - getInvHeight() / 2 - getIconHeight() + 3, invTextureX, invTextureY, getInvWidth(), getInvHeight());
         } else
         {
+            gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 - getInvHeight() / 2 - getIconHeight() + 3 + 38, invTextureX, invTextureY + 76, getInvWidth(), 38);
             gui.drawTexturedModalRect(guiCoords[0] + getIconWidth(), gui.height / 2 - getInvHeight() / 2 - getIconHeight() + 3, invTextureX, invTextureY, getInvWidth(), getInvHeight());
         }
     }
@@ -83,9 +85,6 @@ public class FurnaceTab extends AbstractTab
             }
 
         }
-
-//        renderFurnaceProgressBars(side, xOffset + guiOffsets[0], yOffset + guiOffsets[1]);
-//        renderFurnaceForeground(xOffset + guiOffsets[0], yOffset + guiOffsets[1]);
     }
 
 //    private void renderFurnaceForeground(int x, int y)
