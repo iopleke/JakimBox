@@ -13,7 +13,6 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import werkbench.reference.Compendium;
 
 /**
  * Basic tabbed GUI class
@@ -31,6 +30,11 @@ public abstract class BasicTabbedGUI extends BasicGUI
      * TileEntity object
      */
     private TabbedInventoryTileEntity tileEntity;
+
+    /**
+     * Mod ID of the mod using the tabs
+     */
+    protected String modID;
 
     /**
      * List of tabs for the GUI
@@ -64,7 +68,7 @@ public abstract class BasicTabbedGUI extends BasicGUI
     public BasicTabbedGUI(String modID, BasicContainer container, TabbedInventoryTileEntity tileEntity, World world, int tabCount)
     {
         super(modID, container, tileEntity, world, 0, 0);
-
+	this.modID = modID;
         this.tileEntity = tileEntity;
 
         textureWidth = 256;
@@ -167,16 +171,16 @@ public abstract class BasicTabbedGUI extends BasicGUI
                 if (entry.getValue() == Blocks.chest)
                 {
                     // @TODO - add logic to check for double chests
-                    tabs.addTab(new ChestTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_SINGLE), tabID);
+                    tabs.addTab(new ChestTab(modID, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_SINGLE), tabID);
                 } else if (entry.getValue() == Blocks.ender_chest)
                 {
-                    tabs.addTab(new ChestTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_ENDER), tabID);
+                    tabs.addTab(new ChestTab(modID, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_ENDER), tabID);
                 } else if (entry.getValue() == Blocks.furnace)
                 {
-                    tabs.addTab(new FurnaceTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey())), tabID);
+                    tabs.addTab(new FurnaceTab(modID, RelativeDirection.getRelativeDirectionTabSide(entry.getKey())), tabID);
                 } else if (entry.getValue() == Blocks.anvil)
                 {
-                    tabs.addTab(new AnvilTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey())), tabID);
+                    tabs.addTab(new AnvilTab(modID, RelativeDirection.getRelativeDirectionTabSide(entry.getKey())), tabID);
                 } else if (tabs.getTab(tabID) != null)
                 {
                     tabs.removeTab(tabID);
