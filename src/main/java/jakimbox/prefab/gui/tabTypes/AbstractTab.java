@@ -6,6 +6,7 @@ import jakimbox.prefab.gui.Tabs;
 import jakimbox.prefab.gui.Tabs.TabSide;
 import jakimbox.prefab.gui.Tabs.TabState;
 import jakimbox.prefab.gui.Tabs.TabType;
+import jakimbox.reference.RelativeDirection;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.util.ResourceLocation;
@@ -23,7 +24,7 @@ public abstract class AbstractTab
     protected int invTextureX, invTextureY;
 
     /**
-     * Texture coordinates for the tab icon
+     * Texture coordinates for the tab icon.
      */
     protected int iconTextureX, iconTextureY;
 
@@ -41,6 +42,11 @@ public abstract class AbstractTab
      * Which side of the GUI is the tab positioned
      */
     private final TabSide side;
+
+    /**
+     * Which side of the block is the represented tab on
+     */
+    protected RelativeDirection direction;
 
     /**
      * Whether the tab is closed, open, or somewhere in between
@@ -88,6 +94,16 @@ public abstract class AbstractTab
         guiCoords = new int[2];
 
         reset();
+    }
+
+    public void setRelativeDirection(RelativeDirection direction)
+    {
+        this.direction = direction;
+    }
+
+    public RelativeDirection getRelativeDirection()
+    {
+        return direction;
     }
 
     /**
