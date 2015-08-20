@@ -3,6 +3,7 @@ package jakimbox.prefab.gui.tabTypes;
 import jakimbox.prefab.gui.BasicTabbedGUI;
 import jakimbox.prefab.gui.Tabs.TabSide;
 import jakimbox.prefab.gui.Tabs.TabType;
+import jakimbox.reference.RelativeDirection;
 
 /**
  *
@@ -12,11 +13,12 @@ public class ChestTab extends AbstractTab
 {
     private final int DOUBLE_TAB_WIDTH = 122;
 
-    public ChestTab(String modID, TabSide side, TabType type)
+    public ChestTab(String modID, TabSide side, TabType type, RelativeDirection direction)
     {
         super(modID, // Used to set the texture
             type, // Tab type
             side, // Side, passed in from object construction
+            direction, // Direction, relative to the block
             0, // Texture coordinate for open (x)
             18, // Texture coordinate for open (y)
             66, // Maximum tab width, used to reset the tab

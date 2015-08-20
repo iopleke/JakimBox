@@ -74,16 +74,18 @@ public abstract class AbstractTab
      * @param modID       ID for the mod in question Background graphic resource
      * @param type        Type for the tab
      * @param side        Which side of the GUI is the tab on, from Enum
+     * @param direction   Which direction is the tab, relative to the block
      * @param invTextureX texture X coordinate default for an open tab
      * @param invTextureY texture Y coordinate default for an open tab
      * @param invWidth    maximum tab width
      * @param invHeight   maximum tab width
      */
-    public AbstractTab(String modID, TabType type, TabSide side, int invTextureX, int invTextureY, int invWidth, int invHeight)
+    public AbstractTab(String modID, TabType type, TabSide side, RelativeDirection direction, int invTextureX, int invTextureY, int invWidth, int invHeight)
     {
         this.tabBackground = new ResourceLocation(modID, "textures/gui/" + type.toString().toLowerCase().replace("_", "").replace("single", "").replace("double", "").replace("ender", "") + "TabBackground.png");
         this.type = type;
         this.side = side;
+        this.direction = direction;
         this.invTextureX = invTextureX;
         this.invTextureY = invTextureY;
         this.invWidth = invWidth;

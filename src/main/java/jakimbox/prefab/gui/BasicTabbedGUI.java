@@ -167,16 +167,16 @@ public abstract class BasicTabbedGUI extends BasicGUI
                 if (entry.getValue() == Blocks.chest)
                 {
                     // @TODO - add logic to check for double chests
-                    tabs.addTab(new ChestTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_SINGLE), tabID);
+                    tabs.addTab(new ChestTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_SINGLE, entry.getKey()), tabID);
                 } else if (entry.getValue() == Blocks.ender_chest)
                 {
-                    tabs.addTab(new ChestTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_ENDER), tabID);
+                    tabs.addTab(new ChestTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_ENDER, entry.getKey()), tabID);
                 } else if (entry.getValue() == Blocks.furnace)
                 {
-                    tabs.addTab(new FurnaceTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey())), tabID);
+                    tabs.addTab(new FurnaceTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), entry.getKey()), tabID);
                 } else if (entry.getValue() == Blocks.anvil)
                 {
-                    tabs.addTab(new AnvilTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey())), tabID);
+                    tabs.addTab(new AnvilTab(Compendium.Naming.id, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), entry.getKey()), tabID);
                 } else if (tabs.getTab(tabID) != null)
                 {
                     tabs.removeTab(tabID);

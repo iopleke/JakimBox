@@ -3,6 +3,7 @@ package jakimbox.prefab.gui.tabTypes;
 import jakimbox.prefab.gui.BasicTabbedGUI;
 import jakimbox.prefab.gui.Tabs.TabSide;
 import jakimbox.prefab.gui.Tabs.TabType;
+import jakimbox.reference.RelativeDirection;
 
 /**
  *
@@ -11,11 +12,12 @@ import jakimbox.prefab.gui.Tabs.TabType;
 public class AnvilTab extends AbstractTab
 {
 
-    public AnvilTab(String modID, TabSide side)
+    public AnvilTab(String modID, TabSide side, RelativeDirection direction)
     {
         super(modID, // Used to set the texture
             TabType.ANVIL, // Tab type
             side, // Side, passed in from object construction
+            direction, // Direction, relative to the block
             0, // Texture coordinate for open (x)
             18, // Texture coordinate for open (y)
             100, // Maximum tab width, used to reset the tab

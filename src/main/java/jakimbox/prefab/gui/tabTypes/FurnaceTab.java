@@ -4,6 +4,7 @@ import jakimbox.Config;
 import jakimbox.prefab.gui.BasicTabbedGUI;
 import jakimbox.prefab.gui.Tabs.TabSide;
 import jakimbox.prefab.gui.Tabs.TabType;
+import jakimbox.reference.RelativeDirection;
 
 /**
  *
@@ -15,11 +16,12 @@ public class FurnaceTab extends AbstractTab
     private boolean doFurnaceUpdate;
     private int tickCount;
 
-    public FurnaceTab(String modID, TabSide side)
+    public FurnaceTab(String modID, TabSide side, RelativeDirection direction)
     {
         super(modID, // Used to set the texture
             TabType.FURNACE, // Tab type
             side, // Side, passed in from object construction
+            direction, // Direction, relative to the block
             0, // Texture coordinate for open (x)
             18, // Texture coordinate for open (y)
             76, // Maximum tab width, used to reset the tab
