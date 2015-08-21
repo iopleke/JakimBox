@@ -29,11 +29,6 @@ public class BasicContainer extends Container
     private final int slotHeight = 18;
 
     /**
-     * Saved slot index for adding/removing slots
-     */
-    protected int slotIndex = 0;
-
-    /**
      * Stored TileEntity object.
      */
     private BasicTileEntity tileEntity;
@@ -66,14 +61,15 @@ public class BasicContainer extends Container
             {
                 x = offsets[0] + j * slotHeight;
                 y = offsets[1] + i * slotHeight;
-                addSlotToContainer(new Slot(inventoryPlayer, slotIndex++, x, y));
+                addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, x, y));
+
                 if (i == 0)
                 {
                     x = offsets[0] + j * slotHeight;
                     int hotbarOffset = 4;
                     int hotbarMultiplier = 3;
                     y = offsets[1] + hotbarMultiplier * slotHeight + hotbarOffset;
-                    addSlotToContainer(new Slot(inventoryPlayer, slotIndex++, x, y));
+                    addSlotToContainer(new Slot(inventoryPlayer, j, x, y));
                 }
             }
         }
