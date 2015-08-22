@@ -157,8 +157,19 @@ public class Tabs
      */
     public int getTabsWidth()
     {
-        int DOUBLE_TAB_WIDTH = 122;
-        return DOUBLE_TAB_WIDTH;
+        int size = 122;
+        for (AbstractTab tab : tabList)
+        {
+            ListLoop:
+            if (tab != null)
+            {
+                if (tab.getInvWidth() > size)
+                {
+                    size = tab.getInvWidth();
+                }
+            }
+        }
+        return size;
     }
 
     /**
