@@ -26,4 +26,6 @@ public class VisualConstants
         public static final String white = "\u00A7f";
         public static final String yellow = "\u00A7e";
     }
+
+    public static int playerInventoryIndex = 36;
 }

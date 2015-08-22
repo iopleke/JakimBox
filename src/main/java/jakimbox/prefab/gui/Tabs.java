@@ -5,6 +5,7 @@ import jakimbox.prefab.gui.tabTypes.AbstractTab;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import werkbench.bench.BenchContainer;
 
 /**
  * Class for managing multiple tabs
@@ -77,11 +78,12 @@ public class Tabs
     /**
      * Check if a mouse click activates any of the tabs
      *
+     * @param gui
      * @param clickX
      * @param clickY
      * @param side
      */
-    public void doTabClicks(int clickX, int clickY, TabSide side)
+    public void doTabClicks(BasicTabbedGUI gui, int clickX, int clickY, TabSide side)
     {
         LogHelper.debug("Clicked at x:" + clickX + " y:" + clickY);
         for (AbstractTab tab : tabList)
@@ -93,10 +95,22 @@ public class Tabs
                 {
                     LogHelper.debug("Tab on " + tab.getTabSide().toString() + " was clicked!");
                     tab.toggleTabState();
-                } else if (tab.getTabSide() == side)
+
+                    if (tab.getTabState() == TabState.OPEN)
+                    {
+                        ((BenchContainer) gui.inventorySlots).moveBoundSlots(tab.getRelativeDirection(), tab.getTabSide());
+                    } else
+                    {
+                        ((BenchContainer) gui.inventorySlots).resetBoundSlots(tab.getRelativeDirection());
+                    }
+                } else if (tab.sideIntersect(clickX, clickY))
                 {
                     // @TODO - restrict this to only reset tabs if click is on a different tab
-                    tab.reset();
+                    if (tab.getTabState() == TabState.OPEN)
+                    {
+                        tab.reset();
+                        ((BenchContainer) gui.inventorySlots).resetBoundSlots(tab.getRelativeDirection());
+                    }
                 }
             }
         }

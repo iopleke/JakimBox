@@ -157,6 +157,25 @@ public abstract class AbstractTab
         return false;
     }
 
+    /**
+     * Check if an x/y coordinate intersects with the tabs.
+     *
+     * @param x
+     * @param y
+     * @return boolean
+     */
+    public boolean sideIntersect(int x, int y)
+    {
+        if (x >= guiCoords[0] && x <= guiCoords[0] + getIconWidth())
+        {
+            if (y >= guiCoords[1] - getIconHeight() * 3 && y <= guiCoords[1] + getIconHeight() * 4)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int getInvWidth()
     {
         return invWidth;

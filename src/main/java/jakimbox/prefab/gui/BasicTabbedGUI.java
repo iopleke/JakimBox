@@ -144,8 +144,7 @@ public abstract class BasicTabbedGUI extends BasicGUI
         {
             sideClicked = TabSide.RIGHT;
         }
-
-        tabs.doTabClicks(clickX, clickY, sideClicked);
+        tabs.doTabClicks(this, clickX, clickY, sideClicked);
     }
 
     /**

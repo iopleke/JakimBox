@@ -53,7 +53,7 @@ public class BasicContainer extends Container
      */
     private void bindPlayerInventory(InventoryPlayer inventoryPlayer)
     {
-        int x, y;
+        int slot, x, y;
 
         for (int i = 0; i < 3; i++)
         {
@@ -61,7 +61,8 @@ public class BasicContainer extends Container
             {
                 x = offsets[0] + j * slotHeight;
                 y = offsets[1] + i * slotHeight;
-                addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9, x, y));
+                slot = j + i * 9 + 9;
+                addSlotToContainer(new Slot(inventoryPlayer, slot, x, y));
 
                 if (i == 0)
                 {
@@ -69,7 +70,8 @@ public class BasicContainer extends Container
                     int hotbarOffset = 4;
                     int hotbarMultiplier = 3;
                     y = offsets[1] + hotbarMultiplier * slotHeight + hotbarOffset;
-                    addSlotToContainer(new Slot(inventoryPlayer, j, x, y));
+                    slot = j;
+                    addSlotToContainer(new Slot(inventoryPlayer, slot, x, y));
                 }
             }
         }
