@@ -20,7 +20,7 @@ public class BasicContainer extends Container
      */
     private int[] offsets =
     {
-        32, 166
+        81, 166
     };
 
     /**
