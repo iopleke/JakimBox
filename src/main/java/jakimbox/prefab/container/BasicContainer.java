@@ -23,6 +23,8 @@ public class BasicContainer extends Container
         81, 166
     };
 
+    protected int[] inventorySlotIDs;
+
     /**
      * Height of the slots, shouldn't ever change.
      */
@@ -43,6 +45,7 @@ public class BasicContainer extends Container
     {
         this.tileEntity = tileEntity;
 
+        inventorySlotIDs = new int[36];
         bindPlayerInventory(inventoryPlayer);
     }
 
@@ -54,6 +57,7 @@ public class BasicContainer extends Container
     private void bindPlayerInventory(InventoryPlayer inventoryPlayer)
     {
         int slot, x, y;
+        int count = 0;
 
         for (int i = 0; i < 3; i++)
         {
@@ -62,7 +66,8 @@ public class BasicContainer extends Container
                 x = offsets[0] + j * slotHeight;
                 y = offsets[1] + i * slotHeight;
                 slot = j + i * 9 + 9;
-                addSlotToContainer(new Slot(inventoryPlayer, slot, x, y));
+                inventorySlotIDs[count] = addSlotToContainer(new Slot(inventoryPlayer, slot, x, y)).slotNumber;
+                count++;
 
                 if (i == 0)
                 {
@@ -71,7 +76,8 @@ public class BasicContainer extends Container
                     int hotbarMultiplier = 3;
                     y = offsets[1] + hotbarMultiplier * slotHeight + hotbarOffset;
                     slot = j;
-                    addSlotToContainer(new Slot(inventoryPlayer, slot, x, y));
+                    inventorySlotIDs[count] = addSlotToContainer(new Slot(inventoryPlayer, slot, x, y)).slotNumber;
+                    count++;
                 }
             }
         }
