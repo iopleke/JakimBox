@@ -1,11 +1,11 @@
 package jakimbox.prefab.gui;
 
 import jakimbox.helper.LogHelper;
+import jakimbox.prefab.container.BasicInventoryContainer;
 import jakimbox.prefab.gui.tabTypes.AbstractTab;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import werkbench.bench.BenchContainer;
 
 /**
  * Class for managing multiple tabs
@@ -98,10 +98,10 @@ public class Tabs
 
                     if (tab.getTabState() == TabState.OPEN)
                     {
-                        ((BenchContainer) gui.inventorySlots).moveBoundSlots(tab.getRelativeDirection(), tab.getTabSide());
+                        ((BasicInventoryContainer) gui.inventorySlots).moveBoundSlots(tab.getRelativeDirection(), tab.getTabSide());
                     } else
                     {
-                        ((BenchContainer) gui.inventorySlots).resetBoundSlots(tab.getRelativeDirection());
+                        ((BasicInventoryContainer) gui.inventorySlots).resetBoundSlots(tab.getRelativeDirection());
                     }
                 } else if (tab.sideIntersect(clickX, clickY))
                 {
@@ -109,7 +109,7 @@ public class Tabs
                     if (tab.getTabState() == TabState.OPEN)
                     {
                         tab.reset();
-                        ((BenchContainer) gui.inventorySlots).resetBoundSlots(tab.getRelativeDirection());
+                        ((BasicInventoryContainer) gui.inventorySlots).resetBoundSlots(tab.getRelativeDirection());
                     }
                 }
             }
