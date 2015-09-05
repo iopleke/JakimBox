@@ -16,7 +16,7 @@ import net.minecraftforge.common.util.Constants;
  */
 public abstract class BasicInventoryTileEntity extends BasicTileEntity implements IInventory
 {
-    private BasicInventory inventory;
+    private final BasicInventory inventory;
 
     public BasicInventoryTileEntity(String tileEntityName, int inventorySize)
     {
