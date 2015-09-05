@@ -7,8 +7,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import jakimbox.proxy.CommonProxyBase;
-import jakimbox.registry.BlockRegistry;
-import jakimbox.registry.CreativeTabRegistry;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -35,8 +33,8 @@ public class JakimBox
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        BlockRegistry.init();
-        CreativeTabRegistry.init();
+//        BlockRegistry.init();
+//        CreativeTabRegistry.init();
         Config.init();
         //MessageHandler.init();
     }
