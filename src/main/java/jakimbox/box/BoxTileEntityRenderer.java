@@ -14,7 +14,7 @@ public class BoxTileEntityRenderer extends BasicTileEntityRenderer
 {
     public BoxTileEntityRenderer()
     {
-        super(0.24F, 0.0625F);
+        super(0.24F);
 
         setOffset(0.5D, 0.68D, 0.5D);
 
