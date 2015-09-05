@@ -39,6 +39,10 @@ public class BasicItemRenderer implements IItemRenderer
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data)
     {
+        float[] rotation = tesr.getRotation();
+
+        tesr.setRotation(0F, 0F, 180F);
+
         switch (type)
         {
             case ENTITY:
@@ -48,16 +52,27 @@ public class BasicItemRenderer implements IItemRenderer
             case EQUIPPED_FIRST_PERSON:
             case EQUIPPED:
                 // Move model up and over slightly when in the player's hand
-                GL11.glTranslatef(0.0F, 0.6F, 0.2F);
+                GL11.glTranslatef(0.0F, 0.4F, -0.2F);
+
+                // Rotate model 90 degrees for hand
+                tesr.setRotation(0F, 90F, 180F);
                 break;
             case INVENTORY:
-                // @TODO - scale small blocks up slightly in the inventory
+                // Scale block down slightly in the inventory
+                double inventoryVerticalScale = 0.75;
+                double inventoryHorizontalScale = 0.85;
+                GL11.glScaled(inventoryHorizontalScale, inventoryVerticalScale, inventoryHorizontalScale);
+                tesr.setRotation(0F, 180F, 180F);
                 break;
             default:
                 // do nothing special
                 break;
         }
-        tesr.renderTileEntityAt(this.tileEntity, 0.0D, -(tesr.yOffset / 3), 0.0D, 0.0625F);
+
+        tesr.renderTileEntityAt(this.tileEntity, 0.0D, -0.2D, 0.0D, 0.0625F);
+
+        // reset the rotation
+        tesr.setRotation(rotation[0], rotation[1], rotation[2]);
     }
 
     @Override

@@ -9,6 +9,10 @@ import org.lwjgl.opengl.GL11;
 
 public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
 {
+    private float xRotation;
+    private float yRotation;
+    private float zRotation;
+
     protected BasicModel model;
     protected float rotation;
     protected ResourceLocation texture;
@@ -30,20 +34,25 @@ public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
 
     public BasicTileEntityRenderer(float scale)
     {
-        this(scale, 0.0625F);
+        setScale(scale);
+        setOffset(0.0D, 0.0D, 0.0D);
     }
 
-    /**
-     * Rendering object with scale and rotation
-     *
-     * @param scale    the scale for the object, relative to 1
-     * @param rotation rotation for the object
-     */
-    public BasicTileEntityRenderer(float scale, float rotation)
+    protected void doModelRotations()
     {
-        setScale(scale);
-        setRotation(rotation);
-        setOffset(0.0D, 0.0D, 0.0D);
+        if (xRotation != 0)
+        {
+            GL11.glRotatef(xRotation, 1F, 0F, 0F);
+        }
+        if (yRotation != 0)
+        {
+            GL11.glRotatef(yRotation, 0F, 1F, 0F);
+        }
+        if (zRotation != 0)
+        {
+            GL11.glRotatef(zRotation, 0F, 0F, 1F);
+        }
+
     }
 
     /**
@@ -55,18 +64,22 @@ public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
     {
     }
 
+    public final void setScale(float scale)
+    {
+        this.setScale(scale, scale, scale);
+    }
+
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float scale)
+    public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float partialTick)
     {
         if (tileEntity instanceof BasicTileEntity)
         {
             GL11.glPushMatrix();
             GL11.glTranslated(x + xOffset, y + yOffset, z + zOffset);
 
-            GL11.glPushMatrix();
-            GL11.glTranslatef(0.5F, 0, 0.5F);
+            doModelRotations();
+
             GL11.glRotatef(tileEntity.getBlockMetadata() * (-90F), 0F, 1F, 0F);
-            GL11.glTranslatef(-0.5F, 0, -0.5F);
 
             bindTexture(texture);
 
@@ -75,8 +88,7 @@ public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
             // @TODO - figure out why using scale here causes weird rendering problems
             // ..I should really fix this shouldn't I.
             //model.render(scale);
-            model.render(0.0625F);
-            GL11.glPopMatrix();
+            model.render(0.03125F);
             GL11.glPopMatrix();
         }
     }
@@ -88,16 +100,20 @@ public abstract class BasicTileEntityRenderer extends TileEntitySpecialRenderer
         this.zOffset = zOffset;
     }
 
-    public final void setRotation(float rotation)
+    public final float[] getRotation()
     {
-        this.rotation = rotation;
+        float[] rotation =
+        {
+            xRotation, yRotation, zRotation
+        };
+        return rotation;
     }
 
-    public final void setScale(float scale)
+    public final void setRotation(float xRotation, float yRotation, float zRotation)
     {
-        this.xScale = scale;
-        this.yScale = scale;
-        this.zScale = scale;
+        this.xRotation = xRotation;
+        this.yRotation = yRotation;
+        this.zRotation = zRotation;
     }
 
     public final void setScale(float xScale, float yScale, float zScale)
