@@ -64,7 +64,8 @@ public abstract class AbstractTab
     protected final ResourceLocation tabBackground;
 
     /**
-     * Type of tab, potentially unnecessary since each type extends the abstract tab
+     * Type of tab, potentially unnecessary since each type extends the abstract
+     * tab
      */
     public final TabType type;
 
@@ -147,9 +148,9 @@ public abstract class AbstractTab
      */
     public boolean coordinateIntersect(int x, int y)
     {
-        if (x >= guiCoords[0] && x <= guiCoords[0] + getIconWidth())
+        if (x > guiCoords[0] && x < guiCoords[0] + getIconWidth())
         {
-            if (y >= guiCoords[1] && y <= guiCoords[1] + getIconHeight())
+            if (y > guiCoords[1] && y < guiCoords[1] + getIconHeight())
             {
                 return true;
             }
