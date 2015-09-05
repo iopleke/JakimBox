@@ -96,17 +96,14 @@ public class WorldHelper
          */
         public static boolean isBlockSupported(Block block)
         {
-            if (block == Blocks.anvil
-                || block == Blocks.brewing_stand
-                || block == Blocks.chest
-                || block == Blocks.ender_chest
-                || block == Blocks.enchanting_table
-                || block == Blocks.furnace
-                || block == Blocks.hopper)
-            {
-                return true;
-            }
-            return false;
+            return block == Blocks.anvil
+                    || block == Blocks.brewing_stand
+                    || block == Blocks.chest
+                    || block == Blocks.ender_chest
+                    || block == Blocks.enchanting_table
+                    || block == Blocks.furnace
+                    || block == Blocks.hopper
+                    || block == Blocks.lit_furnace;
         }
     }
 }
