@@ -2,9 +2,13 @@ package jakimbox.prefab.container;
 
 import jakimbox.prefab.gui.Tabs;
 import jakimbox.prefab.tileEntity.BasicInventoryTileEntity;
+import jakimbox.prefab.tileEntity.TabbedInventoryTileEntity;
 import jakimbox.reference.RelativeDirection;
 import java.util.EnumMap;
 import java.util.Map;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockChest;
+import net.minecraft.block.BlockFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -23,7 +27,7 @@ public abstract class BasicInventoryContainer extends BasicContainer
     /**
      * Stored TileEntity object.
      */
-    private BasicInventoryTileEntity tileEntity;
+    private final BasicInventoryTileEntity tileEntity;
 
     /**
      * Container object for the TileEntity
@@ -52,25 +56,52 @@ public abstract class BasicInventoryContainer extends BasicContainer
 
     public void moveBoundSlots(RelativeDirection direction, Tabs.TabSide side)
     {
-        int tabSlots[] = slotIDs.get(direction);
-        if (tabSlots != null)
+        if (this.tileEntity instanceof TabbedInventoryTileEntity)
         {
-            int count = 0;
-            for (int i = 0; i < 3; i++)
+            int tabSlots[] = slotIDs.get(direction);
+            if (tabSlots != null)
             {
-                for (int j = 0; j < 9; j++)
+                Block block = ((TabbedInventoryTileEntity) tileEntity).getBlockCache().get(direction);
+
+                if (block instanceof BlockChest)
+                {
+
+                    int count = 0;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 9; j++)
+                        {
+                            if (side == Tabs.TabSide.LEFT)
+                            {
+                                ((Slot) this.inventorySlots.get(tabSlots[count])).xDisplayPosition = i * 18 - 1;
+                            } else
+                            {
+                                ((Slot) this.inventorySlots.get(tabSlots[count])).xDisplayPosition = 270 + i * 18;
+                            }
+
+                            ((Slot) this.inventorySlots.get(tabSlots[count])).yDisplayPosition = 73 + j * 18;
+                            count++;
+
+                        }
+                    }
+
+                } else if (block instanceof BlockFurnace)
                 {
                     if (side == Tabs.TabSide.LEFT)
                     {
-                        ((Slot) this.inventorySlots.get(tabSlots[count])).xDisplayPosition = i * 18 - 1;
+                        ((Slot) this.inventorySlots.get(tabSlots[0])).xDisplayPosition = -9;
+                        ((Slot) this.inventorySlots.get(tabSlots[1])).xDisplayPosition = 12;
+                        ((Slot) this.inventorySlots.get(tabSlots[2])).xDisplayPosition = 33;
                     } else
                     {
-                        ((Slot) this.inventorySlots.get(tabSlots[count])).xDisplayPosition = 270 + i * 18;
+                        ((Slot) this.inventorySlots.get(tabSlots[0])).xDisplayPosition = 272;
+                        ((Slot) this.inventorySlots.get(tabSlots[1])).xDisplayPosition = 293;
+                        ((Slot) this.inventorySlots.get(tabSlots[2])).xDisplayPosition = 314;
                     }
 
-                    ((Slot) this.inventorySlots.get(tabSlots[count])).yDisplayPosition = 73 + j * 18;
-                    count++;
-
+                    ((Slot) this.inventorySlots.get(tabSlots[0])).yDisplayPosition = 86;
+                    ((Slot) this.inventorySlots.get(tabSlots[1])).yDisplayPosition = 130;
+                    ((Slot) this.inventorySlots.get(tabSlots[2])).yDisplayPosition = 86;
                 }
             }
         }
@@ -78,17 +109,30 @@ public abstract class BasicInventoryContainer extends BasicContainer
 
     public void resetBoundSlots(RelativeDirection direction)
     {
-        int tabSlots[] = slotIDs.get(direction);
-        if (tabSlots != null)
+        if (this.tileEntity instanceof TabbedInventoryTileEntity)
         {
-            int count = 0;
-            for (int i = 0; i < 3; i++)
+            int tabSlots[] = slotIDs.get(direction);
+            if (tabSlots != null)
             {
-                for (int j = 0; j < 9; j++)
+                Block block = ((TabbedInventoryTileEntity) tileEntity).getBlockCache().get(direction);
+
+                if (block instanceof BlockChest)
                 {
-                    ((Slot) this.inventorySlots.get(tabSlots[count])).xDisplayPosition = -999;
-                    ((Slot) this.inventorySlots.get(tabSlots[count])).yDisplayPosition = -999;
-                    count++;
+                    int count = 0;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        for (int j = 0; j < 9; j++)
+                        {
+                            ((Slot) this.inventorySlots.get(tabSlots[count])).xDisplayPosition = -999;
+                            ((Slot) this.inventorySlots.get(tabSlots[count])).yDisplayPosition = -999;
+                            count++;
+                        }
+                    }
+                } else if (block instanceof BlockFurnace)
+                {
+                    ((Slot) this.inventorySlots.get(tabSlots[0])).yDisplayPosition = -999;
+                    ((Slot) this.inventorySlots.get(tabSlots[1])).yDisplayPosition = -999;
+                    ((Slot) this.inventorySlots.get(tabSlots[2])).yDisplayPosition = -999;
                 }
             }
         }
