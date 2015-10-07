@@ -174,9 +174,12 @@ public abstract class BasicTabbedGUI extends BasicGUI
                 } else if (entry.getValue() == Blocks.ender_chest)
                 {
                     tabs.addTab(new ChestTab(modID, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), Tabs.TabType.CHEST_ENDER, entry.getKey()), tabID);
-                } else if (entry.getValue() == Blocks.furnace)
+                } else if (entry.getValue() == Blocks.furnace || entry.getValue() == Blocks.lit_furnace)
                 {
-                    tabs.addTab(new FurnaceTab(modID, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), entry.getKey()), tabID);
+                    if (entry.getValue() == Blocks.furnace && tabs.getTab(tabID) == null || entry.getValue() == Blocks.lit_furnace && tabs.getTab(tabID) == null)
+                    {
+                        tabs.addTab(new FurnaceTab(modID, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), entry.getKey()), tabID);
+                    }
                 } else if (entry.getValue() == Blocks.anvil)
                 {
                     tabs.addTab(new AnvilTab(modID, RelativeDirection.getRelativeDirectionTabSide(entry.getKey()), entry.getKey()), tabID);
