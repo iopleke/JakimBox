@@ -6,3 +6,6 @@ git submodule update --init --recursive
 #gradle cleancache --refresh-dependencies
 gradle setupdecompworkspace
 gradle eclipse
+
+mkdir -p build
+cp -R ~/bin/lwjgl/natives build/
