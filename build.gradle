@@ -13,11 +13,10 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
     }
 }
-
-apply plugin: 'forge'
+apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
@@ -50,7 +49,7 @@ archivesBaseName = "JakimBox"
 
 minecraft {
     version = "${config.version.forge}-${config.version.minecraft}"
-
+    runDir = "run"
     replace "@MAJOR@", config.version.mod.major
     replace "@MINOR@", config.version.mod.minor
 
@@ -61,6 +60,7 @@ minecraft {
     {
         replace "@BUILD@", "ManuallyBuilt"
     }
+    mappings = "snapshot_20160312"
 }
 
 processResources {
@@ -108,10 +108,10 @@ task deobfJar(type: Jar) { // Generate deobfuscated
     classifier = 'deobf'
     destinationDir = file (rootProject.getRootDir().getPath() + '/output')
 }
-task sourceJar(type: Jar) {
+task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'
     destinationDir = file (rootProject.getRootDir().getPath() + '/output')
 }
 
-tasks.assemble.dependsOn('sourceJar', 'deobfJar')
+tasks.assemble.dependsOn('sourcesJar', 'deobfJar')
