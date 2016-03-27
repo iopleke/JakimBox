@@ -1,13 +1,13 @@
 package jakimbox;
 
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * Configuration class for JakimBox
@@ -54,54 +54,54 @@ public class Config
         Property prop;
         List<String> configList = new ArrayList<String>();
 
-        //config.addCustomCategoryComment(Configuration.CATEGORY_GENERAL, StatCollector.translateToLocal("config.general.description"));
-        config.addCustomCategoryComment(Config.CATEGORY_DEBUGGING, StatCollector.translateToLocal("config.debugging.description"));
-        config.addCustomCategoryComment(Config.CATEGORY_GASES, StatCollector.translateToLocal("config.gases.description"));
-        config.addCustomCategoryComment(Config.CATEGORY_PERFORMANCE, StatCollector.translateToLocal("config.performance.description"));
+        //config.addCustomCategoryComment(Configuration.CATEGORY_GENERAL, I18n.translateToLocal("config.general.description"));
+        config.addCustomCategoryComment(Config.CATEGORY_DEBUGGING, I18n.translateToLocal("config.debugging.description"));
+        config.addCustomCategoryComment(Config.CATEGORY_GASES, I18n.translateToLocal("config.gases.description"));
+        config.addCustomCategoryComment(Config.CATEGORY_PERFORMANCE, I18n.translateToLocal("config.performance.description"));
 
         prop = config.get(Config.CATEGORY_DEBUGGING, "debugMode", Config.debugMode);
-        prop.comment = StatCollector.translateToLocal("config.debugging.debugMode.description");
+        prop.setComment(I18n.translateToLocal("config.debugging.debugMode.description"));
         prop.setLanguageKey("config.debugging.debugMode.name");
         debugMode = prop.getBoolean();
         configList.add(prop.getName());
 
         prop = config.get(Config.CATEGORY_GASES, "gasDiffusionRate", Config.gasDiffusionRate);
         prop.setMinValue(1);
-        prop.comment = StatCollector.translateToLocal("config.gases.gasDiffusionRate.description");
+        prop.setComment(I18n.translateToLocal("config.gases.gasDiffusionRate.description"));
         prop.setLanguageKey("config.gases.gasDiffusionRate.name");
         gasDiffusionRate = prop.getInt();
         configList.add(prop.getName());
 
         prop = config.get(Config.CATEGORY_GASES, "gasDiffusionRadiusMax", Config.gasDiffusionRadiusMax);
-        prop.comment = StatCollector.translateToLocal("config.gases.gasDiffusionRadiusMax.description");
+        prop.setComment(I18n.translateToLocal("config.gases.gasDiffusionRadiusMax.description"));
         prop.setLanguageKey("config.gases.gasDiffusionRadiusMax.name");
         gasDiffusionRadiusMax = prop.getInt();
         configList.add(prop.getName());
 
         prop = config.get(Config.CATEGORY_GASES, "gasUpdateTickMin", Config.gasUpdateTickMin);
         prop.setMinValue(1);
-        prop.comment = StatCollector.translateToLocal("config.gases.gasUpdateTickMin.description");
-        prop.comment += "\n" + StatCollector.translateToLocal("config.gases.gasUpdateTickMin.explanation");
+        prop.setComment(I18n.translateToLocal("config.gases.gasUpdateTickMin.description"));
+        prop.setComment(prop.getComment() + "\n" + I18n.translateToLocal("config.gases.gasUpdateTickMin.explanation"));
         prop.setLanguageKey("config.gases.gasUpdateTickMin.name");
         gasUpdateTickMin = prop.getInt();
         configList.add(prop.getName());
 
         prop = config.get(Config.CATEGORY_GASES, "gasUpdateTickRandom", Config.gasUpdateTickRandom);
         prop.setMinValue(3);
-        prop.comment = StatCollector.translateToLocal("config.gases.gasUpdateTickRandom.description");
-        prop.comment += "\n" + StatCollector.translateToLocal("config.gases.gasUpdateTickRandom.explanation");
+        prop.setComment(I18n.translateToLocal("config.gases.gasUpdateTickRandom.description"));
+        prop.setComment(prop.getComment() + "\n" + I18n.translateToLocal("config.gases.gasUpdateTickRandom.explanation"));
         prop.setLanguageKey("config.gases.gasUpdateTickRandom.name");
         gasUpdateTickRandom = prop.getInt();
         configList.add(prop.getName());
 
         prop = Config.config.get(Config.CATEGORY_PERFORMANCE, "maxUpdateTickCount", Config.maxUpdateTickCount);
-        prop.comment = StatCollector.translateToLocal("config.maxUpdateTickCount.description");
+        prop.setComment(I18n.translateToLocal("config.maxUpdateTickCount.description"));
         prop.setLanguageKey("config.maxUpdateTickCount.tooltip");
         Config.maxUpdateTickCount = prop.getInt();
         configList.add(prop.getName());
 
         prop = Config.config.get(Config.CATEGORY_PERFORMANCE, "furnaceGUIUpdatePacketFrequency", Config.furnaceGUIUpdatePacketFrequency);
-        prop.comment = StatCollector.translateToLocal("config.furnaceGUIUpdatePacketFrequency.description");
+        prop.setComment(I18n.translateToLocal("config.furnaceGUIUpdatePacketFrequency.description"));
         prop.setLanguageKey("config.furnaceGUIUpdatePacketFrequency.tooltip");
         Config.furnaceGUIUpdatePacketFrequency = prop.getInt();
         configList.add(prop.getName());
@@ -115,7 +115,7 @@ public class Config
     @SubscribeEvent
     public void onConfigChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event)
     {
-        if (event.modID.equalsIgnoreCase(JakimBox.modID))
+        if (event.getModID().equalsIgnoreCase(JakimBox.modID))
         {
             loadConfig();
         }
