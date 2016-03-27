@@ -1,8 +1,8 @@
 package jakimbox.helper;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.translation.I18n;
 
 /**
  * Notification and message helper class
@@ -19,6 +19,6 @@ public class NotificationHelper
      */
     public static void sendPlayerChatMessage(EntityPlayer player, String message)
     {
-        player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal(message)));
+        player.addChatMessage(new TextComponentString(I18n.translateToLocal(message)));
     }
 }
