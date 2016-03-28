@@ -1,14 +1,13 @@
 package jakimbox.helper;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 
 /**
  * Helper class for world operations
@@ -26,7 +25,7 @@ public class WorldHelper
      */
     public static boolean isActiveFurnace(TileEntity tileEntity)
     {
-        Block block = WorldHelper.getWorld().getBlock(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+        Block block = WorldHelper.getWorld().getBlockState(tileEntity.getPos()).getBlock();
 
         if (block != null)
         {
@@ -58,21 +57,8 @@ public class WorldHelper
      * @param z
      * @return ForgeDirection of the chest, or null if none was found
      */
-    public ForgeDirection doubleChestOffset(int x, int y, int z)
+    public EnumFacing doubleChestOffset(int x, int y, int z)
     {
-        for (ForgeDirection offset : ForgeDirection.VALID_DIRECTIONS)
-        {
-            // Double chests are on the same Y
-            if (offset.offsetY == 0)
-            {
-                TileEntity potentialChest = WorldHelper.getWorld().getTileEntity(offset.offsetX, offset.offsetY, offset.offsetZ);
-                if (potentialChest instanceof TileEntityChest)
-                {
-                    return offset;
-                }
-            }
-
-        }
         return null;
     }
 
